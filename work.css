@@ -1,0 +1,170 @@
+/* ─── WORK PAGE ─── */
+
+.work-page { background: var(--bg); }
+
+/* Header */
+.header--work .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header--work .nav-logo {
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+.header--work .nav-logo img {
+    height: 28px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    transition: filter 0.4s, opacity 0.4s;
+}
+.header--work .nav-links a { color: rgba(255,255,255,0.7); }
+.header--work .nav-links a:hover { color: #fff; }
+.header--work .menu-btn span { background: #fff; }
+
+.header--work.scrolled .nav { justify-content: center; }
+.header--work.scrolled .nav-logo { position: absolute; opacity: 0; pointer-events: none; }
+.header--work.scrolled .nav-links a { color: rgba(255,255,255,0.85); }
+.header--work.scrolled .menu-btn span { background: #fff; }
+
+/* Hero */
+.work-hero {
+    padding: clamp(8rem, 15vh, 12rem) 0 clamp(3rem, 6vw, 5rem);
+    border-bottom: 1px solid var(--border);
+}
+.work-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--fg);
+    margin-top: 0.5rem;
+}
+.work-hero-sub {
+    font-size: 0.8rem;
+    color: var(--fg-3);
+    margin-top: 1rem;
+    letter-spacing: 0.03em;
+}
+
+/* Filter Bar */
+.filter-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 1rem 0;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+}
+.filter-pills {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 2px;
+}
+.filter-pills::-webkit-scrollbar { display: none; }
+.filter-pill {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg-3);
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    white-space: nowrap;
+}
+.filter-pill:hover {
+    color: var(--fg);
+    border-color: rgba(255,255,255,0.2);
+}
+.filter-pill.active {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+}
+
+/* Grid */
+.work-grid-section {
+    padding: clamp(3rem, 6vw, 5rem) 0 clamp(5rem, 10vw, 8rem);
+}
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Cards */
+.work-card {
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.work-card.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+.work-card.filtered-out {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
+}
+.work-card-img {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--bg-2);
+}
+.work-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease), filter 0.5s;
+    filter: brightness(0.75) saturate(0.85);
+}
+.work-card:hover .work-card-img img {
+    transform: scale(1.04);
+    filter: brightness(0.95) saturate(1);
+}
+.work-card-info {
+    padding: 1rem 0 0;
+}
+.work-card-client {
+    font-size: 0.55rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--fg-3);
+    display: block;
+}
+.work-card-title {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    font-weight: 600;
+    margin: 0.2rem 0 0;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+}
+.work-card-type {
+    font-size: 0.65rem;
+    color: var(--fg-3);
+    display: block;
+    margin-top: 0.15rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .work-grid { grid-template-columns: 1fr; }
+    .work-hero { padding-top: 7rem; }
+}

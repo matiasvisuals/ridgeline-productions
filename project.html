@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ridgeline Productions</title>
+    <link rel="icon" type="image/png" href="https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/2b4850ab-b3b5-4b1b-b197-ad118f4f2a07/Ridgeline+Favicon+Blk+NO+Circle+500x500.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="project.css">
+</head>
+<body class="project-page">
+
+    <!-- Nav -->
+    <header class="header header--project scrolled nav-revealed" id="header">
+        <nav class="nav nav--split">
+            <div class="nav-links nav-links--left">
+                <a href="index.html#work">Work</a>
+                <a href="index.html#about">About</a>
+            </div>
+            <div class="nav-logo-space">
+                <a href="index.html" class="nav-logo-link">
+                    <img src="RIDGELINE LOGO.png" alt="Ridgeline" class="nav-logo-img">
+                </a>
+            </div>
+            <div class="nav-links nav-links--right">
+                <a href="index.html#services">Services</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+            <button class="menu-btn" id="menuBtn" aria-label="Menu">
+                <span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html#work" class="mobile-link">Work</a>
+        <a href="index.html#about" class="mobile-link">About</a>
+        <a href="index.html#services" class="mobile-link">Services</a>
+        <a href="index.html#contact" class="mobile-link">Contact</a>
+        <div class="mobile-footer">
+            <a href="https://www.instagram.com/a_ridgeline_production/" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.linkedin.com/company/ridgeline-productions/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+    </div>
+
+    <!-- Project Hero -->
+    <section class="proj-hero" id="projHero">
+        <div class="proj-hero-media" id="projHeroMedia">
+            <img id="projHeroImg" class="proj-hero-img" src="" alt="">
+            <div class="proj-hero-overlay"></div>
+        </div>
+        <div class="proj-hero-content">
+            <p class="proj-hero-client" id="projClient"></p>
+            <h1 class="proj-hero-title" id="projTitle">
+                <span class="title-line"><span class="anim-line" data-delay="1" id="projTitleText"></span></span>
+            </h1>
+            <p class="proj-hero-type" id="projType"></p>
+        </div>
+        <div class="proj-hero-scroll">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Video -->
+    <section class="proj-section" id="projVideo">
+        <div class="proj-video-wrap anim" data-anim="fade-up">
+            <div class="proj-video-player" id="projVideoPlayer">
+                <img id="projVideoThumb" class="proj-video-thumb" src="" alt="">
+                <div class="proj-video-play" id="projPlayBtn">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="23" stroke="white" stroke-width="1.5"/>
+                        <path d="M20 16L32 24L20 32V16Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Description + Credits -->
+    <section class="proj-section">
+        <div class="proj-info-grid container">
+            <div class="proj-desc anim" data-anim="fade-up">
+                <p id="projDesc"></p>
+            </div>
+            <div class="proj-details">
+                <div class="proj-detail-block anim" data-anim="fade-up">
+                    <h4 class="proj-detail-label">Year</h4>
+                    <p class="proj-detail-value" id="projYear"></p>
+                </div>
+                <div class="proj-detail-block anim" data-anim="fade-up">
+                    <h4 class="proj-detail-label">Category</h4>
+                    <p class="proj-detail-value" id="projCategory"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Credits -->
+    <section class="proj-section proj-section--alt">
+        <div class="container">
+            <h3 class="proj-section-title anim" data-anim="fade-up">Credits</h3>
+            <div class="proj-credits-grid" id="projCredits"></div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="proj-section" id="projGallerySection">
+        <div class="container">
+            <h3 class="proj-section-title anim" data-anim="fade-up">Stills</h3>
+            <div class="proj-gallery" id="projGallery"></div>
+        </div>
+    </section>
+
+    <!-- BTS -->
+    <section class="proj-section proj-section--alt" id="projBtsSection">
+        <div class="container">
+            <h3 class="proj-section-title anim" data-anim="fade-up">Behind the Scenes</h3>
+            <div class="proj-bts-grid" id="projBtsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Next / Prev -->
+    <section class="proj-nav-section">
+        <a class="proj-nav-link proj-nav-prev" id="projPrev" href="#">
+            <span class="proj-nav-label">Previous</span>
+            <span class="proj-nav-name" id="projPrevName"></span>
+        </a>
+        <a class="proj-nav-link proj-nav-next" id="projNext" href="#">
+            <span class="proj-nav-label">Next</span>
+            <span class="proj-nav-name" id="projNextName"></span>
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <a href="index.html" class="footer-logo">
+                <img src="RIDGELINE LOGO.png" alt="Ridgeline Productions">
+            </a>
+            <p>&copy; 2024 Ridgeline Productions</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <button class="lightbox-arrow lightbox-arrow--prev" id="lbPrev">&#8592;</button>
+        <button class="lightbox-arrow lightbox-arrow--next" id="lbNext">&#8594;</button>
+        <div class="lightbox-content" id="lightboxContent"></div>
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <script src="projects.js"></script>
+    <script src="project-page.js"></script>
+    <script src="transitions.js"></script>
+</body>
+</html>
