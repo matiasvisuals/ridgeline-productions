@@ -15,6 +15,29 @@ document.addEventListener('DOMContentLoaded', () => {
         heroIframe.src = heroIframe.dataset.src;
     }
 
+    // ─── Client logo marquee — populate from simple-icons with text fallback ───
+    const logoTrack = document.getElementById('clientLogoTrack');
+    const logoData = document.getElementById('clientLogoData');
+    if (logoTrack && logoData) {
+        let clients = [];
+        try { clients = JSON.parse(logoData.getAttribute('data-clients')) || []; }
+        catch (e) { clients = []; }
+
+        const buildSet = () => clients.map(c => {
+            const safeName = c.name.replace(/"/g, '&quot;');
+            return `<span class="client-logo" data-name="${safeName}">` +
+                   `<img src="https://cdn.simpleicons.org/${c.slug}/ffffff" ` +
+                        `alt="${safeName}" class="client-logo-img" ` +
+                        `loading="lazy" ` +
+                        `onerror="this.parentElement.classList.add('client-logo--text');this.remove();">` +
+                   `<span class="client-logo-text">${safeName}</span>` +
+                   `</span>`;
+        }).join('');
+
+        // Two copies for seamless loop
+        logoTrack.innerHTML = buildSet() + buildSet();
+    }
+
     // ─── Logo morph: full white wordmark on hero → R badge in the nav island ───
     const header = document.getElementById('header');
     const heroLogo = document.getElementById('heroLogo');
@@ -142,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ─── Contact headline word rotator ───
     const wordRotator = document.getElementById('wordRotator');
     if (wordRotator) {
-        const words = ['extraordinary', 'cinematic', 'unforgettable', 'iconic', 'timeless', 'breathtaking'];
+        const words = ['extraordinary', 'cinematic', 'unforgettable', 'iconic', 'timeless', 'breathtaking', 'epic', 'bold', 'striking', 'powerful'];
         const current = wordRotator.querySelector('.wr-word');
 
         const meter = document.createElement('span');

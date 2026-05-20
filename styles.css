@@ -512,9 +512,9 @@ body.loaded [data-delay="4"] { animation-delay: 1.4s; }
 .section--dark { background: var(--bg-2); }
 .section-label {
     font-family: var(--font-label);
-    font-size: 0.7rem; font-weight: 400;
+    font-size: 0.85rem; font-weight: 500;
     letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--fg-3);
+    color: rgba(232, 230, 227, 0.78);
     margin-bottom: 2.5rem;
 }
 
@@ -876,6 +876,120 @@ body.loaded [data-delay="4"] { animation-delay: 1.4s; }
     0% { transform: translateX(0); }
     100% { transform: translateX(-33.33%); }
 }
+
+/* ─── CLIENT LOGO MARQUEE (B&W, below hero) ─── */
+.client-marquee {
+    overflow: hidden;
+    padding: 2rem 0;
+    background: var(--bg);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    z-index: 3;
+    white-space: nowrap;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.client-marquee-track {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    animation: client-marquee 60s linear infinite;
+    will-change: transform;
+}
+.client-logo {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    height: clamp(28px, 3.2vw, 44px);
+    color: rgba(232, 230, 227, 0.65);
+    transition: color 0.4s var(--ease), opacity 0.4s var(--ease);
+    opacity: 0.7;
+}
+.client-logo:hover {
+    color: var(--fg);
+    opacity: 1;
+}
+.client-logo-img {
+    height: 100%;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0.9);
+}
+.client-logo-text {
+    display: none;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: inherit;
+    white-space: nowrap;
+}
+.client-logo--text .client-logo-text { display: inline-block; }
+@keyframes client-marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ─── ABOUT — Stacked Headline ─── */
+.about-headline--stack {
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+}
+.about-headline--stack .reveal-line {
+    margin-bottom: 0.1em;
+}
+
+/* ─── ABOUT — Creatives Roster ─── */
+.creatives-roster {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+.creatives-label {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(232, 230, 227, 0.6);
+    margin-bottom: 1.5rem;
+}
+.creatives-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem 0;
+}
+.creatives-list li {
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+    font-weight: 500;
+    color: rgba(232, 230, 227, 0.78);
+    letter-spacing: -0.005em;
+    padding: 0 1rem;
+    position: relative;
+}
+.creatives-list li:not(:last-child)::after {
+    content: '·';
+    position: absolute;
+    right: -0.15em;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--fg-3);
+    opacity: 0.6;
+}
 @keyframes marquee-reverse {
     0% { transform: translateX(-33.33%); }
     100% { transform: translateX(0); }
@@ -940,6 +1054,8 @@ body.loaded [data-delay="4"] { animation-delay: 1.4s; }
     display: inline-block;
     overflow: hidden;
     vertical-align: bottom;
+    padding-bottom: 0.18em;
+    line-height: 1.15;
 }
 .reveal-line-inner {
     display: inline-block;
@@ -966,8 +1082,8 @@ body.loaded [data-delay="4"] { animation-delay: 1.4s; }
 .wr-word.wr-out { opacity: 0; transform: translateY(-55%); }
 .wr-word.wr-in  { opacity: 0; transform: translateY(55%); }
 .about-text {
-    font-size: 0.9rem;
-    color: var(--fg-2);
+    font-size: 0.95rem;
+    color: rgba(232, 230, 227, 0.85);
     margin-bottom: 1.25rem;
     line-height: 1.75;
 }
