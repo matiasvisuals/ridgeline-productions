@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ridgeline Productions</title>
-    <link rel="icon" type="image/png" href="https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/2b4850ab-b3b5-4b1b-b197-ad118f4f2a07/Ridgeline+Favicon+Blk+NO+Circle+500x500.png">
+    <link rel="icon" type="image/png" href="brand/favicon-100.png">
+    <link rel="apple-touch-icon" href="brand/favicon-500.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="project.css">
 </head>
@@ -17,12 +18,12 @@
     <header class="header header--project scrolled nav-revealed" id="header">
         <nav class="nav nav--split">
             <div class="nav-links nav-links--left">
-                <a href="index.html#work">Work</a>
+                <a href="work.html">Work</a>
                 <a href="index.html#about">About</a>
             </div>
             <div class="nav-logo-space">
                 <a href="index.html" class="nav-logo-link">
-                    <img src="RIDGELINE LOGO.png" alt="Ridgeline" class="nav-logo-img">
+                    <img src="brand/favicon-100.png" alt="Ridgeline" class="nav-logo-img">
                 </a>
             </div>
             <div class="nav-links nav-links--right">
@@ -37,7 +38,7 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html#work" class="mobile-link">Work</a>
+        <a href="work.html" class="mobile-link">Work</a>
         <a href="index.html#about" class="mobile-link">About</a>
         <a href="index.html#services" class="mobile-link">Services</a>
         <a href="index.html#contact" class="mobile-link">Contact</a>
@@ -140,9 +141,10 @@
     <footer class="footer">
         <div class="container footer-inner">
             <a href="index.html" class="footer-logo">
-                <img src="RIDGELINE LOGO.png" alt="Ridgeline Productions">
+                <img src="brand/ridgeline-logo-full.png" alt="Ridgeline Productions">
             </a>
-            <p>&copy; 2024 Ridgeline Productions</p>
+            <p class="footer-copyright">&copy; 2026 Ridgeline Productions</p>
+            <p class="footer-credit">Site by <a href="https://createxodus.com" target="_blank" rel="noopener" class="footer-credit-link">CREATEXODUS</a></p>
         </div>
     </footer>
 
@@ -158,6 +160,8 @@
     <!-- Page Transition -->
     <div class="page-transition" id="pageTransition"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="projects.js"></script>
     <script src="project-page.js"></script>
     <script src="transitions.js"></script>

@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ridgeline Productions</title>
     <meta name="description" content="Full-service production company based in Santa Barbara, California.">
-    <link rel="icon" type="image/png" href="https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/2b4850ab-b3b5-4b1b-b197-ad118f4f2a07/Ridgeline+Favicon+Blk+NO+Circle+500x500.png">
+    <link rel="icon" type="image/png" href="brand/favicon-100.png">
+    <link rel="apple-touch-icon" href="brand/favicon-500.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -26,7 +26,7 @@
             </div>
             <div class="nav-logo-space">
                 <a href="#" class="nav-logo-link" id="navLogoLink">
-                    <img src="RIDGELINE LOGO.png" alt="Ridgeline" class="nav-logo-img">
+                    <img src="brand/favicon-100.png" alt="Ridgeline" class="nav-logo-img">
                 </a>
             </div>
             <div class="nav-links nav-links--right">
@@ -39,8 +39,8 @@
         </nav>
     </header>
 
-    <!-- Fixed Quote Button -->
-    <button class="fixed-quote-btn" id="fixedQuoteBtn">Book a Project</button>
+    <!-- Fixed Inquire Button -->
+    <a href="#contact" class="fixed-quote-btn" id="fixedQuoteBtn">Inquire</a>
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
@@ -50,7 +50,7 @@
             <a href="#about" class="mobile-link">About</a>
             <a href="#services" class="mobile-link">Services</a>
             <a href="#contact" class="mobile-link">Contact</a>
-            <a href="#" class="mobile-link mobile-link--quote" id="mobileQuoteBtn">Book a Project</a>
+            <a href="#contact" class="mobile-link mobile-link--quote" id="mobileQuoteBtn">Inquire</a>
         </div>
         <div class="mobile-footer">
             <a href="https://www.instagram.com/a_ridgeline_production/" target="_blank" rel="noopener">Instagram</a>
@@ -58,9 +58,12 @@
         </div>
     </div>
 
-    <!-- Fixed logo — morphs from hero top to nav logo on scroll -->
+    <!-- Fixed logo — full white wordmark on hero, morphs into R badge in the nav island on scroll -->
     <div class="hero-logo" id="heroLogo">
-        <img src="RIDGELINE LOGO.png" alt="Ridgeline" class="hero-logo-img" id="heroLogoImg">
+        <img src="brand/ridgeline-wordmark-white.png" alt="Ridgeline" class="hero-logo-img" id="heroLogoImg">
+    </div>
+    <div class="hero-badge" id="heroBadge" aria-hidden="true">
+        <img src="brand/favicon-100.png" alt="" class="hero-badge-img" id="heroBadgeImg">
     </div>
 
     <!-- Hero -->
@@ -82,15 +85,13 @@
             <p class="hero-sub anim-fade" data-delay="1">Motion &mdash; Photography &mdash; Creative</p>
             <div class="hero-btn-row anim-fade" data-delay="2">
                 <a href="work.html" class="hero-btn hero-btn--outline">Our Work</a>
-                <button class="hero-btn hero-btn--solid" id="heroQuoteBtn">Book a Project</button>
+                <a href="#contact" class="hero-btn hero-btn--solid" id="heroQuoteBtn">Inquire</a>
             </div>
             <p class="hero-tag anim-fade" data-delay="3">Santa Barbara, CA</p>
-        </div>
-
-        <!-- Scroll indicator -->
-        <div class="hero-scroll anim-fade" data-delay="4">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
+            <div class="hero-scroll anim-fade" data-delay="4">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
         </div>
     </section>
 
@@ -100,9 +101,6 @@
             <div class="reel-header-left">
                 <span class="section-label">Selected Work</span>
                 <h2 class="reel-heading">The Reel</h2>
-            </div>
-            <div class="reel-progress" id="reelProgress">
-                <div class="reel-progress-bar" id="reelProgressBar"></div>
             </div>
         </div>
 
@@ -250,22 +248,6 @@
         </div>
     </div>
 
-    <!-- Globe -->
-    <section class="section section--globe" id="globe-section">
-        <div class="container">
-            <div class="globe-layout">
-                <div class="globe-text">
-                    <div class="section-label anim" data-anim="fade-up">Worldwide</div>
-                    <h2 class="globe-headline anim" data-anim="fade-up">Production<br>without borders.</h2>
-                    <p class="globe-desc anim" data-anim="fade-up">From Santa Barbara to everywhere. We've produced content across six continents for brands that think globally.</p>
-                </div>
-                <div class="globe-canvas-wrap">
-                    <canvas id="cobeGlobe" class="globe-canvas"></canvas>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- About -->
     <section class="section section--dark" id="about">
         <div class="container">
@@ -399,7 +381,7 @@
                 <div class="section-label anim" data-anim="fade-up">Get in Touch</div>
                 <h2 class="contact-headline-big">
                     <span class="reveal-line"><span class="reveal-line-inner contact-reveal">Let's build</span></span><br>
-                    <span class="reveal-line"><span class="reveal-line-inner contact-reveal">something <em>extraordinary.</em></span></span>
+                    <span class="reveal-line"><span class="reveal-line-inner contact-reveal">something <em class="word-rotator" id="wordRotator"><span class="wr-word">extraordinary</span></em><em class="wr-punct">.</em></span></span>
                 </h2>
             </div>
             <div class="contact-grid">
@@ -434,139 +416,12 @@
     <footer class="footer">
         <div class="container footer-inner">
             <a href="#" class="footer-logo">
-                <img src="RIDGELINE LOGO.png" alt="Ridgeline Productions">
+                <img src="brand/ridgeline-logo-full.png" alt="Ridgeline Productions">
             </a>
-            <p>&copy; 2024 Ridgeline Productions</p>
+            <p class="footer-copyright">&copy; 2026 Ridgeline Productions</p>
+            <p class="footer-credit">Site by <a href="https://createxodus.com" target="_blank" rel="noopener" class="footer-credit-link">CREATEXODUS</a></p>
         </div>
     </footer>
-
-    <!-- Booking Modal — Premium Multi-step -->
-    <div class="booking-modal" id="bookingModal">
-        <div class="booking-backdrop" id="bookingBackdrop"></div>
-        <div class="booking-center">
-            <button class="booking-close" id="bookingClose">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l14 14M15 1L1 15"/></svg>
-            </button>
-
-            <div class="bk-progress" id="bookingProgress">
-                <div class="bk-progress-bar" id="bookingProgressBar"></div>
-            </div>
-
-            <form id="bookingForm" autocomplete="off">
-                <!-- Step 1: Project Type -->
-                <div class="booking-step active" data-step="1">
-                    <h2 class="bk-title">What are we<br>creating together?</h2>
-                    <p class="bk-sub">Select the type of project you have in mind.</p>
-                    <div class="bk-type-grid">
-                        <button type="button" class="bk-type" data-type="Commercial">
-                            <span class="bk-type-dot"></span>
-                            <span class="bk-type-label">Commercial</span>
-                        </button>
-                        <button type="button" class="bk-type" data-type="Brand Film">
-                            <span class="bk-type-dot"></span>
-                            <span class="bk-type-label">Brand Film</span>
-                        </button>
-                        <button type="button" class="bk-type" data-type="Product">
-                            <span class="bk-type-dot"></span>
-                            <span class="bk-type-label">Product</span>
-                        </button>
-                        <button type="button" class="bk-type" data-type="Event">
-                            <span class="bk-type-dot"></span>
-                            <span class="bk-type-label">Event</span>
-                        </button>
-                        <button type="button" class="bk-type" data-type="Music Video">
-                            <span class="bk-type-dot"></span>
-                            <span class="bk-type-label">Music Video</span>
-                        </button>
-                        <button type="button" class="bk-type" data-type="Other">
-                            <span class="bk-type-dot"></span>
-                            <span class="bk-type-label">Other</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Contact -->
-                <div class="booking-step" data-step="2">
-                    <h2 class="bk-title">Tell us who<br>you are.</h2>
-                    <p class="bk-sub">So we can get back to you.</p>
-                    <div class="bk-fields">
-                        <div class="bk-card-field bk-stagger">
-                            <svg class="bk-card-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg>
-                            <input type="text" name="name" required id="bkName" placeholder="Full Name">
-                        </div>
-                        <div class="bk-card-field bk-stagger">
-                            <svg class="bk-card-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 7 10-7"/></svg>
-                            <input type="email" name="email" required id="bkEmail" placeholder="Email Address">
-                        </div>
-                        <div class="bk-card-field bk-stagger">
-                            <svg class="bk-card-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 5.16 12.9 19.86 19.86 0 0 1 2.09 4.18 2 2 0 0 1 4.08 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.4a16 16 0 0 0 6.51 6.51l1.23-1.22a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/></svg>
-                            <input type="tel" name="phone" id="bkPhone" placeholder="Phone (optional)">
-                        </div>
-                    </div>
-                    <div class="bk-nav">
-                        <button type="button" class="bk-back" data-goto="1">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2L4 8l6 6"/></svg>
-                            Back
-                        </button>
-                        <button type="button" class="bk-continue" data-goto="3">Continue</button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Details -->
-                <div class="booking-step" data-step="3">
-                    <h2 class="bk-title">The details.</h2>
-                    <p class="bk-sub">Help us understand the scope of your project.</p>
-                    <div class="bk-fields">
-                        <div class="bk-card-row bk-stagger">
-                            <div class="bk-card-field bk-card-field--half">
-                                <svg class="bk-card-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                                <input type="text" name="event_date" id="bkDate" placeholder="Timeline">
-                            </div>
-                            <div class="bk-card-field bk-card-field--half">
-                                <svg class="bk-card-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-                                <input type="text" name="event_location" id="bkLoc" placeholder="Location">
-                            </div>
-                        </div>
-                        <div class="bk-card-field bk-card-field--select bk-stagger">
-                            <svg class="bk-card-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                            <select name="budget_range" id="bkBudget">
-                                <option value="" disabled selected>Budget Range</option>
-                                <option>Under $5,000</option>
-                                <option>$5,000 &ndash; $10,000</option>
-                                <option>$10,000 &ndash; $25,000</option>
-                                <option>$25,000+</option>
-                            </select>
-                        </div>
-                        <div class="bk-card-field bk-card-field--textarea bk-stagger">
-                            <svg class="bk-card-icon bk-card-icon--top" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-                            <textarea name="details" id="bkDetails" rows="3" placeholder="Tell us about your vision"></textarea>
-                        </div>
-                    </div>
-                    <div class="bk-nav">
-                        <button type="button" class="bk-back" data-goto="2">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2L4 8l6 6"/></svg>
-                            Back
-                        </button>
-                        <button type="submit" class="bk-continue booking-submit-btn">Submit</button>
-                    </div>
-                </div>
-
-                <!-- Step 4: Success -->
-                <div class="booking-step" data-step="4">
-                    <div class="bk-success">
-                        <div class="bk-success-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path class="bk-check-path" d="M4 12l6 6L20 6"/>
-                            </svg>
-                        </div>
-                        <h2 class="bk-title">We're on it.</h2>
-                        <p class="bk-sub">Expect to hear from us within 24 hours.<br>We can't wait to bring your vision to life.</p>
-                        <button type="button" class="bk-continue" id="bookingDone">Close</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- Video Lightbox -->
     <div class="lightbox" id="lightbox">
@@ -578,7 +433,6 @@
     <div class="page-transition" id="pageTransition"></div>
 
     <script src="phenomenon.js"></script>
-    <script src="cobe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>

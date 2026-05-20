@@ -15,10 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
         heroIframe.src = heroIframe.dataset.src;
     }
 
-    // ─── Logo morph: hero top → nav center ───
+    // ─── Logo morph: full white wordmark on hero → R badge in the nav island ───
     const header = document.getElementById('header');
     const heroLogo = document.getElementById('heroLogo');
     const heroLogoImg = document.getElementById('heroLogoImg');
+    const heroBadge = document.getElementById('heroBadge');
     const heroWrap = document.querySelector('.hero-video-wrap');
     const heroBottom = document.querySelector('.hero-center-cta');
     let logoReady = false;
@@ -47,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let vw = window.innerWidth;
     let MORPH_END = vh * 0.5;
     const NAV_HEIGHT = 52;
-    const TARGET_HEIGHT = 10;
+    const TARGET_HEIGHT = 22;
 
     window.addEventListener('resize', () => {
         vh = window.innerHeight;
@@ -77,19 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!logoReady || !heroLogo) return;
 
-        // Actual rendered width of the logo container
+        // Actual rendered dims of the full-logo container
         const startWidth = heroLogo.offsetWidth;
         const naturalRatio = heroLogoImg.naturalHeight / heroLogoImg.naturalWidth;
         const fullHeight = startWidth * naturalRatio;
         const targetScale = TARGET_HEIGHT / fullHeight;
         const halfH = fullHeight / 2;
 
-        // Start position: CSS top 3vh
+        // Start: hero CSS top 3vh; End: vertical center of the nav island
         const cssTop = (3 / 100) * vh;
         const startCenter = cssTop + halfH;
-
-        // Target position: center of the nav bar
-        // Header padding when scrolled is 0.6rem (~9.6px), nav is 52px
         const headerPadTop = parseFloat(getComputedStyle(document.documentElement).fontSize) * 0.6;
         const targetCenter = headerPadTop + NAV_HEIGHT / 2;
 
@@ -99,8 +97,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         heroLogo.style.top = `${currentTop}px`;
         heroLogo.style.transform = `translateX(-50%) scale(${scale})`;
-        heroLogoImg.style.filter = 'none';
-        heroLogo.style.pointerEvents = rawProgress > 0.7 ? 'auto' : 'none';
+        // Cross-fade: full wordmark fades out by ~60%, badge takes over from ~40% onward
+        const fullOpacity = Math.max(0, 1 - rawProgress * 1.7);
+        heroLogo.style.opacity = fullOpacity;
+        heroLogo.style.pointerEvents = 'none';
+
+        // Badge: rides the same center path, lands in the nav island at native 22px
+        if (heroBadge) {
+            const BADGE_SIZE = TARGET_HEIGHT;
+            const badgeTop = currentCenter - BADGE_SIZE / 2;
+            // Slight scale-down "settle" so the badge feels like it lands
+            const badgeScale = 1.6 - 0.6 * progress;
+            const badgeOpacity = Math.max(0, Math.min(1, (rawProgress - 0.4) * 2.2));
+            heroBadge.style.top = `${badgeTop}px`;
+            heroBadge.style.transform = `translate(-50%, 0) scale(${badgeScale})`;
+            heroBadge.style.opacity = badgeOpacity;
+            heroBadge.style.pointerEvents = rawProgress > 0.7 ? 'auto' : 'none';
+        }
     }
 
     window.addEventListener('scroll', updateMorph, { passive: true });
@@ -111,6 +124,12 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+    if (heroBadge) {
+        heroBadge.style.cursor = 'pointer';
+        heroBadge.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 
     const navLogoLink = document.getElementById('navLogoLink');
     if (navLogoLink) {
@@ -118,6 +137,72 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+    }
+
+    // ─── Contact headline word rotator ───
+    const wordRotator = document.getElementById('wordRotator');
+    if (wordRotator) {
+        const words = ['extraordinary', 'cinematic', 'unforgettable', 'iconic', 'timeless', 'breathtaking'];
+        const current = wordRotator.querySelector('.wr-word');
+
+        const meter = document.createElement('span');
+        meter.setAttribute('aria-hidden', 'true');
+        meter.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;';
+        wordRotator.appendChild(meter);
+
+        const measure = (text) => {
+            meter.textContent = text;
+            return meter.getBoundingClientRect().width;
+        };
+
+        const setWidth = () => {
+            wordRotator.style.width = measure(current.textContent) + 'px';
+        };
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(setWidth);
+        }
+        setWidth();
+        window.addEventListener('resize', setWidth);
+
+        let idx = 0;
+        let cycling = false;
+        const cycle = () => {
+            if (cycling) return;
+            cycling = true;
+            idx = (idx + 1) % words.length;
+            const next = words[idx];
+
+            wordRotator.style.width = measure(next) + 'px';
+            current.classList.add('wr-out');
+
+            setTimeout(() => {
+                current.textContent = next;
+                current.style.transition = 'none';
+                current.classList.remove('wr-out');
+                current.classList.add('wr-in');
+                void current.offsetWidth;
+                current.style.transition = '';
+                current.classList.remove('wr-in');
+                cycling = false;
+            }, 340);
+        };
+
+        // Only run when visible
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            let timer = null;
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting && !timer) {
+                        timer = setInterval(cycle, 1600);
+                    } else if (!e.isIntersecting && timer) {
+                        clearInterval(timer);
+                        timer = null;
+                    }
+                });
+            }, { threshold: 0.2 });
+            obs.observe(contactSection);
+        }
     }
 
     // ─── Mobile menu ───
@@ -397,143 +482,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ─── Booking modal — Multi-step Wizard ───
-    const bookingModal = document.getElementById('bookingModal');
-    const bookingForm = document.getElementById('bookingForm');
-    let currentStep = 1;
-    let selectedType = '';
-
-    function openBooking(e) {
-        if (e) e.preventDefault();
-        bookingModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeBooking() {
-        bookingModal.classList.remove('active');
-        document.body.style.overflow = '';
-        setTimeout(() => {
-            goToStep(1);
-            selectedType = '';
-            bookingForm.reset();
-            document.querySelectorAll('.bk-type').forEach(c => c.classList.remove('selected'));
-        }, 500);
-    }
-
-    function goToStep(step) {
-        currentStep = step;
-        document.querySelectorAll('.booking-step').forEach(s => s.classList.remove('active'));
-        const target = document.querySelector(`.booking-step[data-step="${step}"]`);
-        if (target) target.classList.add('active');
-
-        // Update progress bar
-        const bar = document.getElementById('bookingProgressBar');
-        const progress = document.getElementById('bookingProgress');
-        if (bar && progress) {
-            if (step <= 3) {
-                progress.style.opacity = '1';
-                bar.style.width = `${(step / 3) * 100}%`;
-            } else {
-                progress.style.opacity = '0';
-            }
-        }
-
-        // Re-trigger stagger animations
-        if (target) {
-            target.querySelectorAll('.bk-stagger').forEach(el => {
-                el.style.animation = 'none';
-                el.offsetHeight;
-                el.style.animation = '';
-            });
-        }
-    }
-
-    // Type card selection → auto-advance to step 2
-    document.querySelectorAll('.bk-type').forEach(card => {
-        card.addEventListener('click', () => {
-            document.querySelectorAll('.bk-type').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            selectedType = card.dataset.type;
-            setTimeout(() => goToStep(2), 350);
-        });
-    });
-
-    // Back / Next navigation
-    document.querySelectorAll('.bk-back, .bk-continue:not(.booking-submit-btn)').forEach(btn => {
-        if (btn.dataset.goto) {
-            btn.addEventListener('click', () => goToStep(parseInt(btn.dataset.goto)));
-        }
-    });
-
-    // Open triggers
-    document.getElementById('heroQuoteBtn').addEventListener('click', openBooking);
-    const fixedQuoteBtn = document.getElementById('fixedQuoteBtn');
-    fixedQuoteBtn.addEventListener('click', openBooking);
-    const mobileQuoteBtn = document.getElementById('mobileQuoteBtn');
-    if (mobileQuoteBtn) {
-        mobileQuoteBtn.addEventListener('click', (e) => {
-            menuBtn.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-            openBooking(e);
-        });
-    }
-    document.getElementById('bookingClose').addEventListener('click', closeBooking);
-    document.getElementById('bookingBackdrop').addEventListener('click', closeBooking);
-    const bookingDone = document.getElementById('bookingDone');
-    if (bookingDone) bookingDone.addEventListener('click', closeBooking);
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && bookingModal.classList.contains('active')) closeBooking();
-    });
-
-    // ─── EmailJS ───
-    const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
-    const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-
-    if (typeof emailjs !== 'undefined') {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
-    }
-
-    bookingForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const submitBtn = bookingForm.querySelector('.booking-submit-btn');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-
-        const formData = {
-            name: bookingForm.name.value,
-            email: bookingForm.email.value,
-            phone: bookingForm.phone.value,
-            event_type: selectedType,
-            event_date: bookingForm.event_date.value,
-            event_location: bookingForm.event_location.value,
-            budget_range: bookingForm.budget_range.value,
-            details: bookingForm.details.value,
-        };
-
-        if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formData)
-                .then(() => goToStep(4))
-                .catch((err) => {
-                    console.error('EmailJS error:', err);
-                    goToStep(4);
-                })
-                .finally(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                });
-        } else {
-            console.log('Booking inquiry (EmailJS not configured):', formData);
-            setTimeout(() => {
-                goToStep(4);
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 600);
-        }
-    });
-
     // ─── Contact form ───
     const form = document.getElementById('contactForm');
     if (form) {
@@ -557,32 +505,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 trigger: '.about-headline',
                 start: 'top 80%',
                 once: true,
-            }
-        });
-    }
-
-    // ─── About parallax between columns ───
-    const aboutLeft = document.querySelector('.about-left');
-    const aboutRight = document.querySelector('.about-right');
-    if (aboutLeft && aboutRight) {
-        gsap.to(aboutLeft, {
-            y: -30,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '.about-grid',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
-            }
-        });
-        gsap.to(aboutRight, {
-            y: -70,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '.about-grid',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
             }
         });
     }
@@ -742,27 +664,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 once: true,
             }
         });
-    }
-
-    // ─── Booking — stagger type cards on open ───
-    const bookingObserver = new MutationObserver((mutations) => {
-        mutations.forEach(m => {
-            if (m.target.classList.contains('active')) {
-                const cards = document.querySelectorAll('.bk-type');
-                cards.forEach((card, i) => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(10px)';
-                    setTimeout(() => {
-                        card.style.transition = 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 200 + i * 50);
-                });
-            }
-        });
-    });
-    if (bookingModal) {
-        bookingObserver.observe(bookingModal, { attributes: true, attributeFilter: ['class'] });
     }
 
     // ─── Cobe Globe ───
