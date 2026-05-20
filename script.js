@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         heroIframe.src = heroIframe.dataset.src;
     }
 
-    // ─── Client logo marquee — populate from simple-icons with text fallback ───
+    // ─── Client logo marquee — local SVGs + simple-icons + text fallback ───
     const logoTrack = document.getElementById('clientLogoTrack');
     const logoData = document.getElementById('clientLogoData');
     if (logoTrack && logoData) {
@@ -24,12 +24,23 @@ document.addEventListener('DOMContentLoaded', () => {
         catch (e) { clients = []; }
 
         const buildSet = () => clients.map(c => {
-            const safeName = c.name.replace(/"/g, '&quot;');
-            return `<span class="client-logo" data-name="${safeName}">` +
-                   `<img src="https://cdn.simpleicons.org/${c.slug}/ffffff" ` +
-                        `alt="${safeName}" class="client-logo-img" ` +
-                        `loading="lazy" ` +
-                        `onerror="this.parentElement.classList.add('client-logo--text');this.remove();">` +
+            const safeName = (c.name || '').replace(/"/g, '&quot;');
+            const classes = ['client-logo'];
+            if (c.invert) classes.push('client-logo--invert');
+            if (!c.src) classes.push('client-logo--text');
+
+            const scaleStyle = (c.scale && c.scale !== 1)
+                ? ` style="--logo-scale:${c.scale}"`
+                : '';
+
+            const imgTag = c.src
+                ? `<img src="${c.src}" alt="${safeName}" class="client-logo-img" ` +
+                  `loading="lazy" ` +
+                  `onerror="this.parentElement.classList.add('client-logo--text');this.remove();">`
+                : '';
+
+            return `<span class="${classes.join(' ')}"${scaleStyle} data-name="${safeName}">` +
+                   imgTag +
                    `<span class="client-logo-text">${safeName}</span>` +
                    `</span>`;
         }).join('');
@@ -48,13 +59,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let logoReady = false;
 
     if (heroLogo) {
-        if (window.scrollY > 10) {
-            // Already scrolled — skip the big reveal animation
+        // If the URL has a hash (e.g. arriving at index.html#work via page
+        // transition) the browser scrolls to the fragment *after* DOMContentLoaded.
+        // Treat that case as "already scrolled" so we don't play the big reveal
+        // and flash the wordmark over the destination section.
+        const arrivingScrolled = window.scrollY > 10 || !!location.hash;
+
+        const applyScrolledState = () => {
             logoReady = true;
             heroLogo.style.animation = 'none';
-            heroLogo.style.opacity = '1';
+            heroLogo.style.opacity = '0';
             heroLogo.style.filter = 'none';
             heroLogo.style.transform = 'translateX(-50%)';
+            if (heroBadge) {
+                heroBadge.style.opacity = '1';
+                heroBadge.style.transform = 'translate(-50%, 0) scale(1)';
+                heroBadge.style.pointerEvents = 'auto';
+            }
+        };
+
+        if (arrivingScrolled) {
+            applyScrolledState();
         } else {
             heroLogo.addEventListener('animationend', () => {
                 logoReady = true;
@@ -64,6 +89,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 heroLogo.style.transform = 'translateX(-50%)';
                 updateMorph();
             });
+
+            // Safety: re-check after a frame and a tick in case the browser
+            // scrolls to a fragment shortly after DOMContentLoaded.
+            const recheck = () => {
+                if (!logoReady && window.scrollY > 10) {
+                    applyScrolledState();
+                    updateMorph();
+                }
+            };
+            requestAnimationFrame(recheck);
+            setTimeout(recheck, 60);
         }
     }
 

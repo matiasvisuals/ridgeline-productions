@@ -880,31 +880,35 @@ body.loaded [data-delay="4"] { animation-delay: 1.4s; }
 /* ─── CLIENT LOGO MARQUEE (B&W, below hero) ─── */
 .client-marquee {
     overflow: hidden;
-    padding: 2rem 0;
+    padding: 2.25rem 0;
     background: var(--bg);
     border-top: 1px solid rgba(255,255,255,0.06);
     border-bottom: 1px solid rgba(255,255,255,0.06);
     position: relative;
     z-index: 3;
     white-space: nowrap;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-            mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
 }
 .client-marquee-track {
     display: inline-flex;
     align-items: center;
-    gap: clamp(2.5rem, 5vw, 4rem);
-    animation: client-marquee 60s linear infinite;
+    gap: clamp(2.75rem, 5.5vw, 4.5rem);
+    animation: client-marquee 80s linear infinite;
     will-change: transform;
+    --logo-h: clamp(22px, 2.4vw, 30px);
 }
 .client-logo {
+    --logo-scale: 1;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
-    height: clamp(28px, 3.2vw, 44px);
-    color: rgba(232, 230, 227, 0.65);
+    justify-content: center;
+    height: calc(var(--logo-h) * var(--logo-scale));
+    width: clamp(95px, 11vw, 150px);
+    color: rgba(232, 230, 227, 0.7);
     transition: color 0.4s var(--ease), opacity 0.4s var(--ease);
-    opacity: 0.7;
+    opacity: 0.75;
 }
 .client-logo:hover {
     color: var(--fg);
@@ -912,22 +916,25 @@ body.loaded [data-delay="4"] { animation-delay: 1.4s; }
 }
 .client-logo-img {
     height: 100%;
-    width: auto;
-    max-width: 120px;
+    width: 100%;
     object-fit: contain;
     display: block;
-    filter: brightness(0.9);
+    filter: brightness(0.95);
+}
+.client-logo--invert .client-logo-img {
+    filter: brightness(0) invert(1) brightness(0.95);
 }
 .client-logo-text {
     display: none;
     font-family: var(--font-display);
-    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-size: clamp(0.95rem, 1.4vw, 1.15rem);
     font-weight: 600;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: inherit;
     white-space: nowrap;
 }
+.client-logo--text .client-logo-img { display: none; }
 .client-logo--text .client-logo-text { display: inline-block; }
 @keyframes client-marquee {
     0% { transform: translateX(0); }
