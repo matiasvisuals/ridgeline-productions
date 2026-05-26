@@ -653,11 +653,27 @@ function initShellButtons() {
     });
 }
 
+// Defensive init: make the login render first, then attempt to bind handlers and
+// run bootstrap. Any error in init shouldn't leave the page completely blank.
 (async function init() {
-    initTabs();
-    initLogin();
-    initShellButtons();
-    bindAbout();
-    bindCreatives();
-    await bootstrap();
+    try {
+        // Always show the login overlay first — at minimum the user sees the password screen.
+        const loginEl = document.getElementById('adminLogin');
+        if (loginEl) loginEl.hidden = false;
+    } catch (e) { /* DOM not ready (shouldn't happen — script is at end of body) */ }
+
+    try { initTabs(); } catch (e) { console.error('[admin] initTabs failed', e); }
+    try { initLogin(); } catch (e) { console.error('[admin] initLogin failed', e); }
+    try { initShellButtons(); } catch (e) { console.error('[admin] initShellButtons failed', e); }
+    try { bindAbout(); } catch (e) { console.error('[admin] bindAbout failed', e); }
+    try { bindCreatives(); } catch (e) { console.error('[admin] bindCreatives failed', e); }
+    try { await bootstrap(); } catch (e) {
+        console.error('[admin] bootstrap failed', e);
+        // Surface the error on the login screen so the user knows something went wrong.
+        const errEl = document.getElementById('loginError');
+        if (errEl) {
+            errEl.textContent = 'Init error: ' + (e?.message || e);
+            errEl.hidden = false;
+        }
+    }
 })();
