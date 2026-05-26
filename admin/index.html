@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Ridgeline — Admin</title>
-    <link rel="icon" type="image/png" href="../brand/favicon-100.png">
+    <base href="/admin/">
+    <link rel="icon" type="image/png" href="/brand/favicon-100.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="/admin/admin.css">
 </head>
 <body class="admin">
 
     <!-- Login screen (visible by default; JS hides it on auth success) -->
     <div class="admin-login" id="adminLogin">
         <div class="admin-login-card">
-            <img src="../brand/ridgeline-logo-full-white.png" alt="Ridgeline" class="admin-login-logo">
+            <img src="/brand/ridgeline-logo-full-white.png" alt="Ridgeline" class="admin-login-logo">
             <h1>Admin Dashboard</h1>
             <p class="admin-login-sub">Enter the team password to continue.</p>
             <form id="loginForm" autocomplete="off">
@@ -34,7 +35,7 @@
     <div class="admin-shell" id="adminShell" hidden>
         <header class="admin-header">
             <div class="admin-brand">
-                <img src="../brand/favicon-100.png" alt="" class="admin-brand-mark">
+                <img src="/brand/favicon-100.png" alt="" class="admin-brand-mark">
                 <div>
                     <div class="admin-brand-name">Ridgeline</div>
                     <div class="admin-brand-sub">Admin Dashboard</div>
@@ -156,6 +157,6 @@
 
     </div>
 
-    <script src="admin.js"></script>
+    <script src="/admin/admin.js"></script>
 </body>
 </html>
