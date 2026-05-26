@@ -2,20 +2,29 @@
 // - Published content: fetched from the deployed /data/content.json at runtime.
 //   (This is the file Vercel serves as a static asset; using fetch keeps the
 //   function bundle small and works in both vercel dev and production.)
-// - Draft content: stored in Vercel KV under a single key.
+// - Draft content: stored in Upstash Redis (connected via Vercel Marketplace).
+//   Auto-injected env vars: UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN.
+//   Falls back to KV_REST_API_URL / KV_REST_API_TOKEN for legacy Vercel KV installs.
 
 const DRAFT_KEY = 'content:draft';
 
-let kvClient = null;
+let redisClient = null;
 async function getKv() {
-    if (kvClient !== null) return kvClient;
-    try {
-        const mod = await import('@vercel/kv');
-        kvClient = mod.kv;
-    } catch {
-        kvClient = false;
+    if (redisClient !== null) return redisClient;
+    const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+    const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+    if (!url || !token) {
+        redisClient = false;
+        return null;
     }
-    return kvClient || null;
+    try {
+        const mod = await import('@upstash/redis');
+        redisClient = new mod.Redis({ url, token });
+    } catch (err) {
+        console.error('[store] failed to init redis client:', err.message);
+        redisClient = false;
+    }
+    return redisClient || null;
 }
 
 function baseUrl() {
