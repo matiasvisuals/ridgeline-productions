@@ -27,18 +27,16 @@ async function getKv() {
     return redisClient || null;
 }
 
-function baseUrl() {
-    // Prefer the VERCEL_URL (deployment) when available; fall back to localhost for vercel dev.
-    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-    if (process.env.PUBLIC_BASE_URL) return process.env.PUBLIC_BASE_URL;
-    return 'http://localhost:3000';
-}
-
 export async function getPublishedContent() {
-    const url = `${baseUrl()}/data/content.json`;
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`failed_to_fetch_published_content:${res.status}`);
-    return res.json();
+    // Read the bundled data/content.json from disk. Works in both vercel dev
+    // and production serverless runtime — process.cwd() is the project root.
+    // (We can't fetch our own /data/content.json over HTTP because the internal
+    // VERCEL_URL is gated by Vercel's deployment protection / SSO.)
+    const { readFile } = await import('node:fs/promises');
+    const { join } = await import('node:path');
+    const path = join(process.cwd(), 'data', 'content.json');
+    const raw = await readFile(path, 'utf8');
+    return JSON.parse(raw);
 }
 
 export async function getDraftContent() {
