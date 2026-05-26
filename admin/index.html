@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Ridgeline — Admin</title>
+    <link rel="icon" type="image/png" href="../brand/favicon-100.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin">
+
+    <!-- Login screen -->
+    <div class="admin-login" id="adminLogin" hidden>
+        <div class="admin-login-card">
+            <img src="../brand/ridgeline-logo-full-white.png" alt="Ridgeline" class="admin-login-logo">
+            <h1>Admin Dashboard</h1>
+            <p class="admin-login-sub">Enter the team password to continue.</p>
+            <form id="loginForm" autocomplete="off">
+                <label class="admin-field">
+                    <span class="admin-field-label">Password</span>
+                    <input type="password" id="loginPassword" autocomplete="current-password" autofocus>
+                </label>
+                <button type="submit" class="admin-btn admin-btn--primary" id="loginBtn">Sign in</button>
+                <p class="admin-error" id="loginError" hidden></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard shell -->
+    <div class="admin-shell" id="adminShell" hidden>
+        <header class="admin-header">
+            <div class="admin-brand">
+                <img src="../brand/favicon-100.png" alt="" class="admin-brand-mark">
+                <div>
+                    <div class="admin-brand-name">Ridgeline</div>
+                    <div class="admin-brand-sub">Admin Dashboard</div>
+                </div>
+            </div>
+            <div class="admin-header-actions">
+                <span class="admin-status" id="dirtyStatus">No unsaved changes</span>
+                <a href="/?draft=1" target="_blank" rel="noopener" class="admin-btn admin-btn--ghost">Preview draft ↗</a>
+                <button type="button" class="admin-btn admin-btn--secondary" id="saveDraftBtn">Save draft</button>
+                <button type="button" class="admin-btn admin-btn--primary" id="publishBtn">Publish</button>
+                <button type="button" class="admin-btn admin-btn--ghost" id="logoutBtn">Log out</button>
+            </div>
+        </header>
+
+        <nav class="admin-tabs" role="tablist">
+            <button type="button" class="admin-tab is-active" data-tab="projects" role="tab">Projects</button>
+            <button type="button" class="admin-tab" data-tab="about" role="tab">About</button>
+            <button type="button" class="admin-tab" data-tab="creatives" role="tab">Creatives</button>
+            <button type="button" class="admin-tab" data-tab="services" role="tab">What We Do</button>
+        </nav>
+
+        <main class="admin-main">
+
+            <!-- PROJECTS -->
+            <section class="admin-panel is-active" data-panel="projects">
+                <div class="admin-panel-header">
+                    <h2>Projects</h2>
+                    <button type="button" class="admin-btn admin-btn--secondary" id="addProjectBtn">+ Add project</button>
+                </div>
+                <div class="admin-split">
+                    <aside class="admin-list" id="projectList" aria-label="Project list"></aside>
+                    <div class="admin-editor" id="projectEditor">
+                        <div class="admin-empty">Select a project to edit, or click <strong>Add project</strong>.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABOUT -->
+            <section class="admin-panel" data-panel="about">
+                <h2>About section</h2>
+                <div class="admin-editor admin-editor--single">
+                    <label class="admin-field">
+                        <span class="admin-field-label">Headline lines (one per line, used as the THE WHO / THE WHY / THE HOW stack)</span>
+                        <textarea id="aboutHeadline" rows="4"></textarea>
+                    </label>
+                    <label class="admin-field">
+                        <span class="admin-field-label">About paragraphs (blank line separates paragraphs)</span>
+                        <textarea id="aboutParagraphs" rows="8"></textarea>
+                    </label>
+                    <label class="admin-field">
+                        <span class="admin-field-label">Emphasis line (the italic accent below the paragraphs)</span>
+                        <input type="text" id="aboutEmphasis">
+                    </label>
+                    <div class="admin-grid-3">
+                        <label class="admin-field">
+                            <span class="admin-field-label">Stat 1 — number</span>
+                            <input type="number" id="stat0Count" min="0">
+                        </label>
+                        <label class="admin-field">
+                            <span class="admin-field-label">Stat 1 — label</span>
+                            <input type="text" id="stat0Label">
+                        </label>
+                        <div></div>
+                        <label class="admin-field">
+                            <span class="admin-field-label">Stat 2 — number</span>
+                            <input type="number" id="stat1Count" min="0">
+                        </label>
+                        <label class="admin-field">
+                            <span class="admin-field-label">Stat 2 — label</span>
+                            <input type="text" id="stat1Label">
+                        </label>
+                        <div></div>
+                        <label class="admin-field">
+                            <span class="admin-field-label">Stat 3 — number</span>
+                            <input type="number" id="stat2Count" min="0">
+                        </label>
+                        <label class="admin-field">
+                            <span class="admin-field-label">Stat 3 — label</span>
+                            <input type="text" id="stat2Label">
+                        </label>
+                        <div></div>
+                    </div>
+                    <label class="admin-field">
+                        <span class="admin-field-label">Philosophy text (the long mesh-gradient section under the stats)</span>
+                        <textarea id="aboutPhilosophy" rows="5"></textarea>
+                    </label>
+                </div>
+            </section>
+
+            <!-- CREATIVES -->
+            <section class="admin-panel" data-panel="creatives">
+                <h2>Creatives roster</h2>
+                <p class="admin-hint">One name per line. Order is preserved on the site.</p>
+                <textarea id="creativesList" rows="14" class="admin-textarea-wide"></textarea>
+            </section>
+
+            <!-- SERVICES -->
+            <section class="admin-panel" data-panel="services">
+                <h2>What We Do</h2>
+                <div id="servicesEditor"></div>
+            </section>
+
+        </main>
+
+        <!-- Toast -->
+        <div class="admin-toast" id="toast" hidden></div>
+
+        <!-- Confirm dialog -->
+        <div class="admin-modal" id="confirmModal" hidden>
+            <div class="admin-modal-card">
+                <h3 id="confirmTitle">Confirm</h3>
+                <p id="confirmMessage">Are you sure?</p>
+                <div class="admin-modal-actions">
+                    <button type="button" class="admin-btn admin-btn--ghost" id="confirmCancel">Cancel</button>
+                    <button type="button" class="admin-btn admin-btn--primary" id="confirmOk">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

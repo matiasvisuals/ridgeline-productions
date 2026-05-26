@@ -2,7 +2,15 @@
    PROJECT PAGE
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    // Wait for data-loader (if present) to finish so window.projects reflects the latest content.
+    if (window.contentReady) {
+        try { await window.contentReady; } catch (e) { /* fall back to legacy data */ }
+    }
+    // Re-read projects from window so we pick up dashboard updates / draft preview.
+    const projects = window.projects || {};
+    const projectKeys = Object.keys(projects);
 
     // Get project ID from URL
     const params = new URLSearchParams(window.location.search);

@@ -1,7 +1,8 @@
-/* Shared project data */
+/* Shared project data — fallback used if data-loader.js hasn't hydrated window.projects yet.
+   data-loader.js fetches /data/content.json (or /api/content?draft=1) and overwrites window.projects. */
 const SQSP = 'https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90';
 
-const projects = {
+const _legacyProjects = {
     'rabbit-cadence': {
         client: 'rabbit',
         title: 'Cadence Kit',
@@ -274,4 +275,10 @@ const projects = {
     },
 };
 
+// Expose as window-scoped fallback. data-loader.js may replace this with fetched content.
+if (!window.projects || Object.keys(window.projects).length === 0) {
+    window.projects = _legacyProjects;
+}
+// Back-compat aliases for legacy consumers that read these top-level identifiers.
+const projects = window.projects;
 const projectKeys = Object.keys(projects);

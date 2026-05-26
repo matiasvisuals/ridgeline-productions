@@ -2,7 +2,13 @@
    RIDGELINE PRODUCTIONS — Cinematic Experience
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    // Wait for data-loader (if present) to hydrate dynamic content from /data/content.json
+    // before reading philosophy text, stat counts, service descriptions, etc.
+    if (window.contentReady) {
+        try { await window.contentReady; } catch (e) { /* fall back to static HTML */ }
+    }
 
     // Load trigger
     const transitionDelay = sessionStorage.getItem('pt-active') ? 600 : 100;

@@ -1,0 +1,13 @@
+{
+  "name": "ridgeline-productions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ridgeline Productions cinematic portfolio + admin dashboard",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@vercel/kv": "^3.0.0"
+  }
+}
