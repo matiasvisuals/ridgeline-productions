@@ -38,13 +38,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Ken Burns on hero — delay to start after entrance animation
     setTimeout(() => document.getElementById('projHero').classList.add('loaded'), 1800);
 
-    // Populate video
-    document.getElementById('projVideoThumb').src = p.thumb;
-    document.getElementById('projPlayBtn').addEventListener('click', () => {
-        const player = document.getElementById('projVideoPlayer');
-        const hParam = p.vimeoHash ? `&h=${p.vimeoHash}` : '';
-        player.innerHTML = `<iframe src="https://player.vimeo.com/video/${p.vimeo}?autoplay=1&title=0&byline=0&portrait=0${hParam}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-    });
+    // Populate video (hide the hero player if there's no Vimeo hero yet)
+    if (p.vimeo) {
+        document.getElementById('projVideoThumb').src = p.thumb;
+        document.getElementById('projPlayBtn').addEventListener('click', () => {
+            const player = document.getElementById('projVideoPlayer');
+            const hParam = p.vimeoHash ? `&h=${p.vimeoHash}` : '';
+            player.innerHTML = `<iframe src="https://player.vimeo.com/video/${p.vimeo}?autoplay=1&title=0&byline=0&portrait=0${hParam}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        });
+    } else {
+        const vs = document.getElementById('projVideo');
+        if (vs) vs.style.display = 'none';
+    }
 
     // Populate info
     document.getElementById('projDesc').textContent = p.description;
@@ -60,6 +65,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>`
     ).join('');
 
+    // Show only a preview of big media sets; reveal the rest on "View all".
+    function applyViewAll(gridEl, moreWrap, total, limit, noun) {
+        if (!moreWrap) return;
+        moreWrap.innerHTML = '';
+        if (total <= limit) return;
+        const items = [...gridEl.children];
+        items.forEach((el, i) => { if (i >= limit) el.classList.add('proj-media-collapsed'); });
+        const btn = document.createElement('button');
+        btn.className = 'proj-view-all';
+        btn.textContent = `View all ${total} ${noun}`;
+        btn.addEventListener('click', () => {
+            items.forEach(el => { el.classList.remove('proj-media-collapsed'); el.classList.add('visible'); });
+            moreWrap.innerHTML = '';
+        });
+        moreWrap.appendChild(btn);
+    }
+
+    const PREVIEW = 8;
+
     // Gallery
     const galleryEl = document.getElementById('projGallery');
     const gallerySection = document.getElementById('projGallerySection');
@@ -69,6 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <img src="${img}" alt="Still ${i + 1}" loading="lazy">
             </div>`
         ).join('');
+        applyViewAll(galleryEl, document.getElementById('projGalleryMore'), p.gallery.length, PREVIEW, 'stills');
     } else {
         gallerySection.style.display = 'none';
     }
@@ -83,8 +108,29 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <span class="proj-bts-label">${b.label}</span>
             </div>`
         ).join('');
+        applyViewAll(btsGrid, document.getElementById('projBtsMore'), p.bts.length, PREVIEW, 'photos');
     } else {
         btsSection.style.display = 'none';
+    }
+
+    // BTS Film (self-hosted clips)
+    const clipsGrid = document.getElementById('projClipsGrid');
+    const clipsSection = document.getElementById('projClipsSection');
+    const videos = p.videos || [];
+    if (clipsSection) {
+        if (videos.length) {
+            clipsGrid.innerHTML = videos.map((v, i) =>
+                `<div class="proj-clip anim" data-anim="fade-up">
+                    <video class="proj-clip-video" preload="none" playsinline controls ${v.poster ? `poster="${v.poster}"` : ''}>
+                        <source src="${v.src}" type="video/mp4">
+                    </video>
+                    ${v.label ? `<span class="proj-clip-label">${v.label}</span>` : ''}
+                </div>`
+            ).join('');
+            applyViewAll(clipsGrid, document.getElementById('projClipsMore'), videos.length, 6, 'clips');
+        } else {
+            clipsSection.style.display = 'none';
+        }
     }
 
     // Prev / Next

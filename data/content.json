@@ -1,16 +1,29 @@
 {
   "schemaVersion": 1,
   "about": {
-    "headlineLines": ["THE WHO", "THE WHY", "THE HOW"],
+    "headlineLines": [
+      "THE WHO",
+      "THE WHY",
+      "THE HOW"
+    ],
     "paragraphs": [
       "Co-founded by Maxwell Frank and Tye French, Ridgeline Productions is a full-service production company based in Santa Barbara, California.",
       "With over a decade of experience traveling the globe, we produce, direct, and create authentic brand campaigns and commercial films for startups, major corporations, and agencies alike."
     ],
     "emphasis": "Every project is tailored. Every frame is intentional.",
     "stats": [
-      { "count": 15, "label": "Years Experience" },
-      { "count": 50, "label": "Projects Delivered" },
-      { "count": 30, "label": "Brand Partners" }
+      {
+        "count": 15,
+        "label": "Years Experience"
+      },
+      {
+        "count": 50,
+        "label": "Projects Delivered"
+      },
+      {
+        "count": 30,
+        "label": "Brand Partners"
+      }
     ],
     "philosophy": "We don't just capture moments — we craft stories that move people. Every frame is a choice. Every cut is deliberate. From the peaks of Patagonia to the streets of LA, we bring brands to life through visuals that resonate, inspire, and endure."
   },
@@ -31,21 +44,38 @@
       "number": "01",
       "name": "The Creative",
       "description": "We're not here to simply execute — we're here to collaborate. As creative partners, we help shape the architecture behind the work, guiding brands and agencies from initial brief to fully crafted visuals.",
-      "tags": ["Brand Strategy", "Concept Development", "Art Direction", "Scripting", "Storyboarding"]
+      "tags": [
+        "Brand Strategy",
+        "Concept Development",
+        "Art Direction",
+        "Scripting",
+        "Storyboarding"
+      ]
     },
     {
       "id": "production",
       "number": "02",
       "name": "Production",
       "description": "We embrace being a focused, agile team. As a direct-to-director field production company, we're involved from concept through delivery — ensuring care, precision, and creative alignment at every stage. Ridgeline is a scalable production partner built to bring ideas to life, supported by a global network of producers, directors, and cinematographers.",
-      "tags": ["Commercial Film", "Documentary", "Corporate", "Gear Owned", "Crew Ready"]
+      "tags": [
+        "Commercial Film",
+        "Documentary",
+        "Corporate",
+        "Gear Owned",
+        "Crew Ready"
+      ]
     },
     {
       "id": "post",
       "number": "03",
       "name": "Post Production",
       "description": "Every project is only as good as the post team behind it. Editing, VFX, animation, sound design, and color grading — handled with precision and artistry.",
-      "tags": ["Editing", "VFX & Motion", "Color Grading", "Sound Design"]
+      "tags": [
+        "Editing",
+        "VFX & Motion",
+        "Color Grading",
+        "Sound Design"
+      ]
     }
   ],
   "projects": {
@@ -59,25 +89,108 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/9282ce5b-d108-4bcb-b5ea-d98c1fb6792d/60_sec_rabbit_Cadence_Kit_Edit_V9_FINAL_16x9_ProRes_422.00_00_32_08.Still020-16x9.jpg",
       "description": "A high-energy product launch film for rabbit's Cadence Kit, blending cinematic storytelling with sleek product visuals to capture the spirit of movement and rhythm.",
       "credits": [
-        { "role": "Production Company", "name": "Ridgeline Productions" },
-        { "role": "Director", "name": "Tye French" },
-        { "role": "DP", "name": "Maxwell Frank" },
-        { "role": "1st AC", "name": "Mark Romanov" },
-        { "role": "Gaffer", "name": "Brady Berryhill" },
-        { "role": "Editor", "name": "Tye French" },
-        { "role": "Color", "name": "Ian Matthews" },
-        { "role": "Sound Design & Mix", "name": "Polaire Audio" },
-        { "role": "VFX + Compositing", "name": "James Prola" },
-        { "role": "Talent", "name": "Sam Box & Isabela Zawistowska" }
+        {
+          "role": "Production Company",
+          "name": "Ridgeline Productions"
+        },
+        {
+          "role": "Director",
+          "name": "Tye French"
+        },
+        {
+          "role": "DP",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "1st AC",
+          "name": "Mark Romanov"
+        },
+        {
+          "role": "Gaffer",
+          "name": "Brady Berryhill"
+        },
+        {
+          "role": "Editor",
+          "name": "Tye French"
+        },
+        {
+          "role": "Color",
+          "name": "Ian Matthews"
+        },
+        {
+          "role": "Sound Design & Mix",
+          "name": "Polaire Audio"
+        },
+        {
+          "role": "VFX + Compositing",
+          "name": "James Prola"
+        },
+        {
+          "role": "Talent",
+          "name": "Sam Box & Isabela Zawistowska"
+        }
       ],
-      "bts": [
-        { "label": "On set with talent", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/9282ce5b-d108-4bcb-b5ea-d98c1fb6792d/60_sec_rabbit_Cadence_Kit_Edit_V9_FINAL_16x9_ProRes_422.00_00_32_08.Still020-16x9.jpg" },
-        { "label": "Lighting setup", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/4f343d97-dd8f-468d-a48f-2d1516aa3d21/TRAVEL_REEL_EDIT_V10+WHITE.00_00_16_18.Still001.jpg" },
-        { "label": "Product detail shot", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg" }
-      ],
+      "bts": [],
       "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/9282ce5b-d108-4bcb-b5ea-d98c1fb6792d/60_sec_rabbit_Cadence_Kit_Edit_V9_FINAL_16x9_ProRes_422.00_00_32_08.Still020-16x9.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg"
+        "/media/rabbit-cadence/stills/001.jpg",
+        "/media/rabbit-cadence/stills/002.jpg",
+        "/media/rabbit-cadence/stills/003.jpg",
+        "/media/rabbit-cadence/stills/004.jpg",
+        "/media/rabbit-cadence/stills/005.jpg",
+        "/media/rabbit-cadence/stills/006.jpg",
+        "/media/rabbit-cadence/stills/007.jpg"
+      ],
+      "videos": [
+        {
+          "src": "/media/rabbit-cadence/video/001.mp4",
+          "poster": "/media/rabbit-cadence/video/001.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-cadence/video/002.mp4",
+          "poster": "/media/rabbit-cadence/video/002.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-cadence/video/003.mp4",
+          "poster": "/media/rabbit-cadence/video/003.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-cadence/video/004.mp4",
+          "poster": "/media/rabbit-cadence/video/004.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-cadence/video/005.mp4",
+          "poster": "/media/rabbit-cadence/video/005.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-cadence/video/006.mp4",
+          "poster": "/media/rabbit-cadence/video/006.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-cadence/video/007.mp4",
+          "poster": "/media/rabbit-cadence/video/007.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-cadence/video/008.mp4",
+          "poster": "/media/rabbit-cadence/video/008.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-cadence/video/009.mp4",
+          "poster": "/media/rabbit-cadence/video/009.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-cadence/video/010.mp4",
+          "poster": "/media/rabbit-cadence/video/010.jpg",
+          "label": ""
+        }
       ]
     },
     "hoka-transport": {
@@ -90,20 +203,65 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/91728399-0512-46d3-8c1e-85ae65aa3fa5/HOKA_TRANSPORT_GTX_Thumbnail_Webpage.jpg",
       "description": "An authentic lifestyle campaign for Hoka's Transport GTX, shot across urban and natural landscapes to showcase the shoe's versatility from city streets to mountain trails.",
       "credits": [
-        { "role": "Production Company", "name": "BaM Productions & Ridgeline" },
-        { "role": "Director", "name": "Tye French" },
-        { "role": "DP", "name": "Maxwell Frank" },
-        { "role": "1st AC", "name": "Kirk Nakamura" },
-        { "role": "Talent", "name": "Boo Johnson, Karli Lar Durden, Andrew Garner, Kat Lam" },
-        { "role": "Colorist", "name": "Ian Matthews Color" }
+        {
+          "role": "Production Company",
+          "name": "BaM Productions & Ridgeline"
+        },
+        {
+          "role": "Director",
+          "name": "Tye French"
+        },
+        {
+          "role": "DP",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "1st AC",
+          "name": "Kirk Nakamura"
+        },
+        {
+          "role": "Talent",
+          "name": "Boo Johnson, Karli Lar Durden, Andrew Garner, Kat Lam"
+        },
+        {
+          "role": "Colorist",
+          "name": "Ian Matthews Color"
+        }
       ],
-      "bts": [
-        { "label": "Location scout", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/91728399-0512-46d3-8c1e-85ae65aa3fa5/HOKA_TRANSPORT_GTX_Thumbnail_Webpage.jpg" },
-        { "label": "Steadicam prep", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg" }
-      ],
+      "bts": [],
       "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/91728399-0512-46d3-8c1e-85ae65aa3fa5/HOKA_TRANSPORT_GTX_Thumbnail_Webpage.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg"
+        "/media/hoka-transport/stills/001.jpg",
+        "/media/hoka-transport/stills/002.jpg",
+        "/media/hoka-transport/stills/003.jpg",
+        "/media/hoka-transport/stills/004.jpg",
+        "/media/hoka-transport/stills/005.jpg",
+        "/media/hoka-transport/stills/006.jpg",
+        "/media/hoka-transport/stills/007.jpg",
+        "/media/hoka-transport/stills/008.jpg",
+        "/media/hoka-transport/stills/009.jpg",
+        "/media/hoka-transport/stills/010.jpg"
+      ],
+      "videos": [
+        {
+          "src": "/media/hoka-transport/video/001.mp4",
+          "poster": "/media/hoka-transport/video/001.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/hoka-transport/video/002.mp4",
+          "poster": "/media/hoka-transport/video/002.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/hoka-transport/video/003.mp4",
+          "poster": "/media/hoka-transport/video/003.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/hoka-transport/video/004.mp4",
+          "poster": "/media/hoka-transport/video/004.jpg",
+          "label": ""
+        }
       ]
     },
     "giant-recon": {
@@ -116,22 +274,151 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg",
       "description": "A sleek product film for Giant's Recon+ Taillight, combining dramatic night cinematography with precision product shots to highlight safety innovation.",
       "credits": [
-        { "role": "Production Company", "name": "Ridgeline Productions" },
-        { "role": "Producer", "name": "Philip Jankoski" },
-        { "role": "Director", "name": "Tye French" },
-        { "role": "DP", "name": "Tate Larick" },
-        { "role": "1st AC", "name": "Kirk Nakamura" },
-        { "role": "Editor", "name": "James Prola" },
-        { "role": "Photographer", "name": "Maxwell Frank" },
-        { "role": "Talent", "name": "Huy Doan" }
+        {
+          "role": "Production Company",
+          "name": "Ridgeline Productions"
+        },
+        {
+          "role": "Producer",
+          "name": "Philip Jankoski"
+        },
+        {
+          "role": "Director",
+          "name": "Tye French"
+        },
+        {
+          "role": "DP",
+          "name": "Tate Larick"
+        },
+        {
+          "role": "1st AC",
+          "name": "Kirk Nakamura"
+        },
+        {
+          "role": "Editor",
+          "name": "James Prola"
+        },
+        {
+          "role": "Photographer",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "Talent",
+          "name": "Huy Doan"
+        }
       ],
       "bts": [
-        { "label": "Night shoot setup", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg" },
-        { "label": "Product rigging", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg" }
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/001.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/002.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/003.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/004.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/005.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/006.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/007.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/008.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/009.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/010.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/011.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/012.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/013.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/014.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/015.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/016.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/017.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/018.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/019.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/020.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/021.jpg"
+        }
       ],
       "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg"
+        "/media/giant-recon/stills/001.jpg",
+        "/media/giant-recon/stills/002.jpg",
+        "/media/giant-recon/stills/003.jpg",
+        "/media/giant-recon/stills/004.jpg",
+        "/media/giant-recon/stills/005.jpg",
+        "/media/giant-recon/stills/006.jpg",
+        "/media/giant-recon/stills/007.jpg",
+        "/media/giant-recon/stills/008.jpg",
+        "/media/giant-recon/stills/009.jpg",
+        "/media/giant-recon/stills/010.jpg",
+        "/media/giant-recon/stills/011.jpg",
+        "/media/giant-recon/stills/012.jpg",
+        "/media/giant-recon/stills/013.jpg"
+      ],
+      "videos": [
+        {
+          "src": "/media/giant-recon/video/001.mp4",
+          "poster": "/media/giant-recon/video/001.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-recon/video/002.mp4",
+          "poster": "/media/giant-recon/video/002.jpg",
+          "label": ""
+        }
       ]
     },
     "rabbit-highcountry": {
@@ -144,20 +431,66 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg",
       "description": "An immersive brand film following runners into the mountains, capturing the raw beauty and endurance of high-altitude trail running for rabbit.",
       "credits": [
-        { "role": "Production Company", "name": "Ridgeline Productions" },
-        { "role": "Director", "name": "Tye French" },
-        { "role": "DP", "name": "Maxwell Frank" },
-        { "role": "Colorist", "name": "Ian Matthews Color" }
+        {
+          "role": "Production Company",
+          "name": "Ridgeline Productions"
+        },
+        {
+          "role": "Director",
+          "name": "Tye French"
+        },
+        {
+          "role": "DP",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "Colorist",
+          "name": "Ian Matthews Color"
+        }
       ],
-      "bts": [
-        { "label": "Mountain trail", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg" },
-        { "label": "Golden hour", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg" },
-        { "label": "Running shots", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/4f343d97-dd8f-468d-a48f-2d1516aa3d21/TRAVEL_REEL_EDIT_V10+WHITE.00_00_16_18.Still001.jpg" }
-      ],
+      "bts": [],
       "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/4f343d97-dd8f-468d-a48f-2d1516aa3d21/TRAVEL_REEL_EDIT_V10+WHITE.00_00_16_18.Still001.jpg"
+        "/media/rabbit-highcountry/stills/001.jpg",
+        "/media/rabbit-highcountry/stills/002.jpg",
+        "/media/rabbit-highcountry/stills/003.jpg",
+        "/media/rabbit-highcountry/stills/004.jpg",
+        "/media/rabbit-highcountry/stills/005.jpg",
+        "/media/rabbit-highcountry/stills/006.jpg",
+        "/media/rabbit-highcountry/stills/007.jpg",
+        "/media/rabbit-highcountry/stills/008.jpg",
+        "/media/rabbit-highcountry/stills/009.jpg"
+      ],
+      "videos": [
+        {
+          "src": "/media/rabbit-highcountry/video/001.mp4",
+          "poster": "/media/rabbit-highcountry/video/001.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-highcountry/video/002.mp4",
+          "poster": "/media/rabbit-highcountry/video/002.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-highcountry/video/003.mp4",
+          "poster": "/media/rabbit-highcountry/video/003.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-highcountry/video/004.mp4",
+          "poster": "/media/rabbit-highcountry/video/004.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-highcountry/video/005.mp4",
+          "poster": "/media/rabbit-highcountry/video/005.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/rabbit-highcountry/video/006.mp4",
+          "poster": "/media/rabbit-highcountry/video/006.jpg",
+          "label": ""
+        }
       ]
     },
     "lexus-gx": {
@@ -170,20 +503,45 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cf427124-d5e7-4ecb-ac76-02dd32ea88bf/thumb+%281%29.jpg",
       "description": "A cinematic automotive spot for the Lexus GX 550, featuring sweeping desert landscapes and dynamic driving sequences with Frieda Pinto.",
       "credits": [
-        { "role": "Production Company", "name": "Outside Interactive, Inc." },
-        { "role": "Director", "name": "Brian Syzmanski" },
-        { "role": "DP", "name": "Tory Power & Colin Witherill" },
-        { "role": "Camera Car", "name": "Ridgeline Productions" },
-        { "role": "Sound", "name": "Dave Girtsman" },
-        { "role": "Talent", "name": "Frieda Pinto & Cory Tran" }
+        {
+          "role": "Production Company",
+          "name": "Outside Interactive, Inc."
+        },
+        {
+          "role": "Director",
+          "name": "Brian Syzmanski"
+        },
+        {
+          "role": "DP",
+          "name": "Tory Power & Colin Witherill"
+        },
+        {
+          "role": "Camera Car",
+          "name": "Ridgeline Productions"
+        },
+        {
+          "role": "Sound",
+          "name": "Dave Girtsman"
+        },
+        {
+          "role": "Talent",
+          "name": "Frieda Pinto & Cory Tran"
+        }
       ],
-      "bts": [
-        { "label": "Camera car rig", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cf427124-d5e7-4ecb-ac76-02dd32ea88bf/thumb+%281%29.jpg" },
-        { "label": "Desert location", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/572345b8-f4f3-4557-845e-b9738723308e/thumb.png" }
-      ],
+      "bts": [],
       "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cf427124-d5e7-4ecb-ac76-02dd32ea88bf/thumb+%281%29.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/572345b8-f4f3-4557-845e-b9738723308e/thumb.png"
+        "/media/lexus-gx/stills/001.jpg",
+        "/media/lexus-gx/stills/002.jpg",
+        "/media/lexus-gx/stills/003.jpg",
+        "/media/lexus-gx/stills/004.jpg",
+        "/media/lexus-gx/stills/005.jpg",
+        "/media/lexus-gx/stills/006.jpg",
+        "/media/lexus-gx/stills/007.jpg",
+        "/media/lexus-gx/stills/008.jpg",
+        "/media/lexus-gx/stills/009.jpg",
+        "/media/lexus-gx/stills/010.jpg",
+        "/media/lexus-gx/stills/011.jpg",
+        "/media/lexus-gx/stills/012.jpg"
       ]
     },
     "seek-thermal": {
@@ -196,15 +554,84 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/fa0a82ef-8453-4864-915f-c2233bf703d6/thumb.jpg",
       "description": "A technical product film showcasing Seek Thermal's Reveal Fire Pro, combining dramatic fire scenarios with precise product demonstrations.",
       "credits": [
-        { "role": "Production Company", "name": "Venture Visuals" },
-        { "role": "DP", "name": "Maxwell Frank" },
-        { "role": "AC", "name": "Sam Hall" }
+        {
+          "role": "Production Company",
+          "name": "Venture Visuals"
+        },
+        {
+          "role": "DP",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "AC",
+          "name": "Sam Hall"
+        }
       ],
       "bts": [
-        { "label": "Fire scene", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/fa0a82ef-8453-4864-915f-c2233bf703d6/thumb.jpg" }
+        {
+          "label": "",
+          "img": "/media/seek-thermal/bts/001.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/seek-thermal/bts/002.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/seek-thermal/bts/003.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/seek-thermal/bts/004.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/seek-thermal/bts/005.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/seek-thermal/bts/006.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/seek-thermal/bts/007.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/seek-thermal/bts/008.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/seek-thermal/bts/009.jpg"
+        }
       ],
-      "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/fa0a82ef-8453-4864-915f-c2233bf703d6/thumb.jpg"
+      "gallery": [],
+      "videos": [
+        {
+          "src": "/media/seek-thermal/video/001.mp4",
+          "poster": "/media/seek-thermal/video/001.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/seek-thermal/video/002.mp4",
+          "poster": "/media/seek-thermal/video/002.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/seek-thermal/video/003.mp4",
+          "poster": "/media/seek-thermal/video/003.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/seek-thermal/video/004.mp4",
+          "poster": "/media/seek-thermal/video/004.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/seek-thermal/video/005.mp4",
+          "poster": "/media/seek-thermal/video/005.jpg",
+          "label": ""
+        }
       ]
     },
     "masimo-mightysat": {
@@ -217,16 +644,40 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/490c06c5-4276-4f72-8cd1-531639bea4d9/MASIMO.jpg",
       "description": "A commercial spot for Masimo's MightySat pulse oximeter, featuring athletes Tommy Hass and Taylor Fritz to demonstrate peak performance monitoring.",
       "credits": [
-        { "role": "Agency", "name": "Veracity Colab" },
-        { "role": "Production Company", "name": "Venture Visuals" },
-        { "role": "Producer", "name": "Jake Wasserman" },
-        { "role": "Director", "name": "Thomas Kranzle" },
-        { "role": "DP", "name": "Tye French" },
-        { "role": "Talent", "name": "Tommy Hass & Taylor Fritz" }
+        {
+          "role": "Agency",
+          "name": "Veracity Colab"
+        },
+        {
+          "role": "Production Company",
+          "name": "Venture Visuals"
+        },
+        {
+          "role": "Producer",
+          "name": "Jake Wasserman"
+        },
+        {
+          "role": "Director",
+          "name": "Thomas Kranzle"
+        },
+        {
+          "role": "DP",
+          "name": "Tye French"
+        },
+        {
+          "role": "Talent",
+          "name": "Tommy Hass & Taylor Fritz"
+        }
       ],
       "bts": [
-        { "label": "Studio setup", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/490c06c5-4276-4f72-8cd1-531639bea4d9/MASIMO.jpg" },
-        { "label": "Athlete on set", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg" }
+        {
+          "label": "Studio setup",
+          "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/490c06c5-4276-4f72-8cd1-531639bea4d9/MASIMO.jpg"
+        },
+        {
+          "label": "Athlete on set",
+          "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg"
+        }
       ],
       "gallery": [
         "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/490c06c5-4276-4f72-8cd1-531639bea4d9/MASIMO.jpg",
@@ -243,13 +694,26 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg",
       "description": "A dynamic product film for Hoka's Carbon X2 racing shoe, capturing speed and precision on the track.",
       "credits": [
-        { "role": "Director / DP", "name": "Maxwell Frank" }
+        {
+          "role": "Director / DP",
+          "name": "Maxwell Frank"
+        }
       ],
-      "bts": [
-        { "label": "Track shoot", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg" }
-      ],
+      "bts": [],
       "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg"
+        "/media/hoka-carbon/stills/001.jpg",
+        "/media/hoka-carbon/stills/002.jpg",
+        "/media/hoka-carbon/stills/003.jpg",
+        "/media/hoka-carbon/stills/004.jpg",
+        "/media/hoka-carbon/stills/005.jpg",
+        "/media/hoka-carbon/stills/006.jpg",
+        "/media/hoka-carbon/stills/007.jpg",
+        "/media/hoka-carbon/stills/008.jpg",
+        "/media/hoka-carbon/stills/009.jpg",
+        "/media/hoka-carbon/stills/010.jpg",
+        "/media/hoka-carbon/stills/011.jpg",
+        "/media/hoka-carbon/stills/012.jpg",
+        "/media/hoka-carbon/stills/013.jpg"
       ]
     },
     "wtb-tread": {
@@ -262,20 +726,68 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/51d2e274-0db9-4b71-9d11-6ad5849810a3/thumb+%282%29.jpg",
       "description": "A documentary following rider Israel Carrillo on a personal journey through trail and terrain, produced in partnership with WTB and Kona Bicycles.",
       "credits": [
-        { "role": "Production Company", "name": "Ridgeline Productions" },
-        { "role": "Producer", "name": "Becky Gardner" },
-        { "role": "Director / DP", "name": "Maxwell Frank" },
-        { "role": "Talent", "name": "Israel Carrillo" }
+        {
+          "role": "Production Company",
+          "name": "Ridgeline Productions"
+        },
+        {
+          "role": "Producer",
+          "name": "Becky Gardner"
+        },
+        {
+          "role": "Director / DP",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "Talent",
+          "name": "Israel Carrillo"
+        }
       ],
-      "bts": [
-        { "label": "Trail riding", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/51d2e274-0db9-4b71-9d11-6ad5849810a3/thumb+%282%29.jpg" },
-        { "label": "Interview setup", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg" },
-        { "label": "Drone shot prep", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg" }
-      ],
+      "bts": [],
       "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/51d2e274-0db9-4b71-9d11-6ad5849810a3/thumb+%282%29.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg"
+        "/media/wtb-tread/stills/001.jpg",
+        "/media/wtb-tread/stills/002.jpg",
+        "/media/wtb-tread/stills/003.jpg",
+        "/media/wtb-tread/stills/004.jpg",
+        "/media/wtb-tread/stills/005.jpg",
+        "/media/wtb-tread/stills/006.jpg",
+        "/media/wtb-tread/stills/007.jpg",
+        "/media/wtb-tread/stills/008.jpg",
+        "/media/wtb-tread/stills/009.jpg",
+        "/media/wtb-tread/stills/010.jpg",
+        "/media/wtb-tread/stills/011.jpg"
+      ],
+      "videos": [
+        {
+          "src": "/media/wtb-tread/video/001.mp4",
+          "poster": "/media/wtb-tread/video/001.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/wtb-tread/video/002.mp4",
+          "poster": "/media/wtb-tread/video/002.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/wtb-tread/video/003.mp4",
+          "poster": "/media/wtb-tread/video/003.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/wtb-tread/video/004.mp4",
+          "poster": "/media/wtb-tread/video/004.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/wtb-tread/video/005.mp4",
+          "poster": "/media/wtb-tread/video/005.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/wtb-tread/video/006.mp4",
+          "poster": "/media/wtb-tread/video/006.jpg",
+          "label": ""
+        }
       ]
     },
     "liv-avow": {
@@ -288,19 +800,36 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/3b9a8747-c450-43f8-8a50-e509516add81/thumb.jpg",
       "description": "A high-performance commercial for Liv Cycling's Avow triathlon bike, filmed in the velodrome with precision camera work.",
       "credits": [
-        { "role": "Production Company", "name": "Ridgeline Productions" },
-        { "role": "Director", "name": "Tye French" },
-        { "role": "DP", "name": "Maxwell Frank" },
-        { "role": "Gaffer", "name": "Brady Berryhill" },
-        { "role": "Colorist", "name": "Ian Matthews Color" }
+        {
+          "role": "Production Company",
+          "name": "Ridgeline Productions"
+        },
+        {
+          "role": "Director",
+          "name": "Tye French"
+        },
+        {
+          "role": "DP",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "Gaffer",
+          "name": "Brady Berryhill"
+        },
+        {
+          "role": "Colorist",
+          "name": "Ian Matthews Color"
+        }
       ],
-      "bts": [
-        { "label": "Velodrome", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/3b9a8747-c450-43f8-8a50-e509516add81/thumb.jpg" },
-        { "label": "Bike prep", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg" }
-      ],
+      "bts": [],
       "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/3b9a8747-c450-43f8-8a50-e509516add81/thumb.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg"
+        "/media/liv-avow/stills/001.jpg",
+        "/media/liv-avow/stills/002.jpg",
+        "/media/liv-avow/stills/003.jpg",
+        "/media/liv-avow/stills/004.jpg",
+        "/media/liv-avow/stills/005.jpg",
+        "/media/liv-avow/stills/006.jpg",
+        "/media/liv-avow/stills/007.jpg"
       ]
     },
     "wtb-czr": {
@@ -313,15 +842,417 @@
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg",
       "description": "A product showcase for WTB's CZR wheel line, highlighting engineering and performance through dynamic riding footage.",
       "credits": [
-        { "role": "Producer", "name": "Becky Gardner" },
-        { "role": "Director / DP", "name": "Maxwell Frank" },
-        { "role": "Editor", "name": "Ridgeline Productions" }
+        {
+          "role": "Producer",
+          "name": "Becky Gardner"
+        },
+        {
+          "role": "Director / DP",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "Editor",
+          "name": "Ridgeline Productions"
+        }
+      ],
+      "bts": [],
+      "gallery": [
+        "/media/wtb-czr/stills/001.jpg",
+        "/media/wtb-czr/stills/002.jpg",
+        "/media/wtb-czr/stills/003.jpg",
+        "/media/wtb-czr/stills/004.jpg",
+        "/media/wtb-czr/stills/005.jpg",
+        "/media/wtb-czr/stills/006.jpg"
+      ]
+    },
+    "giant-helmets": {
+      "client": "Giant Bicycles",
+      "title": "Helmets",
+      "type": "Commercial / Product",
+      "year": "2026",
+      "vimeo": "",
+      "vimeoHash": "",
+      "thumb": "/media/giant-helmets/stills/001.jpg",
+      "description": "Behind the scenes with Giant Bicycles on Helmets.",
+      "credits": [],
+      "gallery": [
+        "/media/giant-helmets/stills/001.jpg",
+        "/media/giant-helmets/stills/002.jpg",
+        "/media/giant-helmets/stills/003.jpg",
+        "/media/giant-helmets/stills/004.jpg",
+        "/media/giant-helmets/stills/005.jpg",
+        "/media/giant-helmets/stills/006.jpg",
+        "/media/giant-helmets/stills/007.jpg",
+        "/media/giant-helmets/stills/008.jpg",
+        "/media/giant-helmets/stills/009.jpg",
+        "/media/giant-helmets/stills/010.jpg",
+        "/media/giant-helmets/stills/011.jpg",
+        "/media/giant-helmets/stills/012.jpg",
+        "/media/giant-helmets/stills/013.jpg",
+        "/media/giant-helmets/stills/014.jpg",
+        "/media/giant-helmets/stills/015.jpg",
+        "/media/giant-helmets/stills/016.jpg",
+        "/media/giant-helmets/stills/017.jpg",
+        "/media/giant-helmets/stills/018.jpg",
+        "/media/giant-helmets/stills/019.jpg",
+        "/media/giant-helmets/stills/020.jpg",
+        "/media/giant-helmets/stills/021.jpg",
+        "/media/giant-helmets/stills/022.jpg",
+        "/media/giant-helmets/stills/023.jpg",
+        "/media/giant-helmets/stills/024.jpg",
+        "/media/giant-helmets/stills/025.jpg",
+        "/media/giant-helmets/stills/026.jpg",
+        "/media/giant-helmets/stills/027.jpg",
+        "/media/giant-helmets/stills/028.jpg",
+        "/media/giant-helmets/stills/029.jpg",
+        "/media/giant-helmets/stills/030.jpg",
+        "/media/giant-helmets/stills/031.jpg",
+        "/media/giant-helmets/stills/032.jpg",
+        "/media/giant-helmets/stills/033.jpg",
+        "/media/giant-helmets/stills/034.jpg",
+        "/media/giant-helmets/stills/035.jpg",
+        "/media/giant-helmets/stills/036.jpg",
+        "/media/giant-helmets/stills/037.jpg"
+      ],
+      "bts": [],
+      "videos": [
+        {
+          "src": "/media/giant-helmets/video/001.mp4",
+          "poster": "/media/giant-helmets/video/001.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-helmets/video/002.mp4",
+          "poster": "/media/giant-helmets/video/002.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-helmets/video/003.mp4",
+          "poster": "/media/giant-helmets/video/003.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-helmets/video/004.mp4",
+          "poster": "/media/giant-helmets/video/004.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-helmets/video/005.mp4",
+          "poster": "/media/giant-helmets/video/005.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-helmets/video/006.mp4",
+          "poster": "/media/giant-helmets/video/006.jpg",
+          "label": ""
+        }
+      ]
+    },
+    "giant-shoes": {
+      "client": "Giant Bicycles",
+      "title": "Shoes",
+      "type": "Commercial / Product",
+      "year": "2026",
+      "vimeo": "",
+      "vimeoHash": "",
+      "thumb": "/media/giant-shoes/stills/001.jpg",
+      "description": "Behind the scenes with Giant Bicycles on Shoes.",
+      "credits": [],
+      "gallery": [
+        "/media/giant-shoes/stills/001.jpg",
+        "/media/giant-shoes/stills/002.jpg",
+        "/media/giant-shoes/stills/003.jpg",
+        "/media/giant-shoes/stills/004.jpg",
+        "/media/giant-shoes/stills/005.jpg",
+        "/media/giant-shoes/stills/006.jpg",
+        "/media/giant-shoes/stills/007.jpg",
+        "/media/giant-shoes/stills/008.jpg",
+        "/media/giant-shoes/stills/009.jpg",
+        "/media/giant-shoes/stills/010.jpg",
+        "/media/giant-shoes/stills/011.jpg",
+        "/media/giant-shoes/stills/012.jpg",
+        "/media/giant-shoes/stills/013.jpg",
+        "/media/giant-shoes/stills/014.jpg",
+        "/media/giant-shoes/stills/015.jpg",
+        "/media/giant-shoes/stills/016.jpg",
+        "/media/giant-shoes/stills/017.jpg",
+        "/media/giant-shoes/stills/018.jpg",
+        "/media/giant-shoes/stills/019.jpg",
+        "/media/giant-shoes/stills/020.jpg",
+        "/media/giant-shoes/stills/021.jpg",
+        "/media/giant-shoes/stills/022.jpg",
+        "/media/giant-shoes/stills/023.jpg",
+        "/media/giant-shoes/stills/024.jpg",
+        "/media/giant-shoes/stills/025.jpg",
+        "/media/giant-shoes/stills/026.jpg",
+        "/media/giant-shoes/stills/027.jpg",
+        "/media/giant-shoes/stills/028.jpg",
+        "/media/giant-shoes/stills/029.jpg",
+        "/media/giant-shoes/stills/030.jpg",
+        "/media/giant-shoes/stills/031.jpg",
+        "/media/giant-shoes/stills/032.jpg",
+        "/media/giant-shoes/stills/033.jpg",
+        "/media/giant-shoes/stills/034.jpg",
+        "/media/giant-shoes/stills/035.jpg",
+        "/media/giant-shoes/stills/036.jpg",
+        "/media/giant-shoes/stills/037.jpg",
+        "/media/giant-shoes/stills/038.jpg",
+        "/media/giant-shoes/stills/039.jpg",
+        "/media/giant-shoes/stills/040.jpg",
+        "/media/giant-shoes/stills/041.jpg",
+        "/media/giant-shoes/stills/042.jpg",
+        "/media/giant-shoes/stills/043.jpg",
+        "/media/giant-shoes/stills/044.jpg",
+        "/media/giant-shoes/stills/045.jpg",
+        "/media/giant-shoes/stills/046.jpg",
+        "/media/giant-shoes/stills/047.jpg",
+        "/media/giant-shoes/stills/048.jpg",
+        "/media/giant-shoes/stills/049.jpg",
+        "/media/giant-shoes/stills/050.jpg",
+        "/media/giant-shoes/stills/051.jpg",
+        "/media/giant-shoes/stills/052.jpg",
+        "/media/giant-shoes/stills/053.jpg",
+        "/media/giant-shoes/stills/054.jpg",
+        "/media/giant-shoes/stills/055.jpg",
+        "/media/giant-shoes/stills/056.jpg",
+        "/media/giant-shoes/stills/057.jpg",
+        "/media/giant-shoes/stills/058.jpg",
+        "/media/giant-shoes/stills/059.jpg",
+        "/media/giant-shoes/stills/060.jpg",
+        "/media/giant-shoes/stills/061.jpg",
+        "/media/giant-shoes/stills/062.jpg",
+        "/media/giant-shoes/stills/063.jpg",
+        "/media/giant-shoes/stills/064.jpg"
       ],
       "bts": [
-        { "label": "Wheel detail", "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg" }
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/001.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/002.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/003.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/004.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/005.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/006.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/007.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/008.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/009.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/010.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/011.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/012.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/013.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/014.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/015.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/016.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/017.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/018.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/019.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/020.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/021.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/022.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/023.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/024.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/025.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/026.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/027.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/028.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/029.jpg"
+        }
       ],
-      "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg"
+      "videos": [
+        {
+          "src": "/media/giant-shoes/video/001.mp4",
+          "poster": "/media/giant-shoes/video/001.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/002.mp4",
+          "poster": "/media/giant-shoes/video/002.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/003.mp4",
+          "poster": "/media/giant-shoes/video/003.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/004.mp4",
+          "poster": "/media/giant-shoes/video/004.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/005.mp4",
+          "poster": "/media/giant-shoes/video/005.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/006.mp4",
+          "poster": "/media/giant-shoes/video/006.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/007.mp4",
+          "poster": "/media/giant-shoes/video/007.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/008.mp4",
+          "poster": "/media/giant-shoes/video/008.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/009.mp4",
+          "poster": "/media/giant-shoes/video/009.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/010.mp4",
+          "poster": "/media/giant-shoes/video/010.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/011.mp4",
+          "poster": "/media/giant-shoes/video/011.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/012.mp4",
+          "poster": "/media/giant-shoes/video/012.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/013.mp4",
+          "poster": "/media/giant-shoes/video/013.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/014.mp4",
+          "poster": "/media/giant-shoes/video/014.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/015.mp4",
+          "poster": "/media/giant-shoes/video/015.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/016.mp4",
+          "poster": "/media/giant-shoes/video/016.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/017.mp4",
+          "poster": "/media/giant-shoes/video/017.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/018.mp4",
+          "poster": "/media/giant-shoes/video/018.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/019.mp4",
+          "poster": "/media/giant-shoes/video/019.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/020.mp4",
+          "poster": "/media/giant-shoes/video/020.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/021.mp4",
+          "poster": "/media/giant-shoes/video/021.jpg",
+          "label": ""
+        },
+        {
+          "src": "/media/giant-shoes/video/022.mp4",
+          "poster": "/media/giant-shoes/video/022.jpg",
+          "label": ""
+        }
       ]
     }
   }

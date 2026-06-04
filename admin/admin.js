@@ -1,5 +1,5 @@
 /* ============================================
-   Ridgeline Admin Dashboard
+   Ridgeline Admin Dashboard — Studio Dashboard
    Vanilla JS — no build step.
    ============================================ */
 
@@ -90,8 +90,11 @@ const api = {
 
 /* ────────────── Utilities ────────────── */
 
+function setText(sel, value) { const el = $(sel); if (el) el.textContent = value; }
+
 function toast(message, type = '') {
     const el = $('#toast');
+    if (!el) return;
     el.textContent = message;
     el.className = 'admin-toast' + (type ? ' is-' + type : '');
     el.hidden = false;
@@ -124,11 +127,12 @@ function confirmDialog({ title, message, okLabel = 'Confirm', danger = false }) 
 function setDirty(isDirty) {
     state.dirty = isDirty;
     const el = $('#dirtyStatus');
+    if (!el) return;
     if (isDirty) {
-        el.textContent = '● Unsaved changes';
+        el.textContent = 'Unsaved changes';
         el.classList.add('is-dirty');
     } else {
-        el.textContent = 'No unsaved changes';
+        el.textContent = 'All changes saved';
         el.classList.remove('is-dirty');
     }
 }
@@ -150,7 +154,191 @@ function uniqueProjectId(base) {
     return id;
 }
 
-/* ────────────── Tabs ────────────── */
+/* ────────────── Vimeo parsing ────────────── */
+// Accepts a full Vimeo URL (public or unlisted) or a bare numeric ID and
+// returns { id, hash }. The site uses these two fields separately to build
+// the player embed, so we keep storing them split.
+function parseVimeo(input) {
+    const raw = String(input || '').trim();
+    if (!raw) return { id: '', hash: '' };
+    if (/^\d+$/.test(raw)) return { id: raw, hash: '' };
+
+    let id = '', hash = '';
+    // vimeo.com/ID, vimeo.com/ID/HASH, player.vimeo.com/video/ID
+    const m = raw.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([0-9a-zA-Z]+))?/i);
+    if (m) { id = m[1]; hash = m[2] || ''; }
+    // ?h=HASH form
+    const h = raw.match(/[?&]h=([0-9a-zA-Z]+)/i);
+    if (h) hash = h[1];
+    // Last-resort: first long run of digits
+    if (!id) { const d = raw.match(/(\d{6,})/); if (d) id = d[1]; }
+    return { id, hash };
+}
+
+function vimeoDisplay(id, hash) {
+    if (!id) return '';
+    return hash ? `https://vimeo.com/${id}/${hash}` : `https://vimeo.com/${id}`;
+}
+
+/* ────────────── Image handling ────────────── */
+// Reads a dropped/selected image, downscales it on a canvas to keep the
+// committed content.json reasonable, and returns a data URL. The site treats
+// thumb / gallery / bts images as plain <img src>, so a data URL just works.
+function fileToDataURL(file, maxDim = 1280, quality = 0.82) {
+    return new Promise((resolve, reject) => {
+        if (!file || !file.type || !file.type.startsWith('image/')) {
+            reject(new Error('not an image'));
+            return;
+        }
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error('could not read file'));
+        reader.onload = () => {
+            // Vector / animated formats: keep as-is (canvas would flatten them).
+            if (file.type === 'image/svg+xml' || file.type === 'image/gif') {
+                resolve(reader.result);
+                return;
+            }
+            const img = new Image();
+            img.onerror = () => reject(new Error('could not decode image'));
+            img.onload = () => {
+                const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+                const w = Math.max(1, Math.round(img.width * scale));
+                const h = Math.max(1, Math.round(img.height * scale));
+                try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w; canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+                    const mime = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+                    resolve(canvas.toDataURL(mime, quality));
+                } catch {
+                    resolve(reader.result); // tainted/other — fall back to raw
+                }
+            };
+            img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+const UPLOAD_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg>`;
+const IMG_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>`;
+
+// Reusable image field: drag-and-drop / click-to-upload zone + URL fallback.
+function imageInput({ value = '', onChange, urlPlaceholder = 'https://… or drop a file above' }) {
+    const wrap = document.createElement('div');
+    wrap.className = 'admin-imageinput';
+
+    const zone = document.createElement('div');
+    zone.className = 'admin-dropzone';
+
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.hidden = true;
+
+    const urlRow = document.createElement('div');
+    urlRow.className = 'admin-imageinput-url';
+    const urlLabel = document.createElement('span');
+    urlLabel.className = 'lbl';
+    urlLabel.textContent = 'or URL';
+    const urlInput = document.createElement('input');
+    urlInput.type = 'url';
+    urlInput.placeholder = urlPlaceholder;
+    urlRow.append(urlLabel, urlInput);
+
+    let current = value || '';
+
+    function isData(v) { return /^data:/.test(v); }
+
+    function renderZone() {
+        if (current) {
+            zone.className = 'admin-dropzone has-image';
+            zone.innerHTML = `
+                <img class="preview" src="${escapeAttr(current)}" alt="">
+                <div class="admin-dropzone-overlay">
+                    <span class="meta">${isData(current) ? 'Uploaded image' : escapeAttr(current)}</span>
+                    <span class="acts">
+                        <button type="button" class="admin-btn admin-btn--small admin-btn--secondary" data-act="replace">Replace</button>
+                        <button type="button" class="admin-btn admin-btn--small admin-btn--danger" data-act="remove">Remove</button>
+                    </span>
+                </div>`;
+        } else {
+            zone.className = 'admin-dropzone';
+            zone.innerHTML = `
+                <div class="admin-dropzone-empty">
+                    ${UPLOAD_ICON}
+                    <span class="t">Drop a photo here</span>
+                    <span class="s">or click to browse — PNG, JPG, WebP</span>
+                </div>`;
+        }
+    }
+
+    function commit(v, { syncUrl = true } = {}) {
+        current = v || '';
+        renderZone();
+        if (syncUrl) urlInput.value = (current && !isData(current)) ? current : '';
+        onChange(current);
+    }
+
+    async function handleFile(file) {
+        try {
+            toast('Processing image…');
+            const dataUrl = await fileToDataURL(file);
+            commit(dataUrl);
+            toast('Image added', 'success');
+        } catch (err) {
+            toast('Could not add image: ' + err.message, 'error');
+        }
+    }
+
+    zone.addEventListener('click', (e) => {
+        const act = e.target.closest('[data-act]');
+        if (act && act.dataset.act === 'remove') { e.stopPropagation(); commit(''); return; }
+        fileInput.click();
+    });
+    zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('is-dragover'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('is-dragover'));
+    zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('is-dragover');
+        const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (file) handleFile(file);
+    });
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files && fileInput.files[0];
+        if (file) handleFile(file);
+        fileInput.value = '';
+    });
+    urlInput.addEventListener('input', () => commit(urlInput.value.trim(), { syncUrl: false }));
+
+    renderZone();
+    urlInput.value = (current && !isData(current)) ? current : '';
+    wrap.append(zone, fileInput, urlRow);
+    return wrap;
+}
+
+/* ────────────── Small DOM helpers ────────────── */
+
+function textField(placeholder, value, onInput) {
+    const i = document.createElement('input');
+    i.type = 'text';
+    i.placeholder = placeholder;
+    i.value = value || '';
+    i.addEventListener('input', () => onInput(i.value));
+    return i;
+}
+function deleteButton(onClick, title = 'Remove') {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'admin-btn admin-btn--ghost admin-btn--small';
+    b.textContent = '✕';
+    b.title = title;
+    b.addEventListener('click', onClick);
+    return b;
+}
+
+/* ────────────── Tabs / nav ────────────── */
 
 function initTabs() {
     $$('.admin-tab').forEach(btn => {
@@ -159,8 +347,18 @@ function initTabs() {
             btn.classList.add('is-active');
             const tab = btn.dataset.tab;
             $$('.admin-panel').forEach(p => p.classList.toggle('is-active', p.dataset.panel === tab));
+            setText('#sectionTitle', btn.dataset.title || '');
+            setText('#sectionDesc', btn.dataset.desc || '');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
+}
+
+function updateCounts() {
+    if (!state.content) return;
+    setText('#countProjects', Object.keys(state.content.projects || {}).length);
+    setText('#countCreatives', (state.content.creatives || []).length);
+    setText('#countServices', (state.content.services || []).length);
 }
 
 /* ────────────── Login ────────────── */
@@ -176,10 +374,8 @@ async function showShell() {
 }
 
 async function bootstrap() {
-    // Render the login first so the page never looks blank, then probe the session.
     await showLogin();
 
-    // file:// (or any non-http context) — no API available, just leave login visible.
     if (location.protocol !== 'http:' && location.protocol !== 'https:') {
         $('#loginError').textContent = 'Open this page on the deployed site — local file mode is preview-only.';
         $('#loginError').hidden = false;
@@ -282,14 +478,108 @@ function bindAbout() {
 
 /* ────────────── Render: Creatives ────────────── */
 
+const GRIP_ICON = `<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>`;
+
 function renderCreatives() {
-    $('#creativesList').value = (state.content.creatives || []).join('\n');
+    const host = $('#creativesEditor');
+    if (!host) return;
+    if (!Array.isArray(state.content.creatives)) state.content.creatives = [];
+    const names = state.content.creatives;
+    setText('#creativesCount', names.length ? `— ${names.length}` : '');
+    host.innerHTML = '';
+    if (names.length === 0) {
+        host.innerHTML = '<div class="admin-hint" style="margin:0;grid-column:1/-1">No creatives yet — click “Add creative”.</div>';
+        return;
+    }
+    names.forEach((name, idx) => host.appendChild(buildCreativeRow(name, idx)));
 }
-function bindCreatives() {
-    $('#creativesList').addEventListener('input', e => {
-        state.content.creatives = e.target.value.split('\n').map(s => s.trim()).filter(Boolean);
-        setDirty(true);
+
+function buildCreativeRow(name, idx) {
+    const row = document.createElement('div');
+    row.className = 'creative-row';
+    row.dataset.idx = idx;
+
+    const handle = document.createElement('span');
+    handle.className = 'creative-drag';
+    handle.title = 'Drag to reorder';
+    handle.innerHTML = GRIP_ICON;
+    // Only make the row draggable while the grip is held, so the name field
+    // still selects text normally.
+    handle.addEventListener('mousedown', () => { row.draggable = true; });
+    handle.addEventListener('mouseup', () => { row.draggable = false; });
+
+    const num = document.createElement('span');
+    num.className = 'creative-num';
+    num.textContent = String(idx + 1).padStart(2, '0');
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'creative-name';
+    input.placeholder = 'Full name';
+    input.value = name || '';
+    input.addEventListener('input', () => { state.content.creatives[idx] = input.value; setDirty(true); });
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); addCreative(); }
     });
+
+    const del = deleteButton(() => {
+        state.content.creatives.splice(idx, 1);
+        setDirty(true);
+        renderCreatives();
+        updateCounts();
+    });
+    del.classList.add('creative-del');
+
+    row.addEventListener('dragstart', (e) => {
+        row.classList.add('is-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', String(idx));
+    });
+    row.addEventListener('dragend', () => {
+        row.draggable = false;
+        row.classList.remove('is-dragging');
+        $$('#creativesEditor .creative-row').forEach(r => r.classList.remove('is-dragover'));
+    });
+    row.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; row.classList.add('is-dragover'); });
+    row.addEventListener('dragleave', () => row.classList.remove('is-dragover'));
+    row.addEventListener('drop', (e) => {
+        e.preventDefault();
+        row.classList.remove('is-dragover');
+        const from = parseInt(e.dataTransfer.getData('text/plain'), 10);
+        const to = idx;
+        if (Number.isNaN(from) || from === to) return;
+        const arr = state.content.creatives;
+        const [moved] = arr.splice(from, 1);
+        arr.splice(to, 0, moved);
+        setDirty(true);
+        renderCreatives();
+    });
+
+    row.append(handle, num, input, del);
+    return row;
+}
+
+function addCreative() {
+    if (!state.content) return;
+    if (!Array.isArray(state.content.creatives)) state.content.creatives = [];
+    state.content.creatives.push('');
+    setDirty(true);
+    renderCreatives();
+    updateCounts();
+    const rows = $$('#creativesEditor .creative-row');
+    const last = rows[rows.length - 1];
+    if (last) {
+        last.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        last.classList.add('is-new');
+        setTimeout(() => last.classList.remove('is-new'), 900);
+        const inp = last.querySelector('input');
+        if (inp) setTimeout(() => inp.focus({ preventScroll: true }), 80);
+    }
+}
+
+function bindCreatives() {
+    const btn = $('#addCreativeBtn');
+    if (btn) btn.addEventListener('click', addCreative);
 }
 
 /* ────────────── Render: Services ────────────── */
@@ -302,20 +592,27 @@ function renderServices() {
         block.className = 'admin-service-block';
         block.innerHTML = `
             <div class="admin-service-block-header">
-                <span class="admin-service-num">${svc.number || ''}</span>
-                <h3 style="margin:0">${svc.name}</h3>
+                <span class="admin-service-num">${escapeText(svc.number || String(idx + 1).padStart(2, '0'))}</span>
+                <h3>${escapeText(svc.name || '')}</h3>
+            </div>
+            <div class="admin-grid-2">
+                <label class="admin-field">
+                    <span class="admin-field-label">Display name</span>
+                    <input type="text" data-field="name" value="${escapeAttr(svc.name)}">
+                </label>
+                <label class="admin-field">
+                    <span class="admin-field-label">Number</span>
+                    <input type="text" data-field="number" value="${escapeAttr(svc.number || '')}" placeholder="01">
+                </label>
             </div>
             <label class="admin-field">
-                <span class="admin-field-label">Display name</span>
-                <input type="text" data-field="name" value="${escapeAttr(svc.name)}">
-            </label>
-            <label class="admin-field">
                 <span class="admin-field-label">Description</span>
-                <textarea data-field="description" rows="5">${escapeText(svc.description)}</textarea>
+                <textarea data-field="description" rows="4">${escapeText(svc.description)}</textarea>
             </label>
             <label class="admin-field">
-                <span class="admin-field-label">Tag chips (comma separated)</span>
+                <span class="admin-field-label">Tag chips</span>
                 <input type="text" data-field="tags" value="${escapeAttr((svc.tags || []).join(', '))}">
+                <p class="admin-field-hint">Comma separated.</p>
             </label>
         `;
         block.querySelectorAll('[data-field]').forEach(input => {
@@ -325,6 +622,11 @@ function renderServices() {
                     state.content.services[idx].tags = input.value.split(',').map(s => s.trim()).filter(Boolean);
                 } else {
                     state.content.services[idx][field] = input.value;
+                    if (field === 'number' || field === 'name') {
+                        const hdr = block.querySelector('.admin-service-block-header');
+                        if (field === 'number') hdr.querySelector('.admin-service-num').textContent = input.value || String(idx + 1).padStart(2, '0');
+                        if (field === 'name') hdr.querySelector('h3').textContent = input.value;
+                    }
                 }
                 setDirty(true);
             });
@@ -347,10 +649,14 @@ function renderProjectList() {
         const p = state.content.projects[id];
         const item = document.createElement('div');
         item.className = 'admin-list-item' + (id === state.selectedProject ? ' is-selected' : '');
+        const thumb = p.thumb
+            ? `<img src="${escapeAttr(p.thumb)}" alt="">`
+            : IMG_ICON;
         item.innerHTML = `
+            <div class="admin-list-thumb">${thumb}</div>
             <div class="admin-list-item-info">
                 <div class="admin-list-item-title">${escapeText(p.title || '(untitled)')}</div>
-                <div class="admin-list-item-sub">${escapeText(p.client || '')} · ${escapeText(p.year || '')}</div>
+                <div class="admin-list-item-sub">${escapeText(p.client || '')}${p.year ? ' · ' + escapeText(p.year) : ''}</div>
             </div>
             <div class="admin-list-item-actions">
                 <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-action="delete" title="Delete project">✕</button>
@@ -376,86 +682,166 @@ function renderProjectList() {
             setDirty(true);
             renderProjectList();
             renderProjectEditor();
+            updateCounts();
         });
         list.appendChild(item);
     });
+}
+
+function buildVimeoField(project) {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `
+        <label class="admin-field" style="margin-bottom:.4rem">
+            <span class="admin-field-label">Vimeo link or video ID</span>
+            <input type="text" class="vimeo-input" placeholder="https://vimeo.com/123456789/abc123  ·  or just 123456789">
+            <p class="admin-field-hint">Paste the full Vimeo URL — the ID and private hash are detected automatically.</p>
+        </label>
+        <div class="admin-vimeo-readback"></div>
+        <div class="vimeo-preview-mount"></div>
+    `;
+    const input = wrap.querySelector('.vimeo-input');
+    const readback = wrap.querySelector('.admin-vimeo-readback');
+    const mount = wrap.querySelector('.vimeo-preview-mount');
+    input.value = vimeoDisplay(project.vimeo, project.vimeoHash);
+
+    function refresh() {
+        readback.innerHTML = `
+            <span class="admin-chip ${project.vimeo ? '' : 'is-empty'}">ID <code>${project.vimeo ? escapeText(project.vimeo) : '—'}</code></span>
+            <span class="admin-chip ${project.vimeoHash ? '' : 'is-empty'}">hash <code>${project.vimeoHash ? escapeText(project.vimeoHash) : 'none'}</code></span>
+        `;
+        if (project.vimeo) {
+            const h = project.vimeoHash ? `&h=${encodeURIComponent(project.vimeoHash)}` : '';
+            const src = `https://player.vimeo.com/video/${encodeURIComponent(project.vimeo)}?title=0&byline=0&portrait=0${h}`;
+            // Only rebuild the iframe when the src actually changes (avoid reload on every keystroke).
+            if (mount.dataset.src !== src) {
+                mount.dataset.src = src;
+                mount.innerHTML = `<div class="admin-vimeo-preview"><iframe src="${src}" allow="fullscreen" loading="lazy"></iframe></div>`;
+            }
+        } else {
+            mount.dataset.src = '';
+            mount.innerHTML = `<div class="admin-vimeo-preview-empty">No video yet — paste a Vimeo link above</div>`;
+        }
+    }
+
+    input.addEventListener('input', () => {
+        const { id, hash } = parseVimeo(input.value);
+        project.vimeo = id;
+        project.vimeoHash = hash;
+        setDirty(true);
+        refresh();
+    });
+    refresh();
+    return wrap;
 }
 
 function renderProjectEditor() {
     const root = $('#projectEditor');
     const id = state.selectedProject;
     if (!id || !state.content.projects[id]) {
-        root.innerHTML = '<div class="admin-empty">Select a project to edit, or click <strong>Add project</strong>.</div>';
+        root.innerHTML = `<div class="admin-empty">${IMG_ICON}<div>Select a project to edit, or click <strong>Add project</strong>.</div></div>`;
         return;
     }
     const p = state.content.projects[id];
     root.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-            <h3 style="margin:0">Editing: <span style="color:var(--fg-2)">${escapeText(p.title || '(untitled)')}</span></h3>
-            <code style="color:var(--fg-3);font-size:0.8rem">id: ${escapeText(id)}</code>
+        <div class="admin-editor-titlebar">
+            <h3>Editing <span>${escapeText(p.title || '(untitled)')}</span></h3>
+            <span class="admin-id-chip">id: ${escapeText(id)}</span>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-            <label class="admin-field">
-                <span class="admin-field-label">Client</span>
-                <input type="text" data-field="client" value="${escapeAttr(p.client)}">
-            </label>
-            <label class="admin-field">
-                <span class="admin-field-label">Title</span>
-                <input type="text" data-field="title" value="${escapeAttr(p.title)}">
-            </label>
-            <label class="admin-field">
-                <span class="admin-field-label">Type / category</span>
-                <input type="text" data-field="type" value="${escapeAttr(p.type)}" placeholder="Commercial / Product">
-            </label>
-            <label class="admin-field">
-                <span class="admin-field-label">Year</span>
-                <input type="text" data-field="year" value="${escapeAttr(p.year)}">
-            </label>
-            <label class="admin-field">
-                <span class="admin-field-label">Vimeo video ID</span>
-                <input type="text" data-field="vimeo" value="${escapeAttr(p.vimeo)}" placeholder="1234567890">
-            </label>
-            <label class="admin-field">
-                <span class="admin-field-label">Vimeo private hash (optional)</span>
-                <input type="text" data-field="vimeoHash" value="${escapeAttr(p.vimeoHash || '')}" placeholder="abc123">
-            </label>
+        <div class="admin-card admin-card-accent">
+            <div class="admin-card-head"><div class="admin-card-head-l"><h3>Basics</h3></div></div>
+            <div class="admin-card-body">
+                <div class="admin-grid-2">
+                    <label class="admin-field">
+                        <span class="admin-field-label">Client</span>
+                        <input type="text" data-field="client" value="${escapeAttr(p.client)}">
+                    </label>
+                    <label class="admin-field">
+                        <span class="admin-field-label">Title</span>
+                        <input type="text" data-field="title" value="${escapeAttr(p.title)}">
+                    </label>
+                    <label class="admin-field">
+                        <span class="admin-field-label">Type / category</span>
+                        <input type="text" data-field="type" value="${escapeAttr(p.type)}" placeholder="Commercial / Product">
+                    </label>
+                    <label class="admin-field">
+                        <span class="admin-field-label">Year</span>
+                        <input type="text" data-field="year" value="${escapeAttr(p.year)}">
+                    </label>
+                </div>
+            </div>
         </div>
 
-        <label class="admin-field">
-            <span class="admin-field-label">Thumbnail image URL</span>
-            <input type="url" data-field="thumb" value="${escapeAttr(p.thumb)}">
-        </label>
+        <div class="admin-card admin-card-accent">
+            <div class="admin-card-head"><div class="admin-card-head-l"><h3>Hero video <span class="sub">— Vimeo</span></h3></div></div>
+            <div class="admin-card-body" data-mount="vimeo"></div>
+        </div>
 
-        <label class="admin-field">
-            <span class="admin-field-label">Description (shown under the hero video on the project page)</span>
-            <textarea data-field="description" rows="4">${escapeText(p.description)}</textarea>
-        </label>
+        <div class="admin-card admin-card-accent">
+            <div class="admin-card-head"><div class="admin-card-head-l"><h3>Thumbnail</h3></div></div>
+            <div class="admin-card-body">
+                <p class="admin-field-hint" style="margin-top:0;margin-bottom:.7rem">Shown in the work grid and as the video poster — 16:9 looks best. Drop a file or paste a URL.</p>
+                <div data-mount="thumb"></div>
+            </div>
+        </div>
 
-        <h3>Credits</h3>
-        <div data-repeater="credits"></div>
-        <button type="button" class="admin-btn admin-btn--secondary admin-btn--small admin-repeater-add" data-add="credits">+ Add credit</button>
+        <div class="admin-card admin-card-accent">
+            <div class="admin-card-head"><div class="admin-card-head-l"><h3>Description</h3></div></div>
+            <div class="admin-card-body">
+                <label class="admin-field">
+                    <textarea data-field="description" rows="4">${escapeText(p.description)}</textarea>
+                </label>
+            </div>
+        </div>
 
-        <h3>Stills gallery</h3>
-        <div data-repeater="gallery"></div>
-        <button type="button" class="admin-btn admin-btn--secondary admin-btn--small admin-repeater-add" data-add="gallery">+ Add image</button>
+        <div class="admin-card admin-card-accent">
+            <div class="admin-card-head">
+                <div class="admin-card-head-l"><h3>Credits</h3></div>
+                <button type="button" class="admin-btn admin-btn--secondary admin-btn--small" data-add="credits">+ Add credit</button>
+            </div>
+            <div class="admin-card-body"><div data-repeater="credits"></div></div>
+        </div>
 
-        <h3>Behind the scenes</h3>
-        <div data-repeater="bts"></div>
-        <button type="button" class="admin-btn admin-btn--secondary admin-btn--small admin-repeater-add" data-add="bts">+ Add BTS image</button>
+        <div class="admin-card admin-card-accent">
+            <div class="admin-card-head">
+                <div class="admin-card-head-l"><h3>Stills gallery</h3></div>
+                <button type="button" class="admin-btn admin-btn--secondary admin-btn--small" data-add="gallery">+ Add still</button>
+            </div>
+            <div class="admin-card-body"><div data-repeater="gallery"></div></div>
+        </div>
+
+        <div class="admin-card admin-card-accent">
+            <div class="admin-card-head">
+                <div class="admin-card-head-l"><h3>Behind the scenes</h3></div>
+                <button type="button" class="admin-btn admin-btn--secondary admin-btn--small" data-add="bts">+ Add BTS</button>
+            </div>
+            <div class="admin-card-body"><div data-repeater="bts"></div></div>
+        </div>
     `;
 
-    // Bind primary fields
+    // Bind primary text fields
     root.querySelectorAll('[data-field]').forEach(input => {
         input.addEventListener('input', () => {
             state.content.projects[id][input.dataset.field] = input.value;
             setDirty(true);
-            // Live-update list label if title/client changed
-            if (input.dataset.field === 'title' || input.dataset.field === 'client' || input.dataset.field === 'year') {
+            if (['title', 'client', 'year'].includes(input.dataset.field)) {
                 renderProjectList();
+                if (input.dataset.field === 'title') {
+                    const h = root.querySelector('.admin-editor-titlebar h3 span');
+                    if (h) h.textContent = input.value || '(untitled)';
+                }
             }
         });
     });
+
+    // Vimeo
+    root.querySelector('[data-mount="vimeo"]').appendChild(buildVimeoField(p));
+
+    // Thumbnail
+    root.querySelector('[data-mount="thumb"]').appendChild(imageInput({
+        value: p.thumb,
+        onChange: v => { p.thumb = v; setDirty(true); renderProjectList(); },
+    }));
 
     // Repeaters
     renderRepeater(root, id, 'credits');
@@ -471,80 +857,83 @@ function renderProjectEditor() {
             else if (field === 'bts') project[field].push({ label: '', img: '' });
             else project[field].push('');
             setDirty(true);
-            renderRepeater(root, id, field);
+            renderRepeater(root, id, field, project[field].length - 1);
         });
     });
 }
 
-function renderRepeater(root, projectId, field) {
+function renderRepeater(root, projectId, field, focusIndex = null) {
     const host = root.querySelector(`[data-repeater="${field}"]`);
     if (!host) return;
     host.innerHTML = '';
     const project = state.content.projects[projectId];
     const items = project[field] || [];
 
+    if (items.length === 0) {
+        const labels = { credits: 'credits', gallery: 'stills', bts: 'BTS images' };
+        host.innerHTML = `<div class="admin-hint" style="margin:0">No ${labels[field] || field} yet.</div>`;
+        return;
+    }
+
+    const wrap = document.createElement('div');
+    wrap.className = 'admin-repeater';
+
     items.forEach((item, idx) => {
         const row = document.createElement('div');
-        const isCredit = field === 'credits';
-        const isBts = field === 'bts';
 
-        if (isCredit) {
-            row.className = 'admin-repeater-item';
-            row.innerHTML = `
-                <input type="text" placeholder="Role (e.g. Director)" value="${escapeAttr(item.role || '')}" data-key="role">
-                <input type="text" placeholder="Name" value="${escapeAttr(item.name || '')}" data-key="name">
-                <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-del="${idx}">✕</button>
-            `;
-        } else if (isBts) {
-            row.className = 'admin-repeater-item';
-            row.innerHTML = `
-                <input type="text" placeholder="Caption" value="${escapeAttr(item.label || '')}" data-key="label">
-                <input type="url" placeholder="Image URL" value="${escapeAttr(item.img || '')}" data-key="img">
-                <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-del="${idx}">✕</button>
-            `;
-        } else {
-            row.className = 'admin-repeater-item admin-repeater-item--single';
-            row.innerHTML = `
-                <input type="url" placeholder="Image URL" value="${escapeAttr(item || '')}" data-key="value">
-                <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-del="${idx}">✕</button>
-            `;
+        if (field === 'credits') {
+            row.className = 'admin-repeater-item admin-repeater-item--credit';
+            const roleI = textField('ROLE', item.role, v => { items[idx].role = v; setDirty(true); });
+            roleI.className = 'credit-role';
+            const nameI = textField('Full name', item.name, v => { items[idx].name = v; setDirty(true); });
+            nameI.className = 'credit-name';
+            row.append(roleI, nameI, deleteButton(() => { items.splice(idx, 1); setDirty(true); renderRepeater(root, projectId, field); }));
+        } else if (field === 'bts') {
+            row.className = 'admin-repeater-item admin-repeater-item--media';
+            const top = document.createElement('div');
+            top.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:.5rem';
+            top.innerHTML = `<span class="admin-repeater-handle">BTS ${idx + 1}</span>`;
+            top.appendChild(deleteButton(() => { items.splice(idx, 1); setDirty(true); renderRepeater(root, projectId, field); }));
+            const cap = textField('Caption', item.label, v => { items[idx].label = v; setDirty(true); });
+            const img = imageInput({ value: item.img, onChange: v => { items[idx].img = v; setDirty(true); } });
+            row.append(top, cap, img);
+        } else { // gallery — plain string URL/dataURL
+            row.className = 'admin-repeater-item admin-repeater-item--media';
+            const top = document.createElement('div');
+            top.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:.5rem';
+            top.innerHTML = `<span class="admin-repeater-handle">Still ${idx + 1}</span>`;
+            top.appendChild(deleteButton(() => { items.splice(idx, 1); setDirty(true); renderRepeater(root, projectId, field); }));
+            const img = imageInput({ value: item, onChange: v => { items[idx] = v; setDirty(true); } });
+            row.append(top, img);
         }
 
-        row.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => {
-                const key = input.dataset.key;
-                if (key === 'value') {
-                    state.content.projects[projectId][field][idx] = input.value;
-                } else {
-                    state.content.projects[projectId][field][idx][key] = input.value;
-                }
-                setDirty(true);
-            });
-        });
-
-        row.querySelector('[data-del]').addEventListener('click', () => {
-            state.content.projects[projectId][field].splice(idx, 1);
-            setDirty(true);
-            renderRepeater(root, projectId, field);
-        });
-
-        host.appendChild(row);
+        wrap.appendChild(row);
     });
 
-    if (items.length === 0) {
-        host.innerHTML = `<div class="admin-hint">No ${field} yet.</div>`;
+    host.appendChild(wrap);
+
+    // When a row was just added, glide to it and focus its first input.
+    if (focusIndex != null && wrap.children[focusIndex]) {
+        const newRow = wrap.children[focusIndex];
+        newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const firstInput = newRow.querySelector('input, textarea');
+        if (firstInput) {
+            // Wait for the smooth scroll to settle before focusing so the
+            // browser doesn't yank the scroll position.
+            setTimeout(() => firstInput.focus({ preventScroll: true }), 320);
+        }
+        newRow.classList.add('is-new');
+        setTimeout(() => newRow.classList.remove('is-new'), 900);
     }
 }
 
-async function addProject() {
-    const titleInput = prompt('Project title?');
-    if (!titleInput) return;
-    const clientInput = prompt('Client name?') || '';
-    const baseSlug = slugify(`${clientInput}-${titleInput}`) || slugify(titleInput) || 'project';
-    const id = uniqueProjectId(baseSlug);
+function addProject() {
+    if (!state.content) return;
+    if (!state.content.projects) state.content.projects = {};
+    const id = uniqueProjectId('new-project');
     state.content.projects[id] = {
-        client: clientInput,
-        title: titleInput,
+        client: '',
+        title: 'Untitled project',
         type: '',
         year: String(new Date().getFullYear()),
         vimeo: '',
@@ -559,7 +948,17 @@ async function addProject() {
     setDirty(true);
     renderProjectList();
     renderProjectEditor();
-    toast('Project added (unsaved)', 'success');
+    updateCounts();
+    toast('Project added — fill in the details', 'success');
+    // Jump to the editor and focus the Title field so they can rename right away.
+    const editor = $('#projectEditor');
+    if (editor) {
+        editor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const titleField = editor.querySelector('[data-field="title"]');
+        if (titleField) {
+            setTimeout(() => { titleField.focus(); titleField.select(); }, 120);
+        }
+    }
 }
 
 /* ────────────── Misc HTML helpers ────────────── */
@@ -579,6 +978,7 @@ function renderAll() {
     renderServices();
     renderProjectList();
     renderProjectEditor();
+    updateCounts();
     setDirty(false);
 }
 
@@ -609,7 +1009,6 @@ async function publish() {
     });
     if (!ok) return;
 
-    // Ensure we have a draft saved server-side first
     if (state.dirty) {
         try { await api.saveDraft(state.content); } catch (err) {
             toast('Could not save before publishing: ' + err.message, 'error');
@@ -639,12 +1038,11 @@ function initShellButtons() {
     $('#saveDraftBtn').addEventListener('click', saveDraft);
     $('#publishBtn').addEventListener('click', publish);
     $('#addProjectBtn').addEventListener('click', addProject);
-    $('#logoutBtn').addEventListener('click', async () => {
-        await api.logout();
-        location.reload();
-    });
+    const doLogout = async () => { await api.logout(); location.reload(); };
+    $('#logoutBtn').addEventListener('click', doLogout);
+    const logoutTop = $('#logoutBtnTop');
+    if (logoutTop) logoutTop.addEventListener('click', doLogout);
 
-    // Warn on unload if dirty
     window.addEventListener('beforeunload', e => {
         if (state.dirty) {
             e.preventDefault();
@@ -653,14 +1051,12 @@ function initShellButtons() {
     });
 }
 
-// Defensive init: make the login render first, then attempt to bind handlers and
-// run bootstrap. Any error in init shouldn't leave the page completely blank.
+// Defensive init: render the login first, then bind handlers and bootstrap.
 (async function init() {
     try {
-        // Always show the login overlay first — at minimum the user sees the password screen.
         const loginEl = document.getElementById('adminLogin');
         if (loginEl) loginEl.hidden = false;
-    } catch (e) { /* DOM not ready (shouldn't happen — script is at end of body) */ }
+    } catch (e) { /* DOM not ready */ }
 
     try { initTabs(); } catch (e) { console.error('[admin] initTabs failed', e); }
     try { initLogin(); } catch (e) { console.error('[admin] initLogin failed', e); }
@@ -669,7 +1065,6 @@ function initShellButtons() {
     try { bindCreatives(); } catch (e) { console.error('[admin] bindCreatives failed', e); }
     try { await bootstrap(); } catch (e) {
         console.error('[admin] bootstrap failed', e);
-        // Surface the error on the login screen so the user knows something went wrong.
         const errEl = document.getElementById('loginError');
         if (errEl) {
             errEl.textContent = 'Init error: ' + (e?.message || e);

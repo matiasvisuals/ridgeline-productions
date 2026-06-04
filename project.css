@@ -283,6 +283,59 @@
     color: rgba(255,255,255,0.85);
 }
 
+/* ─── VIEW ALL ─── */
+.proj-media-collapsed { display: none !important; }
+.proj-view-all-wrap { text-align: center; margin-top: 1.75rem; }
+.proj-view-all:empty { display: none; }
+.proj-view-all {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    font-family: inherit;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.8rem;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease), color 0.3s var(--ease);
+}
+.proj-view-all:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #111;
+}
+
+/* ─── BTS FILM (clips) ─── */
+.proj-clips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+.proj-clip {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 16 / 9;
+}
+.proj-clip-video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    background: #000;
+}
+.proj-clip-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 2.5rem 1rem 0.75rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
+    font-size: 0.55rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    pointer-events: none;
+}
+
 /* ─── PROJECT NAV ─── */
 .proj-nav-section {
     display: grid;
@@ -427,6 +480,7 @@ body.loaded .proj-hero-type {
     .proj-credits-grid { grid-template-columns: repeat(2, 1fr); }
     .proj-gallery { grid-template-columns: 1fr; }
     .proj-bts-grid { grid-template-columns: repeat(2, 1fr); }
+    .proj-clips-grid { grid-template-columns: 1fr; }
     .proj-nav-section { grid-template-columns: 1fr; }
     .proj-nav-next { text-align: left; border-left: none; border-top: 1px solid var(--border); }
     .proj-hero-scroll { display: none; }
