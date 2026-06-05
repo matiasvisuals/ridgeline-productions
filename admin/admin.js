@@ -16,7 +16,7 @@ let state = {
 const api = {
     async me() {
         try {
-            const r = await fetch('/api/me', { credentials: 'include' });
+            const r = await fetch('/api/me', { credentials: 'include', cache: 'no-store' });
             if (!r.ok) return { authenticated: false };
             return r.json();
         } catch {
@@ -47,7 +47,7 @@ const api = {
     async loadContent() {
         let r;
         try {
-            r = await fetch('/api/content?draft=1', { credentials: 'include' });
+            r = await fetch('/api/content?draft=1', { credentials: 'include', cache: 'no-store' });
         } catch {
             throw new Error('network_error');
         }
