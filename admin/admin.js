@@ -815,6 +815,13 @@ function renderProjectEditor() {
             </div>
             <div class="admin-card-body"><div data-media="bts"></div></div>
         </div>
+
+        <div class="admin-card admin-card-accent">
+            <div class="admin-card-head">
+                <div class="admin-card-head-l"><h3>Behind the scenes — film <span class="sub" data-media-count="videos"></span></h3></div>
+            </div>
+            <div class="admin-card-body"><div data-media="videos"></div></div>
+        </div>
     `;
 
     // Bind primary text fields
@@ -845,6 +852,7 @@ function renderProjectEditor() {
     renderRepeater(root, id, 'credits');
     renderMediaManager(root, id, 'gallery');
     renderMediaManager(root, id, 'bts');
+    renderMediaManager(root, id, 'videos');
 
     root.querySelectorAll('[data-add]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -929,7 +937,11 @@ function renderRepeater(root, projectId, field, focusIndex = null) {
 // A comfortable bulk editor for image arrays: drop many files at once, see
 // them as a compact reorderable thumbnail grid, remove with one click.
 
-function mediaImageOf(type, item) { return type === 'gallery' ? item : (item && item.img) || ''; }
+function mediaImageOf(type, item) {
+    if (type === 'gallery') return item;
+    if (type === 'videos') return (item && item.poster) || '';
+    return (item && item.img) || '';
+}
 
 function renderMediaManager(root, projectId, type) {
     const host = root.querySelector(`[data-media="${type}"]`);
@@ -937,7 +949,8 @@ function renderMediaManager(root, projectId, type) {
     const project = state.content.projects[projectId];
     if (!Array.isArray(project[type])) project[type] = [];
     const items = project[type];
-    const noun = type === 'gallery' ? 'stills' : 'BTS photos';
+    const isVideo = type === 'videos';
+    const noun = type === 'gallery' ? 'stills' : isVideo ? 'clips' : 'BTS photos';
 
     const countEl = root.querySelector(`[data-media-count="${type}"]`);
     if (countEl) countEl.textContent = items.length ? `— ${items.length}` : '';
@@ -946,49 +959,60 @@ function renderMediaManager(root, projectId, type) {
     const wrap = document.createElement('div');
     wrap.className = 'admin-media-manager';
 
-    // Bulk dropzone (multi-file)
-    const bulk = document.createElement('div');
-    bulk.className = 'admin-media-bulk';
-    bulk.innerHTML = `${UPLOAD_ICON}<div class="admin-media-bulk-text"><div class="t">Drop images here</div><div class="s">or click to upload — add as many as you like at once</div></div>`;
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file'; fileInput.accept = 'image/*'; fileInput.multiple = true; fileInput.hidden = true;
+    if (!isVideo) {
+        // Bulk dropzone (multi-file) — images only
+        const bulk = document.createElement('div');
+        bulk.className = 'admin-media-bulk';
+        bulk.innerHTML = `${UPLOAD_ICON}<div class="admin-media-bulk-text"><div class="t">Drop images here</div><div class="s">or click to upload — add as many as you like at once</div></div>`;
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file'; fileInput.accept = 'image/*'; fileInput.multiple = true; fileInput.hidden = true;
 
-    async function addFiles(fileList) {
-        const files = Array.from(fileList || []).filter(f => f.type && f.type.startsWith('image/'));
-        if (!files.length) return;
-        bulk.classList.add('is-busy');
-        toast(`Processing ${files.length} image${files.length > 1 ? 's' : ''}…`);
-        let added = 0;
-        for (const f of files) {
-            try {
-                const dataUrl = await fileToDataURL(f);
-                if (type === 'gallery') items.push(dataUrl);
-                else items.push({ label: '', img: dataUrl });
-                added++;
-            } catch { /* skip bad file */ }
-        }
-        setDirty(true);
-        renderMediaManager(root, projectId, type);
-        toast(`Added ${added} image${added !== 1 ? 's' : ''}`, 'success');
+        const addFiles = async (fileList) => {
+            const files = Array.from(fileList || []).filter(f => f.type && f.type.startsWith('image/'));
+            if (!files.length) return;
+            bulk.classList.add('is-busy');
+            toast(`Processing ${files.length} image${files.length > 1 ? 's' : ''}…`);
+            let added = 0;
+            for (const f of files) {
+                try {
+                    const dataUrl = await fileToDataURL(f);
+                    if (type === 'gallery') items.push(dataUrl);
+                    else items.push({ label: '', img: dataUrl });
+                    added++;
+                } catch { /* skip bad file */ }
+            }
+            setDirty(true);
+            renderMediaManager(root, projectId, type);
+            toast(`Added ${added} image${added !== 1 ? 's' : ''}`, 'success');
+        };
+
+        bulk.addEventListener('click', () => fileInput.click());
+        bulk.addEventListener('dragover', e => { e.preventDefault(); bulk.classList.add('is-dragover'); });
+        bulk.addEventListener('dragleave', () => bulk.classList.remove('is-dragover'));
+        bulk.addEventListener('drop', e => { e.preventDefault(); bulk.classList.remove('is-dragover'); addFiles(e.dataTransfer.files); });
+        fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+        wrap.append(bulk, fileInput);
+    } else {
+        const note = document.createElement('div');
+        note.className = 'admin-media-note';
+        note.textContent = 'These are the behind-the-scenes clips. Reorder, caption, or remove them here. New clips are encoded through the media pipeline (not uploaded in the browser), or paste a hosted video URL below.';
+        wrap.append(note);
     }
 
-    bulk.addEventListener('click', () => fileInput.click());
-    bulk.addEventListener('dragover', e => { e.preventDefault(); bulk.classList.add('is-dragover'); });
-    bulk.addEventListener('dragleave', () => bulk.classList.remove('is-dragover'));
-    bulk.addEventListener('drop', e => { e.preventDefault(); bulk.classList.remove('is-dragover'); addFiles(e.dataTransfer.files); });
-    fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
-
-    // Optional: add by URL
+    // Add by URL (image URL, or video URL for clips)
     const urlRow = document.createElement('div');
     urlRow.className = 'admin-media-urlrow';
     const urlInput = document.createElement('input');
-    urlInput.type = 'url'; urlInput.placeholder = '…or paste an image URL';
+    urlInput.type = 'url';
+    urlInput.placeholder = isVideo ? 'Paste a video (.mp4) URL' : '…or paste an image URL';
     const urlBtn = document.createElement('button');
     urlBtn.type = 'button'; urlBtn.className = 'admin-btn admin-btn--secondary admin-btn--small'; urlBtn.textContent = 'Add';
     const addUrl = () => {
         const v = urlInput.value.trim();
         if (!v) return;
-        if (type === 'gallery') items.push(v); else items.push({ label: '', img: v });
+        if (type === 'gallery') items.push(v);
+        else if (isVideo) items.push({ src: v, poster: '', label: '' });
+        else items.push({ label: '', img: v });
         urlInput.value = '';
         setDirty(true);
         renderMediaManager(root, projectId, type);
@@ -1001,32 +1025,42 @@ function renderMediaManager(root, projectId, type) {
     const grid = document.createElement('div');
     grid.className = 'admin-media-grid';
     if (items.length === 0) {
-        grid.innerHTML = `<div class="admin-hint" style="grid-column:1/-1;margin:0">No ${noun} yet — drop some above.</div>`;
+        grid.innerHTML = `<div class="admin-hint" style="grid-column:1/-1;margin:0">No ${noun} yet${isVideo ? '.' : ' — drop some above.'}</div>`;
     } else {
         items.forEach((item, idx) => grid.appendChild(buildMediaTile(root, projectId, type, item, idx)));
     }
 
-    wrap.append(bulk, fileInput, urlRow, grid);
+    wrap.append(urlRow, grid);
     host.appendChild(wrap);
 }
 
 function buildMediaTile(root, projectId, type, item, idx) {
     const items = state.content.projects[projectId][type];
+    const hasCaption = type === 'bts' || type === 'videos';
     const tile = document.createElement('div');
-    tile.className = 'admin-media-tile' + (type === 'bts' ? ' has-cap' : '');
+    tile.className = 'admin-media-tile' + (hasCaption ? ' has-cap' : '') + (type === 'videos' ? ' is-video' : '');
     tile.dataset.idx = idx;
 
     const num = document.createElement('span');
     num.className = 'admin-media-tile-num';
     num.textContent = String(idx + 1).padStart(2, '0');
 
-    const pic = document.createElement('img');
-    pic.className = 'admin-media-tile-img';
-    pic.src = mediaImageOf(type, item);
-    pic.alt = '';
-    pic.loading = 'lazy';
-    // Only the image is the drag handle, so caption text stays editable.
-    pic.addEventListener('mousedown', () => { tile.draggable = true; });
+    // Thumbnail (or a placeholder if a clip has no poster yet)
+    const src = mediaImageOf(type, item);
+    let thumb;
+    if (src) {
+        thumb = document.createElement('img');
+        thumb.className = 'admin-media-tile-img';
+        thumb.src = src;
+        thumb.alt = '';
+        thumb.loading = 'lazy';
+    } else {
+        thumb = document.createElement('div');
+        thumb.className = 'admin-media-tile-img admin-media-tile-ph';
+        thumb.innerHTML = IMG_ICON;
+    }
+    // Only the thumbnail is the drag handle, so caption text stays editable.
+    thumb.addEventListener('mousedown', () => { tile.draggable = true; });
 
     const del = document.createElement('button');
     del.type = 'button';
@@ -1040,9 +1074,16 @@ function buildMediaTile(root, projectId, type, item, idx) {
         renderMediaManager(root, projectId, type);
     });
 
-    tile.append(num, pic, del);
+    tile.append(num, thumb, del);
 
-    if (type === 'bts') {
+    if (type === 'videos') {
+        const play = document.createElement('span');
+        play.className = 'admin-media-tile-play';
+        play.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        tile.appendChild(play);
+    }
+
+    if (hasCaption) {
         const cap = document.createElement('input');
         cap.type = 'text';
         cap.className = 'admin-media-tile-cap';

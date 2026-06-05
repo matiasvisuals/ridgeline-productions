@@ -697,6 +697,34 @@ textarea { resize: vertical; line-height: 1.6; min-height: 84px; }
     padding: 0.4rem 0.5rem;
 }
 .admin-media-tile-cap:focus { box-shadow: none; background: var(--bg); }
+.admin-media-tile-ph {
+    display: grid; place-items: center;
+    color: var(--fg-4);
+    background: var(--bg-3);
+}
+.admin-media-tile-ph svg { width: 26px; height: 26px; }
+.admin-media-tile-play {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 34px; height: 34px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    pointer-events: none;
+}
+.admin-media-tile.has-cap .admin-media-tile-play { top: calc(50% - 14px); }
+.admin-media-tile-play svg { width: 16px; height: 16px; margin-left: 1px; }
+.admin-media-note {
+    font-size: 0.78rem;
+    color: var(--fg-3);
+    line-height: 1.5;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--section);
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.85rem;
+}
 
 /* ════════════ VIMEO FIELD ════════════ */
 .admin-vimeo-readback {
