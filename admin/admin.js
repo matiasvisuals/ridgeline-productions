@@ -86,6 +86,19 @@ const api = {
         }
         return r.json();
     },
+    async discardDraft() {
+        let r;
+        try {
+            r = await fetch('/api/discard-draft', { method: 'POST', credentials: 'include' });
+        } catch {
+            throw new Error('network_error');
+        }
+        if (!r.ok) {
+            const data = await r.json().catch(() => ({}));
+            throw new Error(data.error || 'discard_failed');
+        }
+        return r.json();
+    },
 };
 
 /* ────────────── Utilities ────────────── */
@@ -1252,6 +1265,30 @@ function initShellButtons() {
         } finally {
             refreshBtn.disabled = false;
             refreshBtn.textContent = prev;
+        }
+    });
+
+    const discardBtn = $('#discardDraftBtn');
+    if (discardBtn) discardBtn.addEventListener('click', async () => {
+        const ok = await confirmDialog({
+            title: 'Discard draft?',
+            message: 'This deletes the saved draft and reloads the published (live) content. Any unsaved changes will be lost.',
+            okLabel: 'Discard draft',
+            danger: true,
+        });
+        if (!ok) return;
+        discardBtn.disabled = true;
+        const prev = discardBtn.textContent;
+        discardBtn.textContent = 'Discarding…';
+        try {
+            await api.discardDraft();
+            await loadAndRender();
+            toast('Draft discarded — showing published content', 'success');
+        } catch (err) {
+            toast('Discard failed: ' + err.message, 'error');
+        } finally {
+            discardBtn.disabled = false;
+            discardBtn.textContent = prev;
         }
     });
 
