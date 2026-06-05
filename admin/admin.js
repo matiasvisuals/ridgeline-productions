@@ -1231,6 +1231,30 @@ function initShellButtons() {
     $('#saveDraftBtn').addEventListener('click', saveDraft);
     $('#publishBtn').addEventListener('click', publish);
     $('#addProjectBtn').addEventListener('click', addProject);
+    const refreshBtn = $('#refreshBtn');
+    if (refreshBtn) refreshBtn.addEventListener('click', async () => {
+        if (state.dirty) {
+            const ok = await confirmDialog({
+                title: 'Reload latest content?',
+                message: 'This pulls the current published content from the server and discards your unsaved changes.',
+                okLabel: 'Reload',
+                danger: true,
+            });
+            if (!ok) return;
+        }
+        refreshBtn.disabled = true;
+        const prev = refreshBtn.textContent;
+        refreshBtn.textContent = 'Refreshing…';
+        try {
+            await loadAndRender();
+            const n = Object.keys(state.content?.projects || {}).length;
+            toast(`Loaded latest content — ${n} projects`, 'success');
+        } finally {
+            refreshBtn.disabled = false;
+            refreshBtn.textContent = prev;
+        }
+    });
+
     const doLogout = async () => { await api.logout(); location.reload(); };
     $('#logoutBtn').addEventListener('click', doLogout);
     const logoutTop = $('#logoutBtnTop');
