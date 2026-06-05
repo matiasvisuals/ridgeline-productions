@@ -888,6 +888,70 @@ textarea { resize: vertical; line-height: 1.6; min-height: 84px; }
 .admin-modal-card p { margin: 0 0 1.4rem; color: var(--fg-2); }
 .admin-modal-actions { display: flex; justify-content: flex-end; gap: 0.5rem; }
 
+/* ════════════ HELP / GUIDE ════════════ */
+.admin-help {
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.66);
+    backdrop-filter: blur(4px);
+    display: grid; place-items: center;
+    z-index: 400; padding: 1.2rem;
+    animation: fade 0.2s var(--ease);
+}
+.admin-help-card {
+    display: flex; flex-direction: column;
+    width: 100%; max-width: 620px;
+    max-height: 88vh;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+.admin-help-head {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+    padding: 1.3rem 1.4rem 1.1rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.012);
+}
+.admin-help-head h3 { margin: 0; font-size: 1.15rem; font-weight: 650; letter-spacing: -0.01em; }
+.admin-help-head p { margin: 0.25rem 0 0; color: var(--fg-3); font-size: 0.82rem; }
+.admin-help-close {
+    border: none; background: var(--bg-3); color: var(--fg-2);
+    width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+    font-size: 1.2rem; line-height: 1; cursor: pointer;
+    transition: background 0.15s var(--ease), color 0.15s var(--ease);
+}
+.admin-help-close:hover { background: var(--bg-4); color: var(--fg); }
+.admin-help-body { padding: 0.6rem 1.4rem 1rem; overflow-y: auto; }
+.admin-help-step {
+    display: flex; gap: 0.9rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+}
+.admin-help-step:last-child { border-bottom: none; }
+.admin-help-num {
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    display: grid; place-items: center;
+    border-radius: 9px;
+    font-weight: 700; font-size: 0.85rem;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 14%, var(--bg-2));
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.admin-help-text h4 { margin: 0.2rem 0 0.35rem; font-size: 0.95rem; font-weight: 600; }
+.admin-help-text p { margin: 0; color: var(--fg-2); font-size: 0.86rem; line-height: 1.6; }
+.admin-help-list { margin: 0.5rem 0 0; padding-left: 1.1rem; color: var(--fg-2); font-size: 0.85rem; line-height: 1.7; }
+.admin-help-list li { margin-bottom: 0.15rem; }
+.admin-help-list strong { color: var(--fg); }
+.admin-help-text strong { color: var(--fg); }
+.admin-help-foot {
+    display: flex; justify-content: flex-end; gap: 0.5rem;
+    padding: 1rem 1.4rem;
+    border-top: 1px solid var(--border);
+    background: rgba(255,255,255,0.012);
+}
+
 /* ════════════ RESPONSIVE ════════════ */
 
 /* Tablet / small laptop — sidebar folds into a top bar */

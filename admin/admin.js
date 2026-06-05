@@ -384,6 +384,36 @@ async function showLogin() {
 async function showShell() {
     $('#adminLogin').hidden = true;
     $('#adminShell').hidden = false;
+    maybeShowFirstRunHelp();
+}
+
+/* ────────────── Help / Guide ────────────── */
+
+const HELP_SEEN_KEY = 'rdgl_admin_help_seen';
+
+function openHelp() { const m = $('#helpModal'); if (m) m.hidden = false; }
+function closeHelp() {
+    const m = $('#helpModal');
+    if (m) m.hidden = true;
+    try { localStorage.setItem(HELP_SEEN_KEY, '1'); } catch {}
+}
+function maybeShowFirstRunHelp() {
+    let seen = false;
+    try { seen = localStorage.getItem(HELP_SEEN_KEY) === '1'; } catch {}
+    if (!seen) openHelp();
+}
+function initHelp() {
+    const open = $('#helpBtn');
+    if (open) open.addEventListener('click', openHelp);
+    const close = $('#helpClose');
+    if (close) close.addEventListener('click', closeHelp);
+    const gotit = $('#helpGotIt');
+    if (gotit) gotit.addEventListener('click', closeHelp);
+    const modal = $('#helpModal');
+    if (modal) modal.addEventListener('click', e => { if (e.target === modal) closeHelp(); });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal && !modal.hidden) closeHelp();
+    });
 }
 
 async function bootstrap() {
@@ -1312,6 +1342,7 @@ function initShellButtons() {
         if (loginEl) loginEl.hidden = false;
     } catch (e) { /* DOM not ready */ }
 
+    try { initHelp(); } catch (e) { console.error('[admin] initHelp failed', e); }
     try { initTabs(); } catch (e) { console.error('[admin] initTabs failed', e); }
     try { initLogin(); } catch (e) { console.error('[admin] initLogin failed', e); }
     try { initShellButtons(); } catch (e) { console.error('[admin] initShellButtons failed', e); }

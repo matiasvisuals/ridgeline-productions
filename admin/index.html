@@ -92,6 +92,7 @@
                     <p id="sectionDesc">Films, credits, stills and behind-the-scenes for every job.</p>
                 </div>
                 <div class="admin-topbar-actions">
+                    <button type="button" class="admin-btn admin-btn--ghost" id="helpBtn" title="How to use the dashboard">? Guide</button>
                     <span class="admin-status" id="dirtyStatus">All changes saved</span>
                     <button type="button" class="admin-btn admin-btn--ghost" id="refreshBtn" title="Reload the latest published content from the server">↻ Refresh</button>
                     <a href="/?draft=1" target="_blank" rel="noopener" class="admin-btn admin-btn--ghost">Preview ↗</a>
@@ -234,6 +235,73 @@
 
         <!-- Toast -->
         <div class="admin-toast" id="toast" hidden></div>
+
+        <!-- Help / Guide -->
+        <div class="admin-help" id="helpModal" hidden>
+            <div class="admin-help-card">
+                <div class="admin-help-head">
+                    <div>
+                        <h3>How to use the dashboard</h3>
+                        <p>Everything here controls the live Ridgeline site. Take 2 minutes — it's simple.</p>
+                    </div>
+                    <button type="button" class="admin-help-close" id="helpClose" aria-label="Close">&times;</button>
+                </div>
+                <div class="admin-help-body">
+
+                    <section class="admin-help-step">
+                        <div class="admin-help-num">1</div>
+                        <div class="admin-help-text">
+                            <h4>Pick a section</h4>
+                            <p>Use the left menu: <strong>Projects</strong> (films, stills, behind-the-scenes), <strong>About</strong>, <strong>Creatives</strong> (the roster), and <strong>What We Do</strong>. The number next to each shows how many items it has.</p>
+                        </div>
+                    </section>
+
+                    <section class="admin-help-step">
+                        <div class="admin-help-num">2</div>
+                        <div class="admin-help-text">
+                            <h4>Edit a project</h4>
+                            <p>Click a project on the left (or <strong>+ Add project</strong>). Fill in Client, Title, Type and Year. For the hero video, paste the <strong>Vimeo link</strong> — the ID is detected automatically and a preview appears. Set a <strong>Thumbnail</strong> by dropping a photo or pasting an image URL. Add <strong>Credits</strong> (role + name).</p>
+                        </div>
+                    </section>
+
+                    <section class="admin-help-step">
+                        <div class="admin-help-num">3</div>
+                        <div class="admin-help-text">
+                            <h4>Add photos &amp; clips</h4>
+                            <p>In <strong>Stills</strong> and <strong>Behind the Scenes</strong>, drag a whole batch of images onto <em>“Drop images here”</em> (or click to select many at once). <strong>Drag a tile</strong> to reorder, hover and click <strong>✕</strong> to remove, and type a <strong>caption</strong> under BTS tiles. Clips appear as poster tiles you can reorder, caption or remove.</p>
+                        </div>
+                    </section>
+
+                    <section class="admin-help-step">
+                        <div class="admin-help-num">4</div>
+                        <div class="admin-help-text">
+                            <h4>Save, preview, publish</h4>
+                            <p>Your edits aren't live until you publish. The buttons in the top-right:</p>
+                            <ul class="admin-help-list">
+                                <li><strong>Save draft</strong> — saves your work privately.</li>
+                                <li><strong>Preview ↗</strong> — opens the site with your draft applied, so you can check it first.</li>
+                                <li><strong>Publish</strong> — pushes everything live (takes ~30–60 seconds to appear).</li>
+                                <li><strong>Discard draft</strong> — throws away the draft and snaps back to what's currently live.</li>
+                                <li><strong>↻ Refresh</strong> — reloads the latest live content into the dashboard.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="admin-help-step">
+                        <div class="admin-help-num">★</div>
+                        <div class="admin-help-text">
+                            <h4>Good habits</h4>
+                            <p>Works on your phone too. Always <strong>Publish</strong> when you're happy. If you started edits you don't want, hit <strong>Discard draft</strong> rather than leaving them half-finished. When in doubt, <strong>Preview</strong> before publishing.</p>
+                        </div>
+                    </section>
+
+                </div>
+                <div class="admin-help-foot">
+                    <a class="admin-btn admin-btn--ghost" href="/?draft=1" target="_blank" rel="noopener">Open preview ↗</a>
+                    <button type="button" class="admin-btn admin-btn--primary" id="helpGotIt">Got it</button>
+                </div>
+            </div>
+        </div>
 
         <!-- Confirm dialog -->
         <div class="admin-modal" id="confirmModal" hidden>
