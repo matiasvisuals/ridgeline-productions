@@ -804,18 +804,16 @@ function renderProjectEditor() {
 
         <div class="admin-card admin-card-accent">
             <div class="admin-card-head">
-                <div class="admin-card-head-l"><h3>Stills gallery</h3></div>
-                <button type="button" class="admin-btn admin-btn--secondary admin-btn--small" data-add="gallery">+ Add still</button>
+                <div class="admin-card-head-l"><h3>Stills gallery <span class="sub" data-media-count="gallery"></span></h3></div>
             </div>
-            <div class="admin-card-body"><div data-repeater="gallery"></div></div>
+            <div class="admin-card-body"><div data-media="gallery"></div></div>
         </div>
 
         <div class="admin-card admin-card-accent">
             <div class="admin-card-head">
-                <div class="admin-card-head-l"><h3>Behind the scenes</h3></div>
-                <button type="button" class="admin-btn admin-btn--secondary admin-btn--small" data-add="bts">+ Add BTS</button>
+                <div class="admin-card-head-l"><h3>Behind the scenes <span class="sub" data-media-count="bts"></span></h3></div>
             </div>
-            <div class="admin-card-body"><div data-repeater="bts"></div></div>
+            <div class="admin-card-body"><div data-media="bts"></div></div>
         </div>
     `;
 
@@ -843,10 +841,10 @@ function renderProjectEditor() {
         onChange: v => { p.thumb = v; setDirty(true); renderProjectList(); },
     }));
 
-    // Repeaters
+    // Repeaters / media managers
     renderRepeater(root, id, 'credits');
-    renderRepeater(root, id, 'gallery');
-    renderRepeater(root, id, 'bts');
+    renderMediaManager(root, id, 'gallery');
+    renderMediaManager(root, id, 'bts');
 
     root.querySelectorAll('[data-add]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -925,6 +923,160 @@ function renderRepeater(root, projectId, field, focusIndex = null) {
         newRow.classList.add('is-new');
         setTimeout(() => newRow.classList.remove('is-new'), 900);
     }
+}
+
+/* ────────────── Media manager (stills / BTS) ────────────── */
+// A comfortable bulk editor for image arrays: drop many files at once, see
+// them as a compact reorderable thumbnail grid, remove with one click.
+
+function mediaImageOf(type, item) { return type === 'gallery' ? item : (item && item.img) || ''; }
+
+function renderMediaManager(root, projectId, type) {
+    const host = root.querySelector(`[data-media="${type}"]`);
+    if (!host) return;
+    const project = state.content.projects[projectId];
+    if (!Array.isArray(project[type])) project[type] = [];
+    const items = project[type];
+    const noun = type === 'gallery' ? 'stills' : 'BTS photos';
+
+    const countEl = root.querySelector(`[data-media-count="${type}"]`);
+    if (countEl) countEl.textContent = items.length ? `— ${items.length}` : '';
+
+    host.innerHTML = '';
+    const wrap = document.createElement('div');
+    wrap.className = 'admin-media-manager';
+
+    // Bulk dropzone (multi-file)
+    const bulk = document.createElement('div');
+    bulk.className = 'admin-media-bulk';
+    bulk.innerHTML = `${UPLOAD_ICON}<div class="admin-media-bulk-text"><div class="t">Drop images here</div><div class="s">or click to upload — add as many as you like at once</div></div>`;
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file'; fileInput.accept = 'image/*'; fileInput.multiple = true; fileInput.hidden = true;
+
+    async function addFiles(fileList) {
+        const files = Array.from(fileList || []).filter(f => f.type && f.type.startsWith('image/'));
+        if (!files.length) return;
+        bulk.classList.add('is-busy');
+        toast(`Processing ${files.length} image${files.length > 1 ? 's' : ''}…`);
+        let added = 0;
+        for (const f of files) {
+            try {
+                const dataUrl = await fileToDataURL(f);
+                if (type === 'gallery') items.push(dataUrl);
+                else items.push({ label: '', img: dataUrl });
+                added++;
+            } catch { /* skip bad file */ }
+        }
+        setDirty(true);
+        renderMediaManager(root, projectId, type);
+        toast(`Added ${added} image${added !== 1 ? 's' : ''}`, 'success');
+    }
+
+    bulk.addEventListener('click', () => fileInput.click());
+    bulk.addEventListener('dragover', e => { e.preventDefault(); bulk.classList.add('is-dragover'); });
+    bulk.addEventListener('dragleave', () => bulk.classList.remove('is-dragover'));
+    bulk.addEventListener('drop', e => { e.preventDefault(); bulk.classList.remove('is-dragover'); addFiles(e.dataTransfer.files); });
+    fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+
+    // Optional: add by URL
+    const urlRow = document.createElement('div');
+    urlRow.className = 'admin-media-urlrow';
+    const urlInput = document.createElement('input');
+    urlInput.type = 'url'; urlInput.placeholder = '…or paste an image URL';
+    const urlBtn = document.createElement('button');
+    urlBtn.type = 'button'; urlBtn.className = 'admin-btn admin-btn--secondary admin-btn--small'; urlBtn.textContent = 'Add';
+    const addUrl = () => {
+        const v = urlInput.value.trim();
+        if (!v) return;
+        if (type === 'gallery') items.push(v); else items.push({ label: '', img: v });
+        urlInput.value = '';
+        setDirty(true);
+        renderMediaManager(root, projectId, type);
+    };
+    urlBtn.addEventListener('click', addUrl);
+    urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addUrl(); } });
+    urlRow.append(urlInput, urlBtn);
+
+    // Thumbnail grid
+    const grid = document.createElement('div');
+    grid.className = 'admin-media-grid';
+    if (items.length === 0) {
+        grid.innerHTML = `<div class="admin-hint" style="grid-column:1/-1;margin:0">No ${noun} yet — drop some above.</div>`;
+    } else {
+        items.forEach((item, idx) => grid.appendChild(buildMediaTile(root, projectId, type, item, idx)));
+    }
+
+    wrap.append(bulk, fileInput, urlRow, grid);
+    host.appendChild(wrap);
+}
+
+function buildMediaTile(root, projectId, type, item, idx) {
+    const items = state.content.projects[projectId][type];
+    const tile = document.createElement('div');
+    tile.className = 'admin-media-tile' + (type === 'bts' ? ' has-cap' : '');
+    tile.dataset.idx = idx;
+
+    const num = document.createElement('span');
+    num.className = 'admin-media-tile-num';
+    num.textContent = String(idx + 1).padStart(2, '0');
+
+    const pic = document.createElement('img');
+    pic.className = 'admin-media-tile-img';
+    pic.src = mediaImageOf(type, item);
+    pic.alt = '';
+    pic.loading = 'lazy';
+    // Only the image is the drag handle, so caption text stays editable.
+    pic.addEventListener('mousedown', () => { tile.draggable = true; });
+
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'admin-media-tile-del';
+    del.title = 'Remove';
+    del.textContent = '✕';
+    del.addEventListener('click', e => {
+        e.stopPropagation();
+        items.splice(idx, 1);
+        setDirty(true);
+        renderMediaManager(root, projectId, type);
+    });
+
+    tile.append(num, pic, del);
+
+    if (type === 'bts') {
+        const cap = document.createElement('input');
+        cap.type = 'text';
+        cap.className = 'admin-media-tile-cap';
+        cap.placeholder = 'Caption';
+        cap.value = item.label || '';
+        cap.addEventListener('input', () => { items[idx].label = cap.value; setDirty(true); });
+        tile.appendChild(cap);
+    }
+
+    tile.addEventListener('dragstart', e => {
+        tile.classList.add('is-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', String(idx));
+    });
+    tile.addEventListener('dragend', () => {
+        tile.draggable = false;
+        tile.classList.remove('is-dragging');
+        root.querySelectorAll('.admin-media-tile').forEach(t => t.classList.remove('is-dragover'));
+    });
+    tile.addEventListener('dragover', e => { e.preventDefault(); tile.classList.add('is-dragover'); });
+    tile.addEventListener('dragleave', () => tile.classList.remove('is-dragover'));
+    tile.addEventListener('drop', e => {
+        e.preventDefault();
+        tile.classList.remove('is-dragover');
+        const from = parseInt(e.dataTransfer.getData('text/plain'), 10);
+        const to = idx;
+        if (Number.isNaN(from) || from === to) return;
+        const [moved] = items.splice(from, 1);
+        items.splice(to, 0, moved);
+        setDirty(true);
+        renderMediaManager(root, projectId, type);
+    });
+
+    return tile;
 }
 
 function addProject() {
