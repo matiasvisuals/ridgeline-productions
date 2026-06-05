@@ -6,6 +6,9 @@
 //   Auto-injected env vars: UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN.
 //   Falls back to KV_REST_API_URL / KV_REST_API_TOKEN for legacy Vercel KV installs.
 
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+
 const DRAFT_KEY = 'content:draft';
 
 let redisClient = null;
@@ -28,15 +31,14 @@ async function getKv() {
 }
 
 export async function getPublishedContent() {
-    // Read the bundled data/content.json from disk. Works in both vercel dev
-    // and production serverless runtime — process.cwd() is the project root.
-    // (We can't fetch our own /data/content.json over HTTP because the internal
-    // VERCEL_URL is gated by Vercel's deployment protection / SSO.)
-    const { readFile } = await import('node:fs/promises');
-    const { join } = await import('node:path');
-    const path = join(process.cwd(), 'data', 'content.json');
-    const raw = await readFile(path, 'utf8');
-    return JSON.parse(raw);
+    // Load the published content via a STATIC require so Vercel's file tracer
+    // bundles data/content.json into the serverless function. A runtime
+    // process.cwd() readFile is not traced, so the file is missing in prod and
+    // the admin loads nothing. The require'd JSON is the build-time snapshot,
+    // which is exactly the "published" content. Return a deep copy so callers
+    // can't mutate the cached module object.
+    const data = require('../../data/content.json');
+    return JSON.parse(JSON.stringify(data));
 }
 
 export async function getDraftContent() {

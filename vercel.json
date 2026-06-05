@@ -1,4 +1,8 @@
 {
+  "functions": {
+    "api/content.js": { "includeFiles": "data/content.json" },
+    "api/publish.js": { "includeFiles": "data/content.json" }
+  },
   "headers": [
     {
       "source": "/admin/(.*)",
