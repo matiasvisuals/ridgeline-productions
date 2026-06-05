@@ -119,14 +119,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const videos = p.videos || [];
     if (clipsSection) {
         if (videos.length) {
-            clipsGrid.innerHTML = videos.map((v, i) =>
-                `<div class="proj-clip anim" data-anim="fade-up">
+            clipsGrid.innerHTML = videos.map((v, i) => {
+                const ar = (v.w && v.h) ? `${v.w} / ${v.h}` : '16 / 9';
+                return `<div class="proj-clip anim" data-anim="fade-up" style="aspect-ratio:${ar}">
                     <video class="proj-clip-video" preload="none" playsinline controls ${v.poster ? `poster="${v.poster}"` : ''}>
                         <source src="${v.src}" type="video/mp4">
                     </video>
                     ${v.label ? `<span class="proj-clip-label">${v.label}</span>` : ''}
-                </div>`
-            ).join('');
+                </div>`;
+            }).join('');
             applyViewAll(clipsGrid, document.getElementById('projClipsMore'), videos.length, 6, 'clips');
         } else {
             clipsSection.style.display = 'none';

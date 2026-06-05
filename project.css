@@ -309,22 +309,24 @@
     color: #111;
 }
 
-/* ─── BTS FILM (clips) ─── */
+/* ─── BTS FILM (clips — masonry, respects each clip's orientation) ─── */
 .proj-clips-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    columns: 300px 3;
+    column-gap: 10px;
 }
 .proj-clip {
+    break-inside: avoid;
+    margin-bottom: 10px;
     position: relative;
     border-radius: 8px;
     overflow: hidden;
     background: #000;
-    aspect-ratio: 16 / 9;
+    display: block;
+    /* aspect-ratio is set inline per clip from its real dimensions */
 }
 .proj-clip-video {
     width: 100%; height: 100%;
-    object-fit: cover;
+    object-fit: cover;       /* box ratio matches the video, so nothing is cropped */
     display: block;
     background: #000;
 }
@@ -482,7 +484,7 @@ body.loaded .proj-hero-type {
     .proj-credits-grid { grid-template-columns: repeat(2, 1fr); }
     .proj-gallery { columns: 2; column-gap: 6px; }
     .proj-bts-grid { grid-template-columns: repeat(2, 1fr); }
-    .proj-clips-grid { grid-template-columns: 1fr; }
+    .proj-clips-grid { columns: 2; column-gap: 8px; }
     .proj-nav-section { grid-template-columns: 1fr; }
     .proj-nav-next { text-align: left; border-left: none; border-top: 1px solid var(--border); }
     .proj-hero-scroll { display: none; }
