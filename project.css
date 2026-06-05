@@ -228,21 +228,23 @@
     color: var(--fg);
 }
 
-/* ─── GALLERY ─── */
+/* ─── GALLERY (masonry — respects each still's orientation) ─── */
 .proj-gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    columns: 300px 3;
+    column-gap: 6px;
 }
 .proj-gallery-item {
+    break-inside: avoid;
+    margin-bottom: 6px;
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
-    aspect-ratio: 16/10;
+    display: block;
 }
 .proj-gallery-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
+    width: 100%;
+    height: auto;            /* keep natural aspect ratio (vertical stays vertical) */
+    display: block;
     transition: transform 0.7s var(--ease), filter 0.5s;
     filter: brightness(0.85);
 }
@@ -478,7 +480,7 @@ body.loaded .proj-hero-type {
         gap: 1.5rem 3rem;
     }
     .proj-credits-grid { grid-template-columns: repeat(2, 1fr); }
-    .proj-gallery { grid-template-columns: 1fr; }
+    .proj-gallery { columns: 2; column-gap: 6px; }
     .proj-bts-grid { grid-template-columns: repeat(2, 1fr); }
     .proj-clips-grid { grid-template-columns: 1fr; }
     .proj-nav-section { grid-template-columns: 1fr; }
