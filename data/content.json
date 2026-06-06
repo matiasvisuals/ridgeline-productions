@@ -13,7 +13,7 @@
     "emphasis": "Every project is tailored. Every frame is intentional.",
     "stats": [
       {
-        "count": 15,
+        "count": 20,
         "label": "Years Experience"
       },
       {
@@ -694,7 +694,8 @@
         "/media/lexus-gx/stills/001.jpg",
         "/media/lexus-gx/stills/002.jpg",
         "/media/lexus-gx/stills/003.jpg"
-      ]
+      ],
+      "videos": []
     },
     "seek-thermal": {
       "client": "Seek Thermal",
