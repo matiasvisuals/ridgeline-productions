@@ -451,7 +451,24 @@ async function loadAndRender() {
     }
 }
 
+const EYE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c6.5 0 10 7 10 7a13.2 13.2 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.5 13.5 0 0 0 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.39-1.61"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="2" y1="2" x2="22" y2="22"/></svg>';
+
 function initLogin() {
+    const pw = $('#loginPassword');
+    const toggle = $('#loginPasswordToggle');
+    if (pw && toggle) {
+        toggle.addEventListener('click', () => {
+            const reveal = pw.type === 'password';
+            pw.type = reveal ? 'text' : 'password';
+            toggle.innerHTML = reveal ? EYE_OFF_ICON : EYE_ICON;
+            const label = reveal ? 'Hide password' : 'Show password';
+            toggle.setAttribute('aria-label', label);
+            toggle.title = label;
+            pw.focus();
+        });
+    }
+
     $('#loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const password = $('#loginPassword').value;

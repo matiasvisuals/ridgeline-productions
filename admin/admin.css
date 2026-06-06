@@ -376,6 +376,23 @@ a { color: var(--accent); text-decoration: none; }
 }
 .admin-field-hint { font-size: 0.72rem; color: var(--fg-4); margin: 0.35rem 0 0; }
 
+/* Password show/hide */
+.admin-password-wrap { position: relative; }
+.admin-password-wrap input { padding-right: 2.8rem; }
+.admin-password-toggle {
+    position: absolute;
+    right: 0.4rem; top: 50%;
+    transform: translateY(-50%);
+    display: grid; place-items: center;
+    width: 32px; height: 32px;
+    background: none; border: none;
+    color: var(--fg-3); cursor: pointer;
+    border-radius: 7px;
+    transition: color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.admin-password-toggle:hover { color: var(--fg); background: var(--bg-3); }
+.admin-password-toggle svg { width: 18px; height: 18px; }
+
 input[type="text"],
 input[type="password"],
 input[type="number"],

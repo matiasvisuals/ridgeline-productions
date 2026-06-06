@@ -22,7 +22,12 @@
             <form id="loginForm" autocomplete="off">
                 <label class="admin-field">
                     <span class="admin-field-label">Password</span>
-                    <input type="password" id="loginPassword" autocomplete="current-password" autofocus>
+                    <div class="admin-password-wrap">
+                        <input type="password" id="loginPassword" autocomplete="current-password" autofocus>
+                        <button type="button" class="admin-password-toggle" id="loginPasswordToggle" aria-label="Show password" title="Show password">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                    </div>
                 </label>
                 <button type="submit" class="admin-btn admin-btn--primary" id="loginBtn">Sign in</button>
                 <p class="admin-error" id="loginError" hidden></p>
