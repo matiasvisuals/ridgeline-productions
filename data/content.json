@@ -821,20 +821,9 @@
           "name": "Tommy Hass & Taylor Fritz"
         }
       ],
-      "bts": [
-        {
-          "label": "Studio setup",
-          "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/490c06c5-4276-4f72-8cd1-531639bea4d9/MASIMO.jpg"
-        },
-        {
-          "label": "Athlete on set",
-          "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg"
-        }
-      ],
-      "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/490c06c5-4276-4f72-8cd1-531639bea4d9/MASIMO.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg"
-      ]
+      "bts": [],
+      "gallery": [],
+      "videos": []
     },
     "hoka-carbon": {
       "client": "Hoka",
