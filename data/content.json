@@ -1018,10 +1018,8 @@
           "img": "/media/liv-avow/bts/007.jpg"
         }
       ],
-      "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/3b9a8747-c450-43f8-8a50-e509516add81/thumb.jpg",
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg"
-      ]
+      "gallery": [],
+      "videos": []
     },
     "wtb-czr": {
       "client": "WTB",
