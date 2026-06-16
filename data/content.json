@@ -307,9 +307,7 @@
           "img": "/media/hoka-transport/bts/009.jpg"
         }
       ],
-      "gallery": [
-        "/media/hoka-transport/stills/001.jpg"
-      ],
+      "gallery": [],
       "videos": [
         {
           "src": "/media/hoka-transport/video/001.mp4",
