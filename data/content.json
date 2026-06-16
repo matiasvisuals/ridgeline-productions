@@ -840,12 +840,7 @@
           "name": "Maxwell Frank"
         }
       ],
-      "bts": [
-        {
-          "label": "Track shoot",
-          "img": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg"
-        }
-      ],
+      "bts": [],
       "gallery": [
         "/media/hoka-carbon/stills/001.jpg",
         "/media/hoka-carbon/stills/002.jpg",
@@ -860,7 +855,8 @@
         "/media/hoka-carbon/stills/011.jpg",
         "/media/hoka-carbon/stills/012.jpg",
         "/media/hoka-carbon/stills/013.jpg"
-      ]
+      ],
+      "videos": []
     },
     "wtb-tread": {
       "client": "WTB & Kona Bicycles",
