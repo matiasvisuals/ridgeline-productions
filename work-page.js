@@ -13,11 +13,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     const transitionDelay = sessionStorage.getItem('pt-active') ? 600 : 100;
     setTimeout(() => document.body.classList.add('loaded'), transitionDelay);
 
-    // Header scroll
+    // Keep the nav in its compact "island" state across the whole archive so the
+    // filter tray reads as part of it.
     const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
+    header.classList.add('scrolled');
+
+    // Hand the categories off into the nav pill once the static hero row scrolls past.
+    const heroFilters = document.querySelector('.work-hero-filters');
+    const filterBar = document.getElementById('filterBar');
+    const updateFilters = () => {
+        if (!heroFilters || !filterBar) return;
+        filterBar.classList.toggle('is-open', heroFilters.getBoundingClientRect().bottom <= 84);
+    };
+    updateFilters();
+    window.addEventListener('scroll', updateFilters, { passive: true });
+    window.addEventListener('resize', updateFilters, { passive: true });
 
     // Mobile menu
     const menuBtn = document.getElementById('menuBtn');
@@ -45,9 +55,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (filter === currentFilter) return;
             currentFilter = filter;
 
-            // Update active pill
-            pills.forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
+            // Update active state across BOTH pill rows (hero + nav tray)
+            pills.forEach(p => p.classList.toggle('active', p.dataset.filter === filter));
 
             // Filter cards
             let visibleCount = 0;

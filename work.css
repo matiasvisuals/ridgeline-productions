@@ -49,27 +49,55 @@
     letter-spacing: 0.03em;
 }
 
-/* Filter Bar */
-.filter-bar {
-    position: sticky;
-    /* stick below the floating nav island instead of underneath it */
-    top: 76px;
-    z-index: 50;
-    padding: 1rem 0;
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-}
+/* Category filters — a plain row under the hero, plus a tray that extends down
+   from the nav pill once the hero scrolls past. */
 .filter-pills {
     display: flex;
     gap: 0.5rem;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding-bottom: 2px;
 }
 .filter-pills::-webkit-scrollbar { display: none; }
+
+/* Static row beneath the “N projects” line */
+.work-hero-filters { margin-top: 1.75rem; }
+
+/* Tray that animates in under the nav island */
+.filter-bar {
+    position: fixed;
+    top: 68px;                  /* sits just under the island */
+    left: 0; right: 0;
+    z-index: 90;                /* under the island (100) so it reads as part of it */
+    display: flex;
+    justify-content: center;    /* centered under the (centered) island */
+    pointer-events: none;       /* only the tray itself is interactive when open */
+}
+.filter-bar .container {        /* neutralize the 1200px page wrapper */
+    width: auto; max-width: none; margin: 0; padding: 0;
+    display: flex; justify-content: center;
+}
+.filter-bar .filter-pills {
+    width: max-content;         /* hug the pills so left/right padding is identical */
+    max-width: min(92vw, 760px);
+    padding: 0.5rem 0.6rem;     /* symmetric */
+    background: rgba(12,12,14,0.62);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6);
+    backdrop-filter: blur(18px) saturate(1.6);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 100px;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.34);
+    /* closed: hidden + nudged up behind the island */
+    opacity: 0;
+    transform: translateY(-18px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.4s var(--ease), transform 0.55s var(--ease);
+}
+.filter-bar.is-open .filter-pills {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
 .filter-pill {
     flex-shrink: 0;
     background: transparent;
