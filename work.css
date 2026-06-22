@@ -52,7 +52,8 @@
 /* Filter Bar */
 .filter-bar {
     position: sticky;
-    top: 0;
+    /* stick below the floating nav island instead of underneath it */
+    top: 76px;
     z-index: 50;
     padding: 1rem 0;
     background: rgba(10,10,10,0.85);
