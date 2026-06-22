@@ -1511,6 +1511,20 @@
           "w": 720,
           "h": 1280
         }
+      ],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1189536407",
+          "vimeoHash": "63b8c8e4e4",
+          "poster": ""
+        },
+        {
+          "type": "vimeo",
+          "vimeo": "1189536254",
+          "vimeoHash": "89bd709228",
+          "poster": ""
+        }
       ]
     }
   }
