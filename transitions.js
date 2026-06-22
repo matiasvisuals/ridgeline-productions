@@ -7,6 +7,18 @@
     const overlay = document.getElementById('pageTransition');
     if (!overlay) return;
 
+    // --- Reset transition state when restored from back/forward cache ---
+    // Without this, hitting the browser Back button restores the page while
+    // body.page-exiting still has all content at opacity:0 (and the overlay
+    // may still be covering) → the page appears blank.
+    window.addEventListener('pageshow', function (e) {
+        if (!e.persisted) return;
+        document.body.classList.remove('page-exiting');
+        overlay.classList.remove('active', 'slide-up', 'slide-down', 'covering', 'revealing', 'from-bottom', 'from-top');
+        sessionStorage.removeItem('pt-active');
+        sessionStorage.removeItem('pt-direction');
+    });
+
     // --- Detect if we're arriving from a transition ---
     const arriving = sessionStorage.getItem('pt-active');
     const direction = sessionStorage.getItem('pt-direction') || 'up';
