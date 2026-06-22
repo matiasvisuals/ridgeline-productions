@@ -370,7 +370,6 @@ function initTabs() {
 function updateCounts() {
     if (!state.content) return;
     setText('#countProjects', Object.keys(state.content.projects || {}).length);
-    setText('#countCreatives', (state.content.creatives || []).length);
     setText('#countServices', (state.content.services || []).length);
 }
 
@@ -534,112 +533,6 @@ function bindAbout() {
             setDirty(true);
         });
     }
-}
-
-/* ────────────── Render: Creatives ────────────── */
-
-const GRIP_ICON = `<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>`;
-
-function renderCreatives() {
-    const host = $('#creativesEditor');
-    if (!host) return;
-    if (!Array.isArray(state.content.creatives)) state.content.creatives = [];
-    const names = state.content.creatives;
-    setText('#creativesCount', names.length ? `— ${names.length}` : '');
-    host.innerHTML = '';
-    if (names.length === 0) {
-        host.innerHTML = '<div class="admin-hint" style="margin:0;grid-column:1/-1">No creatives yet — click “Add creative”.</div>';
-        return;
-    }
-    names.forEach((name, idx) => host.appendChild(buildCreativeRow(name, idx)));
-}
-
-function buildCreativeRow(name, idx) {
-    const row = document.createElement('div');
-    row.className = 'creative-row';
-    row.dataset.idx = idx;
-
-    const handle = document.createElement('span');
-    handle.className = 'creative-drag';
-    handle.title = 'Drag to reorder';
-    handle.innerHTML = GRIP_ICON;
-    // Only make the row draggable while the grip is held, so the name field
-    // still selects text normally.
-    handle.addEventListener('mousedown', () => { row.draggable = true; });
-    handle.addEventListener('mouseup', () => { row.draggable = false; });
-
-    const num = document.createElement('span');
-    num.className = 'creative-num';
-    num.textContent = String(idx + 1).padStart(2, '0');
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'creative-name';
-    input.placeholder = 'Full name';
-    input.value = name || '';
-    input.addEventListener('input', () => { state.content.creatives[idx] = input.value; setDirty(true); });
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') { e.preventDefault(); addCreative(); }
-    });
-
-    const del = deleteButton(() => {
-        state.content.creatives.splice(idx, 1);
-        setDirty(true);
-        renderCreatives();
-        updateCounts();
-    });
-    del.classList.add('creative-del');
-
-    row.addEventListener('dragstart', (e) => {
-        row.classList.add('is-dragging');
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', String(idx));
-    });
-    row.addEventListener('dragend', () => {
-        row.draggable = false;
-        row.classList.remove('is-dragging');
-        $$('#creativesEditor .creative-row').forEach(r => r.classList.remove('is-dragover'));
-    });
-    row.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; row.classList.add('is-dragover'); });
-    row.addEventListener('dragleave', () => row.classList.remove('is-dragover'));
-    row.addEventListener('drop', (e) => {
-        e.preventDefault();
-        row.classList.remove('is-dragover');
-        const from = parseInt(e.dataTransfer.getData('text/plain'), 10);
-        const to = idx;
-        if (Number.isNaN(from) || from === to) return;
-        const arr = state.content.creatives;
-        const [moved] = arr.splice(from, 1);
-        arr.splice(to, 0, moved);
-        setDirty(true);
-        renderCreatives();
-    });
-
-    row.append(handle, num, input, del);
-    return row;
-}
-
-function addCreative() {
-    if (!state.content) return;
-    if (!Array.isArray(state.content.creatives)) state.content.creatives = [];
-    state.content.creatives.push('');
-    setDirty(true);
-    renderCreatives();
-    updateCounts();
-    const rows = $$('#creativesEditor .creative-row');
-    const last = rows[rows.length - 1];
-    if (last) {
-        last.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        last.classList.add('is-new');
-        setTimeout(() => last.classList.remove('is-new'), 900);
-        const inp = last.querySelector('input');
-        if (inp) setTimeout(() => inp.focus({ preventScroll: true }), 80);
-    }
-}
-
-function bindCreatives() {
-    const btn = $('#addCreativeBtn');
-    if (btn) btn.addEventListener('click', addCreative);
 }
 
 /* ────────────── Render: Services ────────────── */
@@ -833,8 +726,17 @@ function renderProjectEditor() {
         </div>
 
         <div class="admin-card admin-card-accent">
-            <div class="admin-card-head"><div class="admin-card-head-l"><h3>Hero video <span class="sub">— Vimeo</span></h3></div></div>
-            <div class="admin-card-body" data-mount="vimeo"></div>
+            <div class="admin-card-head">
+                <div class="admin-card-head-l"><h3>Hero videos <span class="sub" data-hero-count></span></h3></div>
+                <span class="admin-hero-add">
+                    <button type="button" class="admin-btn admin-btn--secondary admin-btn--small" data-add-hero="vimeo">+ Vimeo</button>
+                    <button type="button" class="admin-btn admin-btn--secondary admin-btn--small" data-add-hero="file">+ Upload</button>
+                </span>
+            </div>
+            <div class="admin-card-body">
+                <p class="admin-field-hint" style="margin-top:0;margin-bottom:.7rem">Add one or more feature videos. They show on the project page as a swipeable carousel. Each can be a Vimeo link or a hosted video file.</p>
+                <div data-mount="hero"></div>
+            </div>
         </div>
 
         <div class="admin-card admin-card-accent">
@@ -864,7 +766,7 @@ function renderProjectEditor() {
 
         <div class="admin-card admin-card-accent">
             <div class="admin-card-head">
-                <div class="admin-card-head-l"><h3>Stills gallery <span class="sub" data-media-count="gallery"></span></h3></div>
+                <div class="admin-card-head-l"><h3>Photography <span class="sub" data-media-count="gallery"></span></h3></div>
             </div>
             <div class="admin-card-body"><div data-media="gallery"></div></div>
         </div>
@@ -899,8 +801,8 @@ function renderProjectEditor() {
         });
     });
 
-    // Vimeo
-    root.querySelector('[data-mount="vimeo"]').appendChild(buildVimeoField(p));
+    // Hero videos (carousel)
+    renderHeroVideos(root, id);
 
     // Thumbnail
     root.querySelector('[data-mount="thumb"]').appendChild(imageInput({
@@ -926,6 +828,129 @@ function renderProjectEditor() {
             renderRepeater(root, id, field, project[field].length - 1);
         });
     });
+
+    root.querySelectorAll('[data-add-hero]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const p2 = state.content.projects[id];
+            const list = ensureHeroVideos(p2);
+            if (btn.dataset.addHero === 'file') list.push({ type: 'file', src: '', poster: '' });
+            else list.push({ type: 'vimeo', vimeo: '', vimeoHash: '', poster: '' });
+            setDirty(true);
+            syncLegacyVimeo(p2);
+            renderHeroVideos(root, id);
+        });
+    });
+}
+
+/* ────────────── Hero videos (carousel) ────────────── */
+// Each project can have several feature videos shown as a swipeable carousel.
+// A hero entry is either { type:'vimeo', vimeo, vimeoHash, poster } or
+// { type:'file', src, poster }. We migrate the legacy single vimeo field in,
+// and mirror the first Vimeo entry back to vimeo/vimeoHash for back-compat.
+function ensureHeroVideos(p) {
+    if (!Array.isArray(p.heroVideos)) {
+        p.heroVideos = [];
+        if (p.vimeo) p.heroVideos.push({ type: 'vimeo', vimeo: p.vimeo, vimeoHash: p.vimeoHash || '', poster: '' });
+    }
+    return p.heroVideos;
+}
+
+function syncLegacyVimeo(p) {
+    const first = (p.heroVideos || []).find(v => v.type !== 'file' && v.vimeo);
+    p.vimeo = first ? first.vimeo : '';
+    p.vimeoHash = first ? (first.vimeoHash || '') : '';
+}
+
+function renderHeroVideos(root, projectId) {
+    const host = root.querySelector('[data-mount="hero"]');
+    if (!host) return;
+    const p = state.content.projects[projectId];
+    const list = ensureHeroVideos(p);
+
+    const countEl = root.querySelector('[data-hero-count]');
+    if (countEl) countEl.textContent = list.length ? `— ${list.length}` : '';
+
+    host.innerHTML = '';
+    if (!list.length) {
+        host.innerHTML = `<div class="admin-hint" style="margin:0">No hero videos yet — add a Vimeo link or upload above.</div>`;
+        return;
+    }
+    list.forEach((v, idx) => host.appendChild(buildHeroRow(root, projectId, v, idx)));
+}
+
+function buildHeroRow(root, projectId, v, idx) {
+    const p = state.content.projects[projectId];
+    const list = p.heroVideos;
+    const row = document.createElement('div');
+    row.className = 'admin-hero-row';
+
+    const head = document.createElement('div');
+    head.className = 'admin-hero-row-head';
+    const label = document.createElement('span');
+    label.className = 'admin-repeater-handle';
+    label.textContent = `Hero ${idx + 1} · ${v.type === 'file' ? 'Upload' : 'Vimeo'}`;
+    const acts = document.createElement('span');
+    acts.className = 'admin-hero-row-acts';
+
+    const move = (delta) => {
+        const j = idx + delta;
+        if (j < 0 || j >= list.length) return;
+        [list[idx], list[j]] = [list[j], list[idx]];
+        setDirty(true);
+        syncLegacyVimeo(p);
+        renderHeroVideos(root, projectId);
+    };
+    const up = miniBtn('↑', 'Move up', () => move(-1));
+    const down = miniBtn('↓', 'Move down', () => move(1));
+    up.disabled = idx === 0;
+    down.disabled = idx === list.length - 1;
+    const del = deleteButton(() => {
+        list.splice(idx, 1);
+        setDirty(true);
+        syncLegacyVimeo(p);
+        renderHeroVideos(root, projectId);
+    });
+    acts.append(up, down, del);
+    head.append(label, acts);
+    row.appendChild(head);
+
+    if (v.type === 'file') {
+        const srcField = textField('Video URL (.mp4)', v.src, val => { v.src = val.trim(); setDirty(true); });
+        row.appendChild(srcField);
+        const note = document.createElement('p');
+        note.className = 'admin-field-hint';
+        note.style.margin = '.4rem 0 0';
+        note.textContent = 'Paste a hosted .mp4 URL, or run the clip through the media pipeline.';
+        row.appendChild(note);
+    } else {
+        const vimeoField = textField('Vimeo link or ID', vimeoDisplay(v.vimeo, v.vimeoHash), val => {
+            const parsed = parseVimeo(val);
+            v.vimeo = parsed.id;
+            v.vimeoHash = parsed.hash;
+            setDirty(true);
+            syncLegacyVimeo(p);
+        });
+        row.appendChild(vimeoField);
+    }
+
+    const posterLabel = document.createElement('span');
+    posterLabel.className = 'admin-field-label';
+    posterLabel.style.cssText = 'display:block;margin:.7rem 0 .35rem';
+    posterLabel.textContent = 'Poster image (optional — falls back to the thumbnail)';
+    row.appendChild(posterLabel);
+    row.appendChild(imageInput({ value: v.poster || '', onChange: val => { v.poster = val; setDirty(true); } }));
+
+    return row;
+}
+
+function miniBtn(glyph, title, onClick) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'admin-btn admin-btn--ghost admin-btn--small';
+    b.textContent = glyph;
+    b.title = title;
+    b.addEventListener('click', onClick);
+    return b;
 }
 
 function renderRepeater(root, projectId, field, focusIndex = null) {
@@ -1010,7 +1035,7 @@ function renderMediaManager(root, projectId, type) {
     if (!Array.isArray(project[type])) project[type] = [];
     const items = project[type];
     const isVideo = type === 'videos';
-    const noun = type === 'gallery' ? 'stills' : isVideo ? 'clips' : 'BTS photos';
+    const noun = type === 'gallery' ? 'photos' : isVideo ? 'clips' : 'BTS photos';
 
     const countEl = root.querySelector(`[data-media-count="${type}"]`);
     if (countEl) countEl.textContent = items.length ? `— ${items.length}` : '';
@@ -1227,7 +1252,6 @@ function escapeAttr(s) {
 
 function renderAll() {
     renderAbout();
-    renderCreatives();
     renderServices();
     renderProjectList();
     renderProjectEditor();
@@ -1364,7 +1388,6 @@ function initShellButtons() {
     try { initLogin(); } catch (e) { console.error('[admin] initLogin failed', e); }
     try { initShellButtons(); } catch (e) { console.error('[admin] initShellButtons failed', e); }
     try { bindAbout(); } catch (e) { console.error('[admin] bindAbout failed', e); }
-    try { bindCreatives(); } catch (e) { console.error('[admin] bindCreatives failed', e); }
     try { await bootstrap(); } catch (e) {
         console.error('[admin] bootstrap failed', e);
         const errEl = document.getElementById('loginError');

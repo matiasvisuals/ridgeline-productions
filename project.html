@@ -67,18 +67,15 @@
         </div>
     </section>
 
-    <!-- Video -->
+    <!-- Hero Video(s) — swipeable carousel -->
     <section class="proj-section" id="projVideo">
         <div class="proj-video-wrap anim" data-anim="fade-up">
-            <div class="proj-video-player" id="projVideoPlayer">
-                <img id="projVideoThumb" class="proj-video-thumb" src="" alt="">
-                <div class="proj-video-play" id="projPlayBtn">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                        <circle cx="24" cy="24" r="23" stroke="white" stroke-width="1.5"/>
-                        <path d="M20 16L32 24L20 32V16Z" fill="white"/>
-                    </svg>
-                </div>
+            <div class="proj-hero-carousel" id="projHeroCarousel">
+                <div class="proj-hero-carousel-track" id="projHeroCarouselTrack"></div>
+                <button class="proj-carousel-arrow proj-carousel-arrow--prev" id="projHeroPrev" aria-label="Previous video">&#8592;</button>
+                <button class="proj-carousel-arrow proj-carousel-arrow--next" id="projHeroNext" aria-label="Next video">&#8594;</button>
             </div>
+            <div class="proj-carousel-dots" id="projHeroDots"></div>
         </div>
     </section>
 
@@ -112,27 +109,18 @@
     <!-- Gallery -->
     <section class="proj-section" id="projGallerySection">
         <div class="container">
-            <h3 class="proj-section-title anim" data-anim="fade-up">Stills</h3>
+            <h3 class="proj-section-title anim" data-anim="fade-up">Photography</h3>
             <div class="proj-gallery" id="projGallery"></div>
             <div class="proj-view-all-wrap" id="projGalleryMore"></div>
         </div>
     </section>
 
-    <!-- BTS -->
+    <!-- BTS — photos + film combined -->
     <section class="proj-section proj-section--alt" id="projBtsSection">
         <div class="container">
             <h3 class="proj-section-title anim" data-anim="fade-up">Behind the Scenes</h3>
             <div class="proj-bts-grid" id="projBtsGrid"></div>
             <div class="proj-view-all-wrap" id="projBtsMore"></div>
-        </div>
-    </section>
-
-    <!-- BTS Film -->
-    <section class="proj-section" id="projClipsSection">
-        <div class="container">
-            <h3 class="proj-section-title anim" data-anim="fade-up">Behind the Scenes — Film</h3>
-            <div class="proj-clips-grid" id="projClipsGrid"></div>
-            <div class="proj-view-all-wrap" id="projClipsMore"></div>
         </div>
     </section>
 

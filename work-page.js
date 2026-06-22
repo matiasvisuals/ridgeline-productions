@@ -2,7 +2,12 @@
    WORK PAGE
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    // Pull the latest content first so admin thumbnail/title edits show up here
+    // (the grid is otherwise hardcoded), and so any project added in the
+    // dashboard but not yet in the static markup still appears.
+    await hydrateWorkGrid();
 
     // Entrance delay if arriving from transition
     const transitionDelay = sessionStorage.getItem('pt-active') ? 600 : 100;
@@ -82,3 +87,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
     cards.forEach(card => observer.observe(card));
 });
+
+// Sync the work grid with the live content (data/content.json via data-loader.js).
+async function hydrateWorkGrid() {
+    if (window.contentReady) {
+        try { await window.contentReady; } catch (e) { /* fall back to static markup */ }
+    }
+    const projects = window.projects || {};
+    const grid = document.getElementById('workGrid');
+    if (!grid) return;
+
+    const idOf = (card) => {
+        try { return new URL(card.href, location.href).searchParams.get('id'); }
+        catch { return null; }
+    };
+
+    // Refresh thumbnail + labels on cards that already exist in the markup.
+    grid.querySelectorAll('.work-card').forEach(card => {
+        const p = projects[idOf(card)];
+        if (!p) return;
+        const img = card.querySelector('.work-card-img img');
+        if (img && p.thumb) {
+            img.src = p.thumb;
+            img.alt = `${p.client || ''} ${p.title || ''}`.trim();
+        }
+    });
+
+    // Append any project from content that isn't already on the page.
+    const have = new Set([...grid.querySelectorAll('.work-card')].map(idOf));
+    Object.keys(projects).forEach(id => {
+        if (have.has(id)) return;
+        grid.appendChild(buildWorkCard(id, projects[id]));
+    });
+
+    const countEl = document.getElementById('workCount');
+    if (countEl) countEl.textContent = grid.querySelectorAll('.work-card').length;
+}
+
+function buildWorkCard(id, p) {
+    const a = document.createElement('a');
+    a.href = `project.html?id=${id}`;
+    a.className = 'work-card';
+    a.setAttribute('data-category', '');
+
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'work-card-img';
+    const img = document.createElement('img');
+    img.src = p.thumb || '';
+    img.alt = `${p.client || ''} ${p.title || ''}`.trim();
+    img.loading = 'lazy';
+    imgWrap.appendChild(img);
+
+    const info = document.createElement('div');
+    info.className = 'work-card-info';
+    const client = document.createElement('span');
+    client.className = 'work-card-client';
+    client.textContent = p.client || '';
+    const title = document.createElement('h3');
+    title.className = 'work-card-title';
+    title.textContent = p.title || '';
+    const type = document.createElement('span');
+    type.className = 'work-card-type';
+    type.textContent = p.type || '';
+    info.append(client, title, type);
+
+    a.append(imgWrap, info);
+    return a;
+}

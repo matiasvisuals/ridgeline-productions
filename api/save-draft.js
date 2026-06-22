@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
     // Basic schema sanity check
     const c = body.content;
-    if (!c.about || !c.creatives || !c.services || !c.projects) {
+    if (!c.about || !c.services || !c.projects) {
         return res.status(400).json({ error: 'missing_required_sections' });
     }
 

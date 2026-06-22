@@ -21,7 +21,7 @@
     <header class="header header--home" id="header">
         <nav class="nav nav--split">
             <div class="nav-links nav-links--left">
-                <a href="#work">Work</a>
+                <a href="work.html">Work</a>
                 <a href="#about">About</a>
             </div>
             <div class="nav-logo-space">
@@ -43,7 +43,7 @@
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-bg"></div>
         <div class="mobile-menu-content">
-            <a href="#work" class="mobile-link">Work</a>
+            <a href="work.html" class="mobile-link">Work</a>
             <a href="#about" class="mobile-link">About</a>
             <a href="#services" class="mobile-link">Services</a>
             <a href="#contact" class="mobile-link">Contact</a>
@@ -85,10 +85,13 @@
                 <a href="#contact" class="hero-btn hero-btn--solid" id="heroQuoteBtn">Inquire</a>
             </div>
             <p class="hero-tag anim-fade" data-delay="3">Santa Barbara, CA</p>
-            <div class="hero-scroll anim-fade" data-delay="4">
-                <span>Scroll</span>
-                <div class="scroll-line"></div>
-            </div>
+            <a href="https://www.instagram.com/a_ridgeline_production/" target="_blank" rel="noopener" class="hero-instagram anim-fade" data-delay="4" aria-label="Ridgeline on Instagram">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+            </a>
         </div>
     </section>
 
@@ -119,7 +122,7 @@
                 {"name":"Urban Decay","src":"brand/clients/urbandecay.svg","invert":true},
                 {"name":"AHNU","src":"brand/clients/ahnu.svg","invert":true,"scale":0.85},
                 {"name":"WTB","src":"brand/clients/wtb.svg","scale":0.95},
-                {"name":"NVIDIA","src":"brand/clients/nvidia.svg","scale":0.9}
+                {"name":"NVIDIA","src":"brand/clients/nvidia.svg","invert":true,"scale":0.9}
              ]'
              hidden></div>
     </div>
@@ -280,22 +283,6 @@
                     <span class="stat-bar"></span>
                 </div>
             </div>
-
-            <!-- Creatives Roster -->
-            <div class="creatives-roster anim" data-anim="fade-up">
-                <span class="creatives-label">Creatives</span>
-                <ul class="creatives-list">
-                    <li>Ian Matthews</li>
-                    <li>Brady Berryhill</li>
-                    <li>Tate Larrick</li>
-                    <li>Donnie Hedden</li>
-                    <li>Noah Woo</li>
-                    <li>Nate Stephenson</li>
-                    <li>Ryan Hansen</li>
-                    <li>James Prola</li>
-                    <li>Matias Mena</li>
-                </ul>
-            </div>
         </div>
     </section>
 
@@ -410,7 +397,10 @@
                         <div class="form-field">
                             <textarea name="message" required placeholder="About your project..." rows="4"></textarea>
                         </div>
+                        <!-- Spam honeypot — hidden from people, bots fill it and get rejected -->
+                        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none !important;position:absolute;left:-9999px">
                         <button type="submit" class="form-btn">Send Message &#8594;</button>
+                        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
                     </form>
                 </div>
             </div>

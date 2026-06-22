@@ -98,6 +98,9 @@
     letter-spacing: -0.03em;
     color: #fff;
     overflow: hidden;
+    /* Give descenders (g, y, p, j) room so the clip box doesn't cut them off */
+    padding-bottom: 0.18em;
+    margin-bottom: -0.18em;
 }
 .proj-hero-type {
     font-size: 0.75rem; font-weight: 300;
@@ -173,6 +176,73 @@
     width: 100%; height: 100%;
     border: none;
 }
+/* Self-hosted hero file: contain so vertical clips letterbox instead of crop */
+.proj-video-el {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+
+/* ─── HERO VIDEO CAROUSEL ─── */
+.proj-hero-carousel {
+    position: relative;
+}
+.proj-hero-carousel-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-radius: 8px;
+}
+.proj-hero-carousel-track::-webkit-scrollbar { display: none; }
+.proj-hero-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+}
+.proj-carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 4;
+    transition: background 0.3s, opacity 0.3s;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+.proj-carousel-arrow:hover { background: rgba(0,0,0,0.7); }
+.proj-carousel-arrow:disabled { opacity: 0; pointer-events: none; }
+.proj-carousel-arrow--prev { left: 1rem; }
+.proj-carousel-arrow--next { right: 1rem; }
+.proj-hero-carousel.is-single .proj-carousel-arrow { display: none; }
+.proj-carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.1rem;
+}
+.proj-carousel-dots:empty { display: none; }
+.proj-dot {
+    width: 7px; height: 7px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--fg-3);
+    opacity: 0.4;
+    cursor: pointer;
+    transition: opacity 0.3s, background 0.3s, transform 0.3s;
+}
+.proj-dot:hover { opacity: 0.7; }
+.proj-dot.active { opacity: 1; background: var(--accent); transform: scale(1.25); }
 
 /* ─── INFO + DETAILS — Single clean row ─── */
 .proj-info-grid {
@@ -253,29 +323,46 @@
     filter: brightness(1);
 }
 
-/* ─── BTS ─── */
+/* ─── BTS (masonry — respects each photo/clip's real aspect ratio) ─── */
 .proj-bts-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    columns: 300px 3;
+    column-gap: 6px;
 }
 .proj-bts-item {
     position: relative;
+    break-inside: avoid;
+    margin-bottom: 6px;
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
-    aspect-ratio: 4/3;
+    display: block;
 }
-.proj-bts-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
+.proj-bts-item img,
+.proj-bts-item video {
+    width: 100%;
+    height: auto;            /* keep natural aspect ratio — nothing is cropped */
+    display: block;
     transition: transform 0.7s var(--ease), filter 0.5s;
     filter: brightness(0.8);
 }
-.proj-bts-item:hover img {
+.proj-bts-item:hover img,
+.proj-bts-item:hover video {
     transform: scale(1.06);
     filter: brightness(1);
 }
+/* Play badge marks a tile as a video */
+.proj-bts-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px; height: 44px;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.9;
+    transition: transform 0.3s var(--ease), opacity 0.3s;
+}
+.proj-bts-play svg { width: 100%; height: 100%; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+.proj-bts-item:hover .proj-bts-play { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
 .proj-bts-label {
     position: absolute; bottom: 0; left: 0; right: 0;
     padding: 2.5rem 1rem 0.75rem;
@@ -409,12 +496,21 @@
 .lightbox-arrow--prev { left: 1.5rem; }
 .lightbox-arrow--next { right: 1.5rem; }
 .lightbox-content {
-    max-width: 85vw; max-height: 80vh;
+    max-width: 92vw; max-height: 88vh;
     display: flex; align-items: center; justify-content: center;
 }
 .lightbox-content img {
-    max-width: 100%; max-height: 80vh;
+    max-width: 92vw; max-height: 88vh;
     object-fit: contain;
+    border-radius: 6px;
+    animation: lbFade 0.3s ease;
+}
+/* Video keeps its native aspect ratio — vertical clips stay vertical, no crop */
+.lightbox-video {
+    max-width: 92vw; max-height: 88vh;
+    width: auto; height: auto;
+    object-fit: contain;
+    background: #000;
     border-radius: 6px;
     animation: lbFade 0.3s ease;
 }
@@ -484,7 +580,7 @@ body.loaded .proj-hero-type {
     }
     .proj-credits-grid { grid-template-columns: repeat(2, 1fr); }
     .proj-gallery { columns: 2; column-gap: 6px; }
-    .proj-bts-grid { grid-template-columns: repeat(2, 1fr); }
+    .proj-bts-grid { columns: 2; column-gap: 6px; }
     .proj-clips-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 6px; }
     .proj-nav-section { grid-template-columns: 1fr; }
     .proj-nav-next { text-align: left; border-left: none; border-top: 1px solid var(--border); }

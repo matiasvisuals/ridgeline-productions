@@ -38,17 +38,88 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Ken Burns on hero — delay to start after entrance animation
     setTimeout(() => document.getElementById('projHero').classList.add('loaded'), 1800);
 
-    // Populate video (hide the hero player if there's no Vimeo hero yet)
-    if (p.vimeo) {
-        document.getElementById('projVideoThumb').src = p.thumb;
-        document.getElementById('projPlayBtn').addEventListener('click', () => {
-            const player = document.getElementById('projVideoPlayer');
-            const hParam = p.vimeoHash ? `&h=${p.vimeoHash}` : '';
-            player.innerHTML = `<iframe src="https://player.vimeo.com/video/${p.vimeo}?autoplay=1&title=0&byline=0&portrait=0${hParam}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    const PLAY_SVG = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="white" stroke-width="1.5"/>
+        <path d="M20 16L32 24L20 32V16Z" fill="white"/>
+    </svg>`;
+
+    // ─── Hero video(s) — swipeable carousel ───
+    // Supports a mix of Vimeo links and self-hosted files via p.heroVideos.
+    // Falls back to the legacy single p.vimeo field so older content still works.
+    function getHeroVideos(proj) {
+        let list = Array.isArray(proj.heroVideos) ? proj.heroVideos.slice() : [];
+        list = list.filter(v => v && ((v.type === 'file' && v.src) || (v.type !== 'file' && v.vimeo)));
+        if (!list.length && proj.vimeo) {
+            list = [{ type: 'vimeo', vimeo: proj.vimeo, vimeoHash: proj.vimeoHash || '', poster: proj.thumb }];
+        }
+        return list;
+    }
+
+    const heroVideos = getHeroVideos(p);
+    const videoSection = document.getElementById('projVideo');
+    const carousel = document.getElementById('projHeroCarousel');
+    const carTrack = document.getElementById('projHeroCarouselTrack');
+    const carDots = document.getElementById('projHeroDots');
+    const carPrev = document.getElementById('projHeroPrev');
+    const carNext = document.getElementById('projHeroNext');
+
+    if (heroVideos.length && carTrack) {
+        carTrack.innerHTML = heroVideos.map((v, i) => {
+            const poster = v.poster || p.thumb || '';
+            return `<div class="proj-hero-slide">
+                <div class="proj-video-player" data-vid="${i}">
+                    <img class="proj-video-thumb" src="${poster}" alt="" loading="${i ? 'lazy' : 'eager'}">
+                    <div class="proj-video-play">${PLAY_SVG}</div>
+                </div>
+            </div>`;
+        }).join('');
+
+        carTrack.querySelectorAll('.proj-video-player').forEach(player => {
+            player.addEventListener('click', () => {
+                if (player.classList.contains('is-playing')) return;
+                const v = heroVideos[+player.dataset.vid];
+                player.classList.add('is-playing');
+                if (v.type === 'file') {
+                    player.innerHTML = `<video class="proj-video-el" src="${v.src}" controls autoplay playsinline ${v.poster ? `poster="${v.poster}"` : ''}></video>`;
+                } else {
+                    const hParam = v.vimeoHash ? `&h=${v.vimeoHash}` : '';
+                    player.innerHTML = `<iframe src="https://player.vimeo.com/video/${v.vimeo}?autoplay=1&title=0&byline=0&portrait=0${hParam}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+                }
+            });
         });
-    } else {
-        const vs = document.getElementById('projVideo');
-        if (vs) vs.style.display = 'none';
+
+        if (heroVideos.length > 1) {
+            carDots.innerHTML = heroVideos.map((_, i) => `<button class="proj-dot${i === 0 ? ' active' : ''}" aria-label="Video ${i + 1}"></button>`).join('');
+            const dots = [...carDots.children];
+            let current = 0;
+            const sync = () => {
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+                carPrev.disabled = current === 0;
+                carNext.disabled = current === heroVideos.length - 1;
+            };
+            const goTo = (i) => {
+                current = Math.max(0, Math.min(heroVideos.length - 1, i));
+                const slide = carTrack.children[current];
+                if (slide) carTrack.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
+                sync();
+            };
+            carPrev.addEventListener('click', () => goTo(current - 1));
+            carNext.addEventListener('click', () => goTo(current + 1));
+            dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+            let scrollTimer;
+            carTrack.addEventListener('scroll', () => {
+                clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(() => {
+                    current = Math.round(carTrack.scrollLeft / carTrack.clientWidth);
+                    sync();
+                }, 90);
+            }, { passive: true });
+            sync();
+        } else {
+            carousel.classList.add('is-single');
+        }
+    } else if (videoSection) {
+        videoSection.style.display = 'none';
     }
 
     // Populate info
@@ -82,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         moreWrap.appendChild(btn);
     }
 
-    const PREVIEW = 8;
+    const PREVIEW = 9; // full 3×3 grid — avoids an empty bottom-right tile before "View all"
 
     // Gallery
     const galleryEl = document.getElementById('projGallery');
@@ -93,45 +164,38 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <img src="${img}" alt="Still ${i + 1}" loading="lazy">
             </div>`
         ).join('');
-        applyViewAll(galleryEl, document.getElementById('projGalleryMore'), p.gallery.length, PREVIEW, 'stills');
+        applyViewAll(galleryEl, document.getElementById('projGalleryMore'), p.gallery.length, PREVIEW, 'photos');
     } else {
         gallerySection.style.display = 'none';
     }
 
-    // BTS
+    // ─── BTS — photos + film combined into one grid ───
     const btsGrid = document.getElementById('projBtsGrid');
     const btsSection = document.getElementById('projBtsSection');
-    if (p.bts && p.bts.length) {
-        btsGrid.innerHTML = p.bts.map((b, i) =>
-            `<div class="proj-bts-item anim" data-anim="fade-up" data-lb-idx="${i}" data-lb-group="bts">
-                <img src="${b.img}" alt="${b.label}" loading="lazy">
-                <span class="proj-bts-label">${b.label}</span>
-            </div>`
-        ).join('');
-        applyViewAll(btsGrid, document.getElementById('projBtsMore'), p.bts.length, PREVIEW, 'photos');
+    const btsPhotos = (p.bts || []).map(b => ({ kind: 'image', src: b.img, label: b.label || '' }));
+    const btsClips = (p.videos || []).map(v => ({ kind: 'video', src: v.src, poster: v.poster || '', label: v.label || '', w: v.w, h: v.h }));
+    const btsItems = [...btsPhotos, ...btsClips];
+
+    if (btsItems.length) {
+        btsGrid.innerHTML = btsItems.map((m, i) => {
+            // Reserve the clip's real aspect ratio so masonry doesn't reflow when it loads.
+            const ar = (m.w && m.h) ? ` style="aspect-ratio:${m.w} / ${m.h}"` : '';
+            const thumb = m.kind === 'video'
+                ? (m.poster
+                    ? `<img src="${m.poster}" alt="${m.label}" loading="lazy"${ar}>`
+                    : `<video src="${m.src}#t=0.1" muted playsinline preload="metadata"${ar}></video>`)
+                : `<img src="${m.src}" alt="${m.label}" loading="lazy">`;
+            const playBadge = m.kind === 'video'
+                ? `<span class="proj-bts-play">${PLAY_SVG}</span>`
+                : '';
+            const label = m.label ? `<span class="proj-bts-label">${m.label}</span>` : '';
+            return `<div class="proj-bts-item anim" data-anim="fade-up" data-lb-idx="${i}">
+                ${thumb}${playBadge}${label}
+            </div>`;
+        }).join('');
+        applyViewAll(btsGrid, document.getElementById('projBtsMore'), btsItems.length, PREVIEW, 'items');
     } else {
         btsSection.style.display = 'none';
-    }
-
-    // BTS Film (self-hosted clips)
-    const clipsGrid = document.getElementById('projClipsGrid');
-    const clipsSection = document.getElementById('projClipsSection');
-    const videos = p.videos || [];
-    if (clipsSection) {
-        if (videos.length) {
-            clipsGrid.innerHTML = videos.map((v, i) => {
-                const ar = (v.w && v.h) ? `${v.w} / ${v.h}` : '16 / 9';
-                return `<div class="proj-clip anim" data-anim="fade-up" style="aspect-ratio:${ar}">
-                    <video class="proj-clip-video" preload="none" playsinline controls ${v.poster ? `poster="${v.poster}"` : ''}>
-                        <source src="${v.src}" type="video/mp4">
-                    </video>
-                    ${v.label ? `<span class="proj-clip-label">${v.label}</span>` : ''}
-                </div>`;
-            }).join('');
-            applyViewAll(clipsGrid, document.getElementById('projClipsMore'), videos.length, 6, 'clips');
-        } else {
-            clipsSection.style.display = 'none';
-        }
     }
 
     // Prev / Next
@@ -191,64 +255,82 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.body.style.overflow = '';
     }));
 
-    // --- Lightbox ---
+    // --- Lightbox (images + videos, full aspect ratio, swipeable) ---
     const lightbox = document.getElementById('lightbox');
     const lbContent = document.getElementById('lightboxContent');
     const lbCaption = document.getElementById('lightboxCaption');
-    let lbImages = [];
+    const lbPrevBtn = document.getElementById('lbPrev');
+    const lbNextBtn = document.getElementById('lbNext');
+    let lbItems = [];
     let lbIdx = 0;
 
-    function openLightbox(images, startIdx, caption) {
-        lbImages = images;
+    // Accepts an array of media objects: { kind:'image'|'video', src, poster?, label? }
+    function openLightbox(items, startIdx) {
+        lbItems = items;
         lbIdx = startIdx;
-        showLbImage(caption);
+        showLb();
         lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
 
-    function showLbImage(caption) {
-        lbContent.innerHTML = `<img src="${lbImages[lbIdx]}" alt="">`;
-        lbCaption.textContent = caption || `${lbIdx + 1} / ${lbImages.length}`;
+    function showLb() {
+        const m = lbItems[lbIdx];
+        if (m.kind === 'video') {
+            lbContent.innerHTML = `<video class="lightbox-video" src="${m.src}" controls autoplay playsinline ${m.poster ? `poster="${m.poster}"` : ''}></video>`;
+        } else {
+            lbContent.innerHTML = `<img src="${m.src}" alt="">`;
+        }
+        lbCaption.textContent = m.label || `${lbIdx + 1} / ${lbItems.length}`;
+        const multi = lbItems.length > 1;
+        lbPrevBtn.style.display = multi ? '' : 'none';
+        lbNextBtn.style.display = multi ? '' : 'none';
     }
 
     function closeLightbox() {
         lightbox.classList.remove('active');
+        lbContent.innerHTML = ''; // stop any playing video
+        document.body.style.overflow = '';
+    }
+
+    function lbStep(dir) {
+        lbIdx = (lbIdx + dir + lbItems.length) % lbItems.length;
+        showLb();
     }
 
     document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-    document.getElementById('lbPrev').addEventListener('click', (e) => {
-        e.stopPropagation();
-        lbIdx = (lbIdx - 1 + lbImages.length) % lbImages.length;
-        showLbImage();
-    });
-    document.getElementById('lbNext').addEventListener('click', (e) => {
-        e.stopPropagation();
-        lbIdx = (lbIdx + 1) % lbImages.length;
-        showLbImage();
-    });
+    lbPrevBtn.addEventListener('click', e => { e.stopPropagation(); lbStep(-1); });
+    lbNextBtn.addEventListener('click', e => { e.stopPropagation(); lbStep(1); });
 
     document.addEventListener('keydown', e => {
         if (!lightbox.classList.contains('active')) return;
         if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') { lbIdx = (lbIdx - 1 + lbImages.length) % lbImages.length; showLbImage(); }
-        if (e.key === 'ArrowRight') { lbIdx = (lbIdx + 1) % lbImages.length; showLbImage(); }
+        if (e.key === 'ArrowLeft') lbStep(-1);
+        if (e.key === 'ArrowRight') lbStep(1);
     });
 
-    // Gallery lightbox
+    // Swipe to navigate on touch
+    let touchX = null;
+    lbContent.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+    lbContent.addEventListener('touchend', e => {
+        if (touchX === null) return;
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 50) lbStep(dx < 0 ? 1 : -1);
+        touchX = null;
+    }, { passive: true });
+
+    // Gallery lightbox (stills are plain image URLs)
     galleryEl.querySelectorAll('.proj-gallery-item').forEach(item => {
         item.addEventListener('click', () => {
-            const i = parseInt(item.dataset.lbIdx);
-            openLightbox(p.gallery, i);
+            const galleryItems = p.gallery.map(src => ({ kind: 'image', src }));
+            openLightbox(galleryItems, parseInt(item.dataset.lbIdx));
         });
     });
 
-    // BTS lightbox
+    // BTS lightbox (photos + videos combined)
     btsGrid.querySelectorAll('.proj-bts-item').forEach(item => {
         item.addEventListener('click', () => {
-            const i = parseInt(item.dataset.lbIdx);
-            const imgs = p.bts.map(b => b.img);
-            const label = p.bts[i].label;
-            openLightbox(imgs, i, label);
+            openLightbox(btsItems, parseInt(item.dataset.lbIdx));
         });
     });
 });

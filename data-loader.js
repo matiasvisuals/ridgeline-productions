@@ -64,18 +64,6 @@
         if (phil && about.philosophy) safeText(phil, about.philosophy);
     }
 
-    function hydrateCreatives(names) {
-        if (!Array.isArray(names)) return;
-        const list = document.querySelector('.creatives-list');
-        if (!list) return;
-        list.innerHTML = '';
-        names.forEach(name => {
-            const li = document.createElement('li');
-            li.textContent = name;
-            list.appendChild(li);
-        });
-    }
-
     function hydrateServices(services) {
         if (!Array.isArray(services)) return;
         const items = document.querySelectorAll('.services-list .service-item');
@@ -105,7 +93,6 @@
         window.SITE_CONTENT = content;
         if (content.projects) window.projects = content.projects;
         hydrateAbout(content.about);
-        hydrateCreatives(content.creatives);
         hydrateServices(content.services);
     }
 

@@ -53,6 +53,55 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Two copies for seamless loop
         logoTrack.innerHTML = buildSet() + buildSet();
+
+        // ─── Auto-drift + click-and-hold drag to explore all clients ───
+        const marquee = logoTrack.closest('.client-marquee');
+        if (marquee) {
+            let half = 0;
+            const measure = () => { half = logoTrack.scrollWidth / 2; };
+            measure();
+            window.addEventListener('resize', measure);
+            window.addEventListener('load', measure);
+
+            const SPEED = 0.5;            // px/frame auto-drift
+            let pos = 0;                  // float scroll position (sub-pixel safe)
+            let dragging = false;
+            let paused = false;           // brief pause after the user lets go
+            let lastX = 0, resumeTimer;
+
+            const loop = () => {
+                if (!dragging && !paused) pos += SPEED;
+                if (half > 0) { pos %= half; if (pos < 0) pos += half; } // seamless wrap (two identical copies)
+                marquee.scrollLeft = pos;
+                requestAnimationFrame(loop);
+            };
+            requestAnimationFrame(loop);
+
+            // One path for mouse, touch and pen
+            marquee.addEventListener('pointerdown', (e) => {
+                dragging = true;
+                lastX = e.clientX;
+                marquee.classList.add('is-grabbing');
+                try { marquee.setPointerCapture(e.pointerId); } catch (_) {}
+                clearTimeout(resumeTimer);
+            });
+            marquee.addEventListener('pointermove', (e) => {
+                if (!dragging) return;
+                pos -= (e.clientX - lastX);
+                lastX = e.clientX;
+            });
+            const endDrag = (e) => {
+                if (!dragging) return;
+                dragging = false;
+                marquee.classList.remove('is-grabbing');
+                try { marquee.releasePointerCapture(e.pointerId); } catch (_) {}
+                paused = true;
+                clearTimeout(resumeTimer);
+                resumeTimer = setTimeout(() => { paused = false; }, 1500);
+            };
+            marquee.addEventListener('pointerup', endDrag);
+            marquee.addEventListener('pointercancel', endDrag);
+        }
     }
 
     // ─── Logo morph: full white wordmark on hero → R badge in the nav island ───
@@ -547,14 +596,47 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // ─── Contact form ───
+    // ─── Contact form (Web3Forms → info@ridgelineproductions.com) ───
+    const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
     const form = document.getElementById('contactForm');
     if (form) {
-        form.addEventListener('submit', e => {
+        const btn = form.querySelector('.form-btn');
+        const statusEl = document.getElementById('formStatus');
+        const DEFAULT_LABEL = 'Send Message →';
+        const setStatus = (msg, kind) => {
+            if (!statusEl) return;
+            statusEl.textContent = msg || '';
+            statusEl.className = 'form-status' + (kind ? ' is-' + kind : '');
+        };
+        form.addEventListener('submit', async e => {
             e.preventDefault();
-            const btn = form.querySelector('.form-btn');
-            btn.textContent = 'Sent!';
-            setTimeout(() => { btn.textContent = 'Send Message →'; form.reset(); }, 2500);
+            setStatus('');
+            btn.disabled = true;
+            btn.textContent = 'Sending…';
+            try {
+                const fd = new FormData(form);
+                fd.append('access_key', WEB3FORMS_ACCESS_KEY);
+                fd.append('subject', 'New inquiry — Ridgeline Productions');
+                fd.append('from_name', 'Ridgeline Productions Website');
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { Accept: 'application/json' },
+                    body: fd,
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok && data.success) {
+                    form.reset();
+                    btn.textContent = 'Sent!';
+                    setStatus("Thanks — we'll be in touch soon.", 'success');
+                    setTimeout(() => { btn.textContent = DEFAULT_LABEL; btn.disabled = false; }, 3000);
+                } else {
+                    throw new Error(data.message || 'send_failed');
+                }
+            } catch (err) {
+                btn.textContent = DEFAULT_LABEL;
+                btn.disabled = false;
+                setStatus('Something went wrong. Please email info@ridgelineproductions.com directly.', 'error');
+            }
         });
     }
 
