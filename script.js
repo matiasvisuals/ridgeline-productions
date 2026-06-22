@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Two copies for seamless loop
         logoTrack.innerHTML = buildSet() + buildSet();
 
-        // ─── Auto-drift + click-and-hold drag to explore all clients ───
+        // ─── Auto-drift + swipe/drag to explore all clients ───
         const marquee = logoTrack.closest('.client-marquee');
         if (marquee) {
             let half = 0;
@@ -63,41 +63,61 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.addEventListener('resize', measure);
             window.addEventListener('load', measure);
 
-            const SPEED = 0.5;            // px/frame auto-drift
-            let pos = 0;                  // float scroll position (sub-pixel safe)
-            let dragging = false;
-            let paused = false;           // brief pause after the user lets go
-            let lastX = 0, resumeTimer;
+            const SPEED = 0.4;        // px/frame auto-drift
+            let acc = 0;              // sub-pixel accumulator (integer-scrollLeft safe)
+            let active = true;        // auto-drift running?
+            let dragging = false;     // mouse drag in progress
+            let lastX = 0, idleTimer;
 
+            const wrap = () => {
+                if (half <= 0) return;
+                if (marquee.scrollLeft >= half) marquee.scrollLeft -= half;
+                else if (marquee.scrollLeft <= 0) marquee.scrollLeft += half;
+            };
             const loop = () => {
-                if (!dragging && !paused) pos += SPEED;
-                if (half > 0) { pos %= half; if (pos < 0) pos += half; } // seamless wrap (two identical copies)
-                marquee.scrollLeft = pos;
+                if (active && !dragging) {
+                    acc += SPEED;
+                    const whole = Math.floor(acc);
+                    if (whole) { marquee.scrollLeft += whole; acc -= whole; wrap(); }
+                }
                 requestAnimationFrame(loop);
             };
             requestAnimationFrame(loop);
 
-            // One path for mouse, touch and pen
+            const pause = () => { active = false; clearTimeout(idleTimer); };
+            const resumeSoon = () => { clearTimeout(idleTimer); idleTimer = setTimeout(() => { active = true; }, 1000); };
+
+            // Touch: let the browser scroll natively (momentum) — just park the drift,
+            // then resume shortly after the strip settles.
+            marquee.addEventListener('touchstart', pause, { passive: true });
+            marquee.addEventListener('touchend', resumeSoon, { passive: true });
+            marquee.addEventListener('scroll', () => {
+                if (active || dragging) return;   // ignore the drift's own scrolling
+                wrap();
+                resumeSoon();
+            }, { passive: true });
+
+            // Mouse / pen: click-and-hold drag.
             marquee.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'touch') return; // touch handled natively above
                 dragging = true;
+                pause();
                 lastX = e.clientX;
                 marquee.classList.add('is-grabbing');
                 try { marquee.setPointerCapture(e.pointerId); } catch (_) {}
-                clearTimeout(resumeTimer);
             });
             marquee.addEventListener('pointermove', (e) => {
                 if (!dragging) return;
-                pos -= (e.clientX - lastX);
+                marquee.scrollLeft -= (e.clientX - lastX);
                 lastX = e.clientX;
+                wrap();
             });
             const endDrag = (e) => {
                 if (!dragging) return;
                 dragging = false;
                 marquee.classList.remove('is-grabbing');
                 try { marquee.releasePointerCapture(e.pointerId); } catch (_) {}
-                paused = true;
-                clearTimeout(resumeTimer);
-                resumeTimer = setTimeout(() => { paused = false; }, 1500);
+                resumeSoon();
             };
             marquee.addEventListener('pointerup', endDrag);
             marquee.addEventListener('pointercancel', endDrag);
@@ -269,8 +289,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             return meter.getBoundingClientRect().width;
         };
 
+        // Lock the slot to the widest word (+ its period) so the headline never
+        // reflows or shifts the section when a longer word rotates in.
         const setWidth = () => {
-            wordRotator.style.width = measure(current.textContent) + 'px';
+            let max = 0;
+            words.forEach(w => { const x = measure(w + '.'); if (x > max) max = x; });
+            wordRotator.style.width = Math.ceil(max + 2) + 'px';
         };
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(setWidth);
@@ -286,7 +310,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             idx = (idx + 1) % words.length;
             const next = words[idx];
 
-            wordRotator.style.width = measure(next) + 'px';
             current.classList.add('wr-out');
 
             setTimeout(() => {

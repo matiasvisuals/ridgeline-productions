@@ -895,7 +895,7 @@ body.loaded [data-delay="5"] { animation-delay: 1.65s; }
     overflow-x: auto;
     overflow-y: hidden;
     cursor: grab;
-    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;   /* momentum scroll on iOS */
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding: 2.25rem 0;
@@ -1046,10 +1046,11 @@ body.loaded [data-delay="5"] { animation-delay: 1.65s; }
     display: inline-block;
     position: relative;
     overflow: clip;
-    overflow-clip-margin: 0.25em;
+    overflow-clip-margin: 0.3em;
     vertical-align: bottom;
     white-space: nowrap;
-    transition: width 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+    text-align: left;        /* word + period hug the left; reserved slot fills to the right */
+    transition: width 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .wr-word {
     display: inline-block;
