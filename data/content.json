@@ -851,7 +851,7 @@
       "client": "WTB & Kona Bicycles",
       "title": "Leaving a Tread",
       "type": "Documentary / Cycling",
-      "year": "2023",
+      "year": "",
       "vimeo": "1067859697",
       "vimeoHash": "c7fe926db5",
       "thumb": "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/51d2e274-0db9-4b71-9d11-6ad5849810a3/thumb+%282%29.jpg",
@@ -943,6 +943,14 @@
           "label": "",
           "w": 720,
           "h": 1280
+        }
+      ],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1067859697",
+          "vimeoHash": "c7fe926db5",
+          "poster": ""
         }
       ]
     },
