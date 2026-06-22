@@ -1087,6 +1087,46 @@
         {
           "role": "DoP",
           "name": "Maxwell Frank"
+        },
+        {
+          "role": "Photographer",
+          "name": "Jeff Clark"
+        },
+        {
+          "role": "Digi",
+          "name": "Hugo Martinez"
+        },
+        {
+          "role": "Gaffer",
+          "name": "Manny Gonzalez"
+        },
+        {
+          "role": "Edit Supervisor",
+          "name": "Tye French"
+        },
+        {
+          "role": "Editor/Colorist",
+          "name": "Ryan Hansen"
+        },
+        {
+          "role": "VFX + Compositing",
+          "name": "James Prola"
+        },
+        {
+          "role": "Studio Athlete",
+          "name": "Terence Ayala"
+        },
+        {
+          "role": "Outdoor Athlete",
+          "name": "Alonso Mae"
+        },
+        {
+          "role": "Outdoor Athlete",
+          "name": "David"
+        },
+        {
+          "role": "studio",
+          "name": "Summit Studios"
         }
       ],
       "gallery": [],
