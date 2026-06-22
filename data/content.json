@@ -1059,9 +1059,16 @@
           "img": "/media/wtb-czr/bts/006.jpg"
         }
       ],
-      "gallery": [
-        "https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg"
-      ]
+      "gallery": [],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1064899375",
+          "vimeoHash": "",
+          "poster": ""
+        }
+      ],
+      "videos": []
     },
     "giant-helmets": {
       "client": "Giant Bicycles",
