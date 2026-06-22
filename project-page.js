@@ -391,18 +391,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         touchX = null;
     }, { passive: true });
 
-    // Gallery lightbox (stills are plain image URLs)
-    galleryEl.querySelectorAll('.proj-gallery-item').forEach(item => {
-        item.addEventListener('click', () => {
+    // Gallery lightbox (delegated so tiles revealed by "View all" still work)
+    if (galleryEl) {
+        galleryEl.addEventListener('click', (e) => {
+            const item = e.target.closest('.proj-gallery-item');
+            if (!item || !galleryEl.contains(item)) return;
             const galleryItems = p.gallery.map(src => ({ kind: 'image', src }));
             openLightbox(galleryItems, parseInt(item.dataset.lbIdx));
         });
-    });
+    }
 
-    // BTS lightbox (photos + videos combined)
-    btsGrid.querySelectorAll('.proj-bts-item').forEach(item => {
-        item.addEventListener('click', () => {
+    // BTS lightbox — delegated so photos AND videos (incl. items shown via "View all")
+    // all open in the full-aspect lightbox.
+    if (btsGrid) {
+        btsGrid.addEventListener('click', (e) => {
+            const item = e.target.closest('.proj-bts-item');
+            if (!item || !btsGrid.contains(item)) return;
             openLightbox(btsItems, parseInt(item.dataset.lbIdx));
         });
-    });
+    }
 });

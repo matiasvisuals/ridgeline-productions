@@ -1538,22 +1538,26 @@ body.page-exiting > .fixed-quote-btn {
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
     .nav-links { display: none; }
-    /* badge centered in the pill, hamburger pinned to the top-right (always reachable) */
-    .nav--split { display: flex !important; justify-content: center !important; align-items: center; }
+    /* badge top-left, hamburger top-right — both inside the pill */
+    .nav--split { display: flex !important; justify-content: space-between !important; align-items: center; }
     .nav-logo-space { display: flex; width: auto; }
     .nav-logo-img { height: 24px; }
-    .menu-btn {
-        display: flex;
-        position: fixed;
-        top: 1.55rem;
-        right: clamp(1.1rem, 5vw, 1.75rem);
-        z-index: 200;
-    }
+    .menu-btn { display: flex; position: static; }
     /* keep the pill within the screen so it never overflows on a phone */
     .header.scrolled .nav { max-width: 100%; }
-    /* on the home page reveal the static badge on scroll (the morph badge is hidden on mobile) */
+    /* Home: keep the hero clean — no badge or hamburger until you scroll past it
+       (the pill + controls appear together once the nav reveals). */
+    .header--home .menu-btn { display: none; }
+    .header--home.nav-revealed .menu-btn { display: flex; }
     .header--home.nav-revealed .nav-logo-link { opacity: 1; }
     .hero-badge { display: none; }
+    /* Hero subtitle much smaller so it doesn't dominate the phone view */
+    .hero-sub { font-size: 0.6rem; letter-spacing: 0.1em; }
+    /* Zoom the background video more so it fully covers a tall phone (no black bars) */
+    .hero-video-iframe {
+        width: calc(max(100vw, 177.78vh) * 1.6);
+        height: calc(max(100vh, 56.25vw) * 1.6);
+    }
     .hero-logo { width: 95vw; top: 2vh; }
     .hero-center-cta { top: 72%; }
     .hero-btn-row { flex-direction: column; gap: 0.5rem; }
