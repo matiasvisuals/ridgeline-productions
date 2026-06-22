@@ -503,6 +503,11 @@
 .lightbox-arrow--prev { left: 1.5rem; }
 .lightbox-arrow--next { right: 1.5rem; }
 .lightbox-content {
+    /* Override the legacy 16:9 video-lightbox rule in styles.css that was
+       clipping photos/videos to a wide strip. */
+    width: auto;
+    aspect-ratio: auto;
+    overflow: visible;
     max-width: 92vw; max-height: 88vh;
     display: flex; align-items: center; justify-content: center;
 }
