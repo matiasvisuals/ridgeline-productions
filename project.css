@@ -507,6 +507,7 @@
     display: flex; align-items: center; justify-content: center;
 }
 .lightbox-content img {
+    width: auto; height: auto;          /* never force a box — always the photo's real shape */
     max-width: 92vw; max-height: 86vh;
     object-fit: contain;
     border-radius: 6px;
