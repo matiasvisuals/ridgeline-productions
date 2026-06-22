@@ -507,8 +507,6 @@
     display: flex; align-items: center; justify-content: center;
 }
 .lightbox-content img {
-    /* No object-fit / forced box — the image sizes to its own natural shape,
-       which avoids a Chromium object-fit+orientation rendering bug. */
     width: auto; height: auto;
     max-width: 92vw; max-height: 86vh;
     border-radius: 6px;
