@@ -1279,12 +1279,60 @@
       "description": "Behind the scenes with Giant Bicycles on Shoes.",
       "credits": [
         {
-          "role": "Director & DoP",
+          "role": "Photographer",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "Producer",
+          "name": "Chaparral Studio"
+        },
+        {
+          "role": "Gaffer",
+          "name": "Brady Berryhill"
+        },
+        {
+          "role": "Swing",
+          "name": "Noah Spiece"
+        },
+        {
+          "role": "Studio AC",
+          "name": "Jesse Natale"
+        },
+        {
+          "role": "1st AC",
+          "name": "Joseph Cunningham"
+        },
+        {
+          "role": "Camera Car Driver",
+          "name": "Mark Romanov"
+        },
+        {
+          "role": "PA/2nd AC",
+          "name": "Nate Stephensonn"
+        },
+        {
+          "role": "Edit Supervisor",
           "name": "Tye French"
         },
         {
-          "role": "Photographer",
-          "name": "Maxwell Frank"
+          "role": "Editor",
+          "name": "Brian Szymanski"
+        },
+        {
+          "role": "Colorist",
+          "name": "Ian Matthews"
+        },
+        {
+          "role": "VFX + Compositing",
+          "name": "James Prola"
+        },
+        {
+          "role": "Athlete",
+          "name": "Brandon Baker"
+        },
+        {
+          "role": "studio",
+          "name": "Summit Studios"
         }
       ],
       "gallery": [
