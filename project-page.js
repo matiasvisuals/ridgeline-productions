@@ -136,40 +136,101 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>`
     ).join('');
 
-    // Show only a preview of big media sets; reveal the rest on "View all".
-    function applyViewAll(gridEl, moreWrap, total, limit, noun) {
-        if (!moreWrap) return;
-        moreWrap.innerHTML = '';
-        if (total <= limit) return;
-        const items = [...gridEl.children];
-        items.forEach((el, i) => { if (i >= limit) el.classList.add('proj-media-collapsed'); });
-        const btn = document.createElement('button');
-        btn.className = 'proj-view-all';
-        btn.textContent = `View all ${total} ${noun}`;
-        btn.addEventListener('click', () => {
-            items.forEach(el => { el.classList.remove('proj-media-collapsed'); el.classList.add('visible'); });
-            moreWrap.innerHTML = '';
-        });
-        moreWrap.appendChild(btn);
+    // Aspect ratio (w/h) of a tile — stored clip dims, then the loaded image/video, else a fallback.
+    function tileAspect(item) {
+        const w = parseFloat(item.dataset.arw), h = parseFloat(item.dataset.arh);
+        if (w && h) return w / h;
+        const img = item.querySelector('img');
+        if (img && img.naturalWidth && img.naturalHeight) return img.naturalWidth / img.naturalHeight;
+        const vid = item.querySelector('video');
+        if (vid && vid.videoWidth && vid.videoHeight) return vid.videoWidth / vid.videoHeight;
+        return 4 / 3;
     }
 
-    const PREVIEW = 9; // full 3×3 grid — avoids an empty bottom-right tile before "View all"
+    // Balanced masonry: each tile drops into the shortest column (even bottom edge), the
+    // column group is centered, and we never make more columns than there are tiles — so a
+    // short set sits in the middle of the page instead of hugging the left.
+    function setupMasonry(gridEl, moreWrap, itemEls, total, previewLimit, noun) {
+        let limit = Math.min(total, previewLimit);
+        let scheduled = false;
 
-    // Gallery
+        function layout() {
+            const width = gridEl.clientWidth;
+            if (!width || !itemEls.length) return;
+            const gap = 6, target = 220;
+            const count = Math.min(limit, itemEls.length);
+            const maxCols = Math.max(2, Math.floor((width + gap) / (target + gap)));
+            const cols = Math.max(1, Math.min(maxCols, count));
+            // fill the full width when columns are maxed out; otherwise keep tiles at the
+            // target size and let the centered flex container balance the margins.
+            const colW = cols === maxCols ? (width - (cols - 1) * gap) / cols : target;
+            gridEl.innerHTML = '';
+            const colEls = [], colH = [];
+            for (let i = 0; i < cols; i++) {
+                const c = document.createElement('div');
+                c.className = 'proj-masonry-col';
+                c.style.width = colW + 'px';
+                gridEl.appendChild(c);
+                colEls.push(c); colH.push(0);
+            }
+            itemEls.slice(0, limit).forEach(item => {
+                let m = 0;
+                for (let i = 1; i < cols; i++) if (colH[i] < colH[m]) m = i;
+                colEls[m].appendChild(item);
+                colH[m] += colW / tileAspect(item) + gap;
+            });
+        }
+        const relayout = () => {
+            if (scheduled) return;
+            scheduled = true;
+            requestAnimationFrame(() => { scheduled = false; layout(); });
+        };
+
+        if (moreWrap) {
+            moreWrap.innerHTML = '';
+            if (total > previewLimit) {
+                const btn = document.createElement('button');
+                btn.className = 'proj-view-all';
+                btn.textContent = `View all ${total} ${noun}`;
+                btn.addEventListener('click', () => {
+                    limit = total;
+                    itemEls.forEach(el => el.classList.add('visible'));
+                    layout();
+                    moreWrap.innerHTML = '';
+                });
+                moreWrap.appendChild(btn);
+            }
+        }
+        layout();
+        // refine once real media sizes are known, and on resize
+        itemEls.forEach(el => {
+            const img = el.querySelector('img');
+            if (img && !img.complete) img.addEventListener('load', relayout, { once: true });
+            const vid = el.querySelector('video');
+            if (vid) vid.addEventListener('loadedmetadata', relayout, { once: true });
+        });
+        window.addEventListener('resize', relayout, { passive: true });
+    }
+
+    const PREVIEW = 9;      // stills preview
+    const BTS_PREVIEW = 18; // BTS is denser now — show more so the block reads as complete
+
+    // Gallery (Photography)
     const galleryEl = document.getElementById('projGallery');
     const gallerySection = document.getElementById('projGallerySection');
     if (p.gallery && p.gallery.length) {
         galleryEl.innerHTML = p.gallery.map((img, i) =>
-            `<div class="proj-gallery-item anim" data-anim="fade-up" data-lb-idx="${i}" data-lb-group="gallery">
+            `<div class="proj-gallery-item anim" data-anim="fade-up" data-lb-idx="${i}">
                 <img src="${img}" alt="Still ${i + 1}" loading="lazy">
             </div>`
         ).join('');
-        applyViewAll(galleryEl, document.getElementById('projGalleryMore'), p.gallery.length, PREVIEW, 'photos');
+        const galleryEls = [...galleryEl.querySelectorAll('.proj-gallery-item')];
+        setupMasonry(galleryEl, document.getElementById('projGalleryMore'), galleryEls, p.gallery.length, PREVIEW, 'photos');
     } else {
         gallerySection.style.display = 'none';
     }
 
-    // ─── BTS — photos + film combined into one grid ───
+    // ─── BTS — photos + film combined into one balanced masonry grid ───
     const btsGrid = document.getElementById('projBtsGrid');
     const btsSection = document.getElementById('projBtsSection');
     const btsPhotos = (p.bts || []).map(b => ({ kind: 'image', src: b.img, label: b.label || '' }));
@@ -178,22 +239,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (btsItems.length) {
         btsGrid.innerHTML = btsItems.map((m, i) => {
-            // Reserve the clip's real aspect ratio so masonry doesn't reflow when it loads.
-            const ar = (m.w && m.h) ? ` style="aspect-ratio:${m.w} / ${m.h}"` : '';
+            const arStyle = (m.w && m.h) ? ` style="aspect-ratio:${m.w} / ${m.h}"` : '';
+            const arData = (m.w && m.h) ? ` data-arw="${m.w}" data-arh="${m.h}"` : '';
             const thumb = m.kind === 'video'
                 ? (m.poster
-                    ? `<img src="${m.poster}" alt="${m.label}" loading="lazy"${ar}>`
-                    : `<video src="${m.src}#t=0.1" muted playsinline preload="metadata"${ar}></video>`)
+                    ? `<img src="${m.poster}" alt="${m.label}" loading="lazy"${arStyle}>`
+                    : `<video src="${m.src}#t=0.1" muted playsinline preload="metadata"${arStyle}></video>`)
                 : `<img src="${m.src}" alt="${m.label}" loading="lazy">`;
-            const playBadge = m.kind === 'video'
-                ? `<span class="proj-bts-play">${PLAY_SVG}</span>`
-                : '';
+            const playBadge = m.kind === 'video' ? `<span class="proj-bts-play">${PLAY_SVG}</span>` : '';
             const label = m.label ? `<span class="proj-bts-label">${m.label}</span>` : '';
-            return `<div class="proj-bts-item anim" data-anim="fade-up" data-lb-idx="${i}">
+            return `<div class="proj-bts-item anim" data-anim="fade-up" data-lb-idx="${i}"${arData}>
                 ${thumb}${playBadge}${label}
             </div>`;
         }).join('');
-        applyViewAll(btsGrid, document.getElementById('projBtsMore'), btsItems.length, PREVIEW, 'items');
+        const btsEls = [...btsGrid.querySelectorAll('.proj-bts-item')];
+        setupMasonry(btsGrid, document.getElementById('projBtsMore'), btsEls, btsItems.length, BTS_PREVIEW, 'items');
     } else {
         btsSection.style.display = 'none';
     }

@@ -298,14 +298,14 @@
     color: var(--fg);
 }
 
-/* ─── GALLERY (masonry — respects each still's orientation) ─── */
+/* ─── GALLERY (JS masonry — even columns, centered, no cropping) ─── */
 .proj-gallery {
-    columns: 300px 3;
-    column-gap: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 6px;
 }
 .proj-gallery-item {
-    break-inside: avoid;
-    margin-bottom: 6px;
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
@@ -323,15 +323,22 @@
     filter: brightness(1);
 }
 
-/* ─── BTS (masonry — respects each photo/clip's real aspect ratio) ─── */
+/* ─── BTS (JS masonry — even columns, centered, no cropping) ─── */
 .proj-bts-grid {
-    columns: 300px 3;
-    column-gap: 6px;
+    display: flex;
+    justify-content: center;   /* centers the column group when items are few */
+    align-items: flex-start;
+    gap: 6px;
+}
+/* shared masonry column for Photography + BTS (width is set per-layout in JS) */
+.proj-masonry-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 0 0 auto;
 }
 .proj-bts-item {
     position: relative;
-    break-inside: avoid;
-    margin-bottom: 6px;
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
@@ -500,14 +507,15 @@
     display: flex; align-items: center; justify-content: center;
 }
 .lightbox-content img {
-    max-width: 92vw; max-height: 88vh;
+    max-width: 92vw; max-height: 86vh;
     object-fit: contain;
     border-radius: 6px;
     animation: lbFade 0.3s ease;
 }
-/* Video keeps its native aspect ratio — vertical clips stay vertical, no crop */
+/* Video keeps its native aspect ratio — vertical clips stay vertical, no crop.
+   Capped a bit shorter so the native playback controls always stay on-screen. */
 .lightbox-video {
-    max-width: 92vw; max-height: 88vh;
+    max-width: 92vw; max-height: 80vh;
     width: auto; height: auto;
     object-fit: contain;
     background: #000;
@@ -579,9 +587,6 @@ body.loaded .proj-hero-type {
         gap: 1.5rem 3rem;
     }
     .proj-credits-grid { grid-template-columns: repeat(2, 1fr); }
-    .proj-gallery { columns: 2; column-gap: 6px; }
-    .proj-bts-grid { columns: 2; column-gap: 6px; }
-    .proj-clips-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 6px; }
     .proj-nav-section { grid-template-columns: 1fr; }
     .proj-nav-next { text-align: left; border-left: none; border-top: 1px solid var(--border); }
     .proj-hero-scroll { display: none; }
