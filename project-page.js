@@ -151,16 +151,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     // column group is centered, and we never make more columns than there are tiles — so a
     // short set sits in the middle of the page instead of hugging the left.
     function setupMasonry(gridEl, moreWrap, itemEls, total, previewLimit, noun) {
-        let limit = Math.min(total, previewLimit);
+        let expanded = total <= previewLimit;
         let scheduled = false;
 
         function layout() {
             const width = gridEl.clientWidth;
             if (!width || !itemEls.length) return;
             const gap = 6, target = 220;
-            const count = Math.min(limit, itemEls.length);
             const maxCols = Math.max(2, Math.floor((width + gap) / (target + gap)));
-            const cols = Math.max(1, Math.min(maxCols, count));
+            // When collapsed, show whole rows only so the last row is never left with
+            // empty spots (which read as "missing photos").
+            let showCount;
+            if (expanded) {
+                showCount = itemEls.length;
+            } else {
+                const pc = Math.max(1, Math.min(maxCols, previewLimit));
+                showCount = Math.min(itemEls.length, Math.max(1, Math.round(previewLimit / pc)) * pc);
+            }
+            const cols = Math.max(1, Math.min(maxCols, showCount));
             // fill the full width when columns are maxed out; otherwise keep tiles at the
             // target size and let the centered flex container balance the margins.
             const colW = cols === maxCols ? (width - (cols - 1) * gap) / cols : target;
@@ -173,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 gridEl.appendChild(c);
                 colEls.push(c); colH.push(0);
             }
-            itemEls.slice(0, limit).forEach(item => {
+            itemEls.slice(0, showCount).forEach(item => {
                 let m = 0;
                 for (let i = 1; i < cols; i++) if (colH[i] < colH[m]) m = i;
                 colEls[m].appendChild(item);
@@ -193,7 +201,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 btn.className = 'proj-view-all';
                 btn.textContent = `View all ${total} ${noun}`;
                 btn.addEventListener('click', () => {
-                    limit = total;
+                    expanded = true;
                     itemEls.forEach(el => el.classList.add('visible'));
                     layout();
                     moreWrap.innerHTML = '';
