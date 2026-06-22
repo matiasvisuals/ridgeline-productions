@@ -592,8 +592,10 @@ body.loaded .proj-hero-type {
         gap: 1.5rem 3rem;
     }
     .proj-credits-grid { grid-template-columns: repeat(2, 1fr); }
-    .proj-nav-section { grid-template-columns: 1fr; }
-    .proj-nav-next { text-align: left; border-left: none; border-top: 1px solid var(--border); }
+    /* Keep Previous (left) / Next (right) side by side on mobile too */
+    .proj-nav-section { grid-template-columns: 1fr 1fr; }
+    .proj-nav-link { padding: clamp(1.75rem, 6vw, 4rem) clamp(0.9rem, 4vw, 2.5rem); }
+    .proj-nav-name { font-size: clamp(0.95rem, 4vw, 1.6rem); }
     .proj-hero-scroll { display: none; }
 
     /* Lightbox tuned for small screens */
