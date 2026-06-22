@@ -1538,9 +1538,22 @@ body.page-exiting > .fixed-quote-btn {
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
     .nav-links { display: none; }
-    .nav--split { display: flex; justify-content: center; }
-    .nav-logo-space { display: none; }
-    .menu-btn { display: flex; position: absolute; right: clamp(1.25rem, 4vw, 2.5rem); }
+    /* badge centered in the pill, hamburger pinned to the top-right (always reachable) */
+    .nav--split { display: flex !important; justify-content: center !important; align-items: center; }
+    .nav-logo-space { display: flex; width: auto; }
+    .nav-logo-img { height: 24px; }
+    .menu-btn {
+        display: flex;
+        position: fixed;
+        top: 1.55rem;
+        right: clamp(1.1rem, 5vw, 1.75rem);
+        z-index: 200;
+    }
+    /* keep the pill within the screen so it never overflows on a phone */
+    .header.scrolled .nav { max-width: 100%; }
+    /* on the home page reveal the static badge on scroll (the morph badge is hidden on mobile) */
+    .header--home.nav-revealed .nav-logo-link { opacity: 1; }
+    .hero-badge { display: none; }
     .hero-logo { width: 95vw; top: 2vh; }
     .hero-center-cta { top: 72%; }
     .hero-btn-row { flex-direction: column; gap: 0.5rem; }

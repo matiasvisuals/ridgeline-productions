@@ -344,7 +344,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     function showLb() {
         const m = lbItems[lbIdx];
         if (m.kind === 'video') {
-            lbContent.innerHTML = `<video class="lightbox-video" src="${m.src}" controls autoplay playsinline ${m.poster ? `poster="${m.poster}"` : ''}></video>`;
+            // Give the clip its real intrinsic size (like an <img width height>) so it
+            // scales to the correct aspect ratio immediately, instead of flashing the
+            // browser's default 300×150 video box before metadata loads.
+            const dims = (m.w && m.h) ? ` width="${m.w}" height="${m.h}"` : '';
+            lbContent.innerHTML = `<video class="lightbox-video"${dims} src="${m.src}" controls autoplay playsinline ${m.poster ? `poster="${m.poster}"` : ''}></video>`;
         } else {
             lbContent.innerHTML = `<img src="${m.src}" alt="">`;
         }

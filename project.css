@@ -590,4 +590,12 @@ body.loaded .proj-hero-type {
     .proj-nav-section { grid-template-columns: 1fr; }
     .proj-nav-next { text-align: left; border-left: none; border-top: 1px solid var(--border); }
     .proj-hero-scroll { display: none; }
+
+    /* Lightbox tuned for small screens */
+    .lightbox-close { top: 1rem; right: 1rem; }
+    .lightbox-arrow { width: 40px; height: 40px; }
+    .lightbox-arrow--prev { left: 0.5rem; }
+    .lightbox-arrow--next { right: 0.5rem; }
+    .lightbox-content, .lightbox-content img, .lightbox-video { max-width: 94vw; }
+    .lightbox-video { max-height: 78vh; }
 }
