@@ -3,6 +3,14 @@
     "api/content.js": { "includeFiles": "data/content.json" },
     "api/publish.js": { "includeFiles": "data/content.json" }
   },
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.ridgelineproductions.com" }],
+      "destination": "https://ridgelineproductions.com/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/admin/(.*)",
