@@ -221,9 +221,15 @@
 }
 .proj-carousel-arrow:hover { background: rgba(0,0,0,0.7); }
 .proj-carousel-arrow:disabled { opacity: 0; pointer-events: none; }
-.proj-carousel-arrow--prev { left: 1rem; }
-.proj-carousel-arrow--next { right: 1rem; }
+/* Sit in the margins just outside the video box (not overlapping the footage). */
+.proj-carousel-arrow--prev { left: -3.75rem; }
+.proj-carousel-arrow--next { right: -3.75rem; }
 .proj-hero-carousel.is-single .proj-carousel-arrow { display: none; }
+/* Not enough side margin to clear the video — tuck the arrows back inside. */
+@media (max-width: 1280px) {
+    .proj-carousel-arrow--prev { left: 1rem; }
+    .proj-carousel-arrow--next { right: 1rem; }
+}
 .proj-carousel-dots {
     display: flex;
     justify-content: center;
