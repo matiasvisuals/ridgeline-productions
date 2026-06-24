@@ -1688,6 +1688,13 @@
       ],
       "videos": [
         {
+          "src": "/media/giant-shoes/video/004.mp4",
+          "poster": "/media/giant-shoes/video/004.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
           "src": "/media/giant-shoes/video/001.mp4",
           "poster": "/media/giant-shoes/video/001.jpg",
           "label": "",
@@ -1704,13 +1711,6 @@
         {
           "src": "/media/giant-shoes/video/003.mp4",
           "poster": "/media/giant-shoes/video/003.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/004.mp4",
-          "poster": "/media/giant-shoes/video/004.jpg",
           "label": "",
           "w": 720,
           "h": 1280
@@ -1790,6 +1790,14 @@
           "kind": "image",
           "img": "/media/giant-shoes/bts/001.jpg",
           "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/004.mp4",
+          "poster": "/media/giant-shoes/video/004.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
         },
         {
           "kind": "image",
@@ -1951,14 +1959,6 @@
           "kind": "video",
           "src": "/media/giant-shoes/video/003.mp4",
           "poster": "/media/giant-shoes/video/003.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/004.mp4",
-          "poster": "/media/giant-shoes/video/004.jpg",
           "label": "",
           "w": 720,
           "h": 1280
