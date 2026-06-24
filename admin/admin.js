@@ -1278,7 +1278,7 @@ function enableGridReorder(grid, items, onReorder) {
         const tile = handle.closest('.admin-media-tile');
         if (!tile) return;
         e.preventDefault();
-        st = { tile, startX: e.clientX, startY: e.clientY, active: false, clone: null, dx: 0, dy: 0, startOrder: orderKey() };
+        st = { tile, startX: e.clientX, startY: e.clientY, lastX: e.clientX, lastY: e.clientY, active: false, clone: null, dx: 0, dy: 0, raf: 0, startOrder: orderKey() };
         window.addEventListener('pointermove', onMove);
         window.addEventListener('pointerup', onUp, { once: true });
         window.addEventListener('pointercancel', onUp, { once: true });
@@ -1299,29 +1299,55 @@ function enableGridReorder(grid, items, onReorder) {
         tile.classList.add('is-drag-src');
         document.body.classList.add('is-grid-dragging');
         st.active = true;
+        st.raf = requestAnimationFrame(autoScrollTick);
     }
 
-    function onMove(e) {
-        if (!st) return;
-        if (!st.active) {
-            if (Math.hypot(e.clientX - st.startX, e.clientY - st.startY) < THRESHOLD) return;
-            beginDrag(e);
-        }
-        st.clone.style.transform = `translate(${e.clientX - st.dx}px, ${e.clientY - st.dy}px) scale(1.05)`;
+    function positionClone() {
+        st.clone.style.transform = `translate(${st.lastX - st.dx}px, ${st.lastY - st.dy}px) scale(1.05)`;
+    }
 
-        // Insertion point = first tile whose midpoint is past the pointer (row-major).
-        // Comparing against midpoints gives hysteresis, so neighbours don't oscillate.
+    // Insertion point = first tile whose midpoint is past the pointer (row-major).
+    // Comparing against midpoints gives hysteresis, so neighbours don't oscillate.
+    function updateInsertion() {
         const others = tilesIn().filter(t => t !== st.tile);
         let ref = null;
         for (const t of others) {
             const r = t.getBoundingClientRect();
-            const before = e.clientY < r.top ? true
-                : e.clientY > r.bottom ? false
-                : e.clientX < r.left + r.width / 2;
+            const before = st.lastY < r.top ? true
+                : st.lastY > r.bottom ? false
+                : st.lastX < r.left + r.width / 2;
             if (before) { ref = t; break; }
         }
         if (ref === st.tile || st.tile.nextSibling === ref) return; // already in place
         flipMove(() => grid.insertBefore(st.tile, ref));
+    }
+
+    // While dragging near the top/bottom edge of the viewport, scroll the page in
+    // that direction so a tile can be dropped beyond what's currently on screen.
+    function autoScrollTick() {
+        if (!st || !st.active) return;
+        const MARGIN = 100, MAX = 22;
+        const vh = window.innerHeight;
+        let dy = 0;
+        if (st.lastY < MARGIN) dy = -MAX * (1 - st.lastY / MARGIN);
+        else if (st.lastY > vh - MARGIN) dy = MAX * (1 - (vh - st.lastY) / MARGIN);
+        if (dy) {
+            const before = window.scrollY;
+            window.scrollBy(0, dy);
+            if (window.scrollY !== before) updateInsertion(); // tiles moved under the pointer
+        }
+        st.raf = requestAnimationFrame(autoScrollTick);
+    }
+
+    function onMove(e) {
+        if (!st) return;
+        st.lastX = e.clientX; st.lastY = e.clientY;
+        if (!st.active) {
+            if (Math.hypot(e.clientX - st.startX, e.clientY - st.startY) < THRESHOLD) return;
+            beginDrag(e);
+        }
+        positionClone();
+        updateInsertion();
     }
 
     // FLIP: record sibling positions, move the placeholder in the DOM, then play
@@ -1348,6 +1374,7 @@ function enableGridReorder(grid, items, onReorder) {
         window.removeEventListener('pointermove', onMove);
         if (!st) return;
         const s = st; st = null;
+        if (s.raf) cancelAnimationFrame(s.raf);
         if (!s.active) return;
 
         const rect = s.tile.getBoundingClientRect();
