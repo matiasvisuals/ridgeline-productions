@@ -1189,6 +1189,7 @@ function renderMediaManager(root, projectId, type) {
         grid.innerHTML = `<div class="admin-hint" style="grid-column:1/-1;margin:0">No ${noun} yet${isVideo ? '.' : ' — drop some above.'}</div>`;
     } else {
         items.forEach((item, idx) => grid.appendChild(buildMediaTile(root, projectId, type, item, idx)));
+        enableGridReorder(grid, items, () => { setDirty(true); renderMediaManager(root, projectId, type); });
     }
 
     wrap.append(urlRow, grid);
@@ -1220,8 +1221,9 @@ function buildMediaTile(root, projectId, type, item, idx) {
         thumb.className = 'admin-media-tile-img admin-media-tile-ph';
         thumb.innerHTML = IMG_ICON;
     }
-    // Only the thumbnail is the drag handle, so caption text stays editable.
-    thumb.addEventListener('mousedown', () => { tile.draggable = true; });
+    // The thumbnail is the drag handle (caption text stays editable). Reordering
+    // is handled by enableGridReorder() at the grid level (pointer drag + FLIP).
+    thumb.draggable = false;
 
     const del = document.createElement('button');
     del.type = 'button';
@@ -1254,31 +1256,119 @@ function buildMediaTile(root, projectId, type, item, idx) {
         tile.appendChild(cap);
     }
 
-    tile.addEventListener('dragstart', e => {
-        tile.classList.add('is-dragging');
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', String(idx));
-    });
-    tile.addEventListener('dragend', () => {
-        tile.draggable = false;
-        tile.classList.remove('is-dragging');
-        root.querySelectorAll('.admin-media-tile').forEach(t => t.classList.remove('is-dragover'));
-    });
-    tile.addEventListener('dragover', e => { e.preventDefault(); tile.classList.add('is-dragover'); });
-    tile.addEventListener('dragleave', () => tile.classList.remove('is-dragover'));
-    tile.addEventListener('drop', e => {
+    return tile;
+}
+
+/* ────────────── iOS-style pointer drag-reorder for media grids ────────────── */
+// The grabbed tile floats under the pointer while the rest slide (FLIP) to open a
+// gap, committing on release. Replaces native HTML5 DnD for the photo/video
+// grids. `items` is the backing array (mutated in place); `onReorder` persists +
+// repaints once, only if the order actually changed.
+function enableGridReorder(grid, items, onReorder) {
+    const THRESHOLD = 4;
+    let st = null;
+
+    const tilesIn = () => [...grid.children].filter(c => c.classList.contains('admin-media-tile'));
+    const orderKey = () => tilesIn().map(t => t.dataset.idx).join(',');
+
+    grid.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        const handle = e.target.closest('.admin-media-tile-img');
+        if (!handle || !grid.contains(handle)) return;
+        const tile = handle.closest('.admin-media-tile');
+        if (!tile) return;
         e.preventDefault();
-        tile.classList.remove('is-dragover');
-        const from = parseInt(e.dataTransfer.getData('text/plain'), 10);
-        const to = idx;
-        if (Number.isNaN(from) || from === to) return;
-        const [moved] = items.splice(from, 1);
-        items.splice(to, 0, moved);
-        setDirty(true);
-        renderMediaManager(root, projectId, type);
+        st = { tile, startX: e.clientX, startY: e.clientY, active: false, clone: null, dx: 0, dy: 0, startOrder: orderKey() };
+        window.addEventListener('pointermove', onMove);
+        window.addEventListener('pointerup', onUp, { once: true });
+        window.addEventListener('pointercancel', onUp, { once: true });
     });
 
-    return tile;
+    function beginDrag(e) {
+        const tile = st.tile;
+        const rect = tile.getBoundingClientRect();
+        st.dx = e.clientX - rect.left;
+        st.dy = e.clientY - rect.top;
+        const clone = tile.cloneNode(true);
+        clone.classList.add('admin-media-drag-clone');
+        clone.style.width = rect.width + 'px';
+        clone.style.height = rect.height + 'px';
+        clone.style.transform = `translate(${rect.left}px, ${rect.top}px) scale(1.05)`;
+        document.body.appendChild(clone);
+        st.clone = clone;
+        tile.classList.add('is-drag-src');
+        document.body.classList.add('is-grid-dragging');
+        st.active = true;
+    }
+
+    function onMove(e) {
+        if (!st) return;
+        if (!st.active) {
+            if (Math.hypot(e.clientX - st.startX, e.clientY - st.startY) < THRESHOLD) return;
+            beginDrag(e);
+        }
+        st.clone.style.transform = `translate(${e.clientX - st.dx}px, ${e.clientY - st.dy}px) scale(1.05)`;
+
+        // Insertion point = first tile whose midpoint is past the pointer (row-major).
+        // Comparing against midpoints gives hysteresis, so neighbours don't oscillate.
+        const others = tilesIn().filter(t => t !== st.tile);
+        let ref = null;
+        for (const t of others) {
+            const r = t.getBoundingClientRect();
+            const before = e.clientY < r.top ? true
+                : e.clientY > r.bottom ? false
+                : e.clientX < r.left + r.width / 2;
+            if (before) { ref = t; break; }
+        }
+        if (ref === st.tile || st.tile.nextSibling === ref) return; // already in place
+        flipMove(() => grid.insertBefore(st.tile, ref));
+    }
+
+    // FLIP: record sibling positions, move the placeholder in the DOM, then play
+    // each sibling from its old spot to its new one.
+    function flipMove(mutate) {
+        const tiles = tilesIn();
+        const firsts = tiles.map(t => [t, t.getBoundingClientRect()]);
+        mutate();
+        for (const [t, f] of firsts) {
+            if (t === st.tile) continue;
+            const l = t.getBoundingClientRect();
+            const dx = f.left - l.left, dy = f.top - l.top;
+            if (!dx && !dy) continue;
+            t.style.transition = 'none';
+            t.style.transform = `translate(${dx}px, ${dy}px)`;
+            requestAnimationFrame(() => {
+                t.style.transition = 'transform 0.2s cubic-bezier(0.2, 0, 0, 1)';
+                t.style.transform = '';
+            });
+        }
+    }
+
+    function onUp() {
+        window.removeEventListener('pointermove', onMove);
+        if (!st) return;
+        const s = st; st = null;
+        if (!s.active) return;
+
+        const rect = s.tile.getBoundingClientRect();
+        s.clone.style.transition = 'transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s';
+        s.clone.style.transform = `translate(${rect.left}px, ${rect.top}px) scale(1)`;
+
+        let done = false;
+        const finish = () => {
+            if (done) return;
+            done = true;
+            s.clone.remove();
+            s.tile.classList.remove('is-drag-src');
+            document.body.classList.remove('is-grid-dragging');
+            if (orderKey() === s.startOrder) return; // nothing actually moved
+            const newOrder = tilesIn().map(t => items[+t.dataset.idx]);
+            items.splice(0, items.length, ...newOrder);
+            onReorder();
+        };
+        s.clone.addEventListener('transitionend', finish, { once: true });
+        setTimeout(finish, 240);
+    }
 }
 
 /* ────────────── Combined BTS (photos + videos, hand-ordered) ────────────── */
@@ -1394,6 +1484,7 @@ function renderBtsManager(root, projectId) {
         grid.innerHTML = `<div class="admin-hint" style="grid-column:1/-1;margin:0">No behind-the-scenes media yet — drop some above.</div>`;
     } else {
         items.forEach((item, idx) => grid.appendChild(buildBtsTile(root, item, idx, items, commit, rerender)));
+        enableGridReorder(grid, items, () => { commit(); rerender(); });
     }
 
     wrap.append(urlRow, grid);
@@ -1426,7 +1517,7 @@ function buildBtsTile(root, item, idx, items, commit, rerender) {
         thumb.className = 'admin-media-tile-img admin-media-tile-ph';
         thumb.innerHTML = IMG_ICON;
     }
-    thumb.addEventListener('mousedown', () => { tile.draggable = true; });
+    thumb.draggable = false; // pointer drag handled by enableGridReorder()
 
     const del = document.createElement('button');
     del.type = 'button';
@@ -1451,29 +1542,6 @@ function buildBtsTile(root, item, idx, items, commit, rerender) {
     cap.value = item.label || '';
     cap.addEventListener('input', () => { items[idx].label = cap.value; commit(); });
     tile.appendChild(cap);
-
-    // Drag-to-reorder — the thumbnail is the handle.
-    tile.addEventListener('dragstart', e => {
-        tile.classList.add('is-dragging');
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', String(idx));
-    });
-    tile.addEventListener('dragend', () => {
-        tile.draggable = false;
-        tile.classList.remove('is-dragging');
-        root.querySelectorAll('.admin-media-tile').forEach(t => t.classList.remove('is-dragover'));
-    });
-    tile.addEventListener('dragover', e => { e.preventDefault(); tile.classList.add('is-dragover'); });
-    tile.addEventListener('dragleave', () => tile.classList.remove('is-dragover'));
-    tile.addEventListener('drop', e => {
-        e.preventDefault();
-        tile.classList.remove('is-dragover');
-        const from = parseInt(e.dataTransfer.getData('text/plain'), 10);
-        if (Number.isNaN(from) || from === idx) return;
-        const [moved] = items.splice(from, 1);
-        items.splice(idx, 0, moved);
-        commit(); rerender();
-    });
 
     return tile;
 }
