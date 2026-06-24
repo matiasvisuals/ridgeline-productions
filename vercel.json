@@ -3,6 +3,9 @@
     "api/content.js": { "includeFiles": "data/content.json" },
     "api/publish.js": { "includeFiles": "data/content.json" }
   },
+  "rewrites": [
+    { "source": "/((?!coming-soon|admin|api|brand|fonts|media|favicon|robots|sitemap).*)", "destination": "/coming-soon.html" }
+  ],
   "headers": [
     {
       "source": "/admin/(.*)",
