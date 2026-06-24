@@ -111,7 +111,9 @@ async function hydrateWorkGrid() {
         catch { return null; }
     };
 
-    // Refresh thumbnail + labels on cards that already exist in the markup.
+    // Refresh thumbnail + text labels on cards that already exist in the markup,
+    // so client/title/type edits made in the dashboard show here too (the grid is
+    // otherwise hardcoded — e.g. a "Shoes" → "Shoe Campaign" rename).
     grid.querySelectorAll('.work-card').forEach(card => {
         const p = projects[idOf(card)];
         if (!p) return;
@@ -120,6 +122,14 @@ async function hydrateWorkGrid() {
             img.src = p.thumb;
             img.alt = `${p.client || ''} ${p.title || ''}`.trim();
         }
+        const clientEl = card.querySelector('.work-card-client');
+        const titleEl = card.querySelector('.work-card-title');
+        const typeEl = card.querySelector('.work-card-type');
+        if (clientEl && p.client != null) clientEl.textContent = p.client;
+        if (titleEl && p.title != null) titleEl.textContent = p.title;
+        // content stores type as "Commercial / Product"; the grid shows it with a
+        // middot to match the existing styling.
+        if (typeEl && p.type) typeEl.textContent = p.type.replace(/\s*\/\s*/g, ' · ');
     });
 
     // Append any project from content that isn't already on the page.
@@ -127,6 +137,13 @@ async function hydrateWorkGrid() {
     Object.keys(projects).forEach(id => {
         if (have.has(id)) return;
         grid.appendChild(buildWorkCard(id, projects[id]));
+    });
+
+    // Reorder the cards to match the project order from the dashboard, so
+    // drag-to-reorder in the portal drives the All Work grid order.
+    Object.keys(projects).forEach(id => {
+        const card = [...grid.querySelectorAll('.work-card')].find(c => idOf(c) === id);
+        if (card) grid.appendChild(card); // re-appending moves it to the end, in order
     });
 
     const countEl = document.getElementById('workCount');
@@ -157,7 +174,7 @@ function buildWorkCard(id, p) {
     title.textContent = p.title || '';
     const type = document.createElement('span');
     type.className = 'work-card-type';
-    type.textContent = p.type || '';
+    type.textContent = (p.type || '').replace(/\s*\/\s*/g, ' · ');
     info.append(client, title, type);
 
     a.append(imgWrap, info);

@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const idx = projectKeys.indexOf(id);
 
+    const escapeHtml = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
     // Set page title
     document.title = `${p.client} — ${p.title} | Ridgeline Productions`;
 
@@ -88,6 +90,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         });
 
+        // Stop any playing hero video and restore its poster — so skipping to the
+        // next/previous slide (arrows, dots, or swipe) doesn't leave audio/video
+        // playing behind the scenes.
+        function stopHeroPlayback() {
+            carTrack.querySelectorAll('.proj-video-player.is-playing').forEach(player => {
+                const v = heroVideos[+player.dataset.vid];
+                const poster = (v && (v.poster || p.thumb)) || '';
+                player.classList.remove('is-playing');
+                player.innerHTML = `<img class="proj-video-thumb" src="${poster}" alt="" loading="lazy"><div class="proj-video-play">${PLAY_SVG}</div>`;
+            });
+        }
+
         if (heroVideos.length > 1) {
             carDots.innerHTML = heroVideos.map((_, i) => `<button class="proj-dot${i === 0 ? ' active' : ''}" aria-label="Video ${i + 1}"></button>`).join('');
             const dots = [...carDots.children];
@@ -98,6 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 carNext.disabled = current === heroVideos.length - 1;
             };
             const goTo = (i) => {
+                stopHeroPlayback();
                 current = Math.max(0, Math.min(heroVideos.length - 1, i));
                 const slide = carTrack.children[current];
                 if (slide) carTrack.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
@@ -110,7 +125,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             carTrack.addEventListener('scroll', () => {
                 clearTimeout(scrollTimer);
                 scrollTimer = setTimeout(() => {
-                    current = Math.round(carTrack.scrollLeft / carTrack.clientWidth);
+                    const landed = Math.round(carTrack.scrollLeft / carTrack.clientWidth);
+                    // Swiped to a different clip — stop whatever was playing on the way out.
+                    if (landed !== current) stopHeroPlayback();
+                    current = landed;
                     sync();
                 }, 90);
             }, { passive: true });
@@ -122,17 +140,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         videoSection.style.display = 'none';
     }
 
-    // Populate info
-    document.getElementById('projDesc').textContent = p.description;
-    document.getElementById('projYear').textContent = p.year;
+    // Populate info — render the description as real paragraphs so the blank-line
+    // spacing the editor types in the portal is reflected on the page (single
+    // newlines become line breaks within a paragraph).
+    const descEl = document.getElementById('projDesc');
+    const paragraphs = String(p.description || '').split(/\n{2,}/).map(s => s.trim()).filter(Boolean);
+    descEl.innerHTML = paragraphs.map(para => `<p>${escapeHtml(para).replace(/\n/g, '<br>')}</p>`).join('');
+
+    // Year — hide the whole block (label included) when there's no year set.
+    const yearVal = String(p.year || '').trim();
+    document.getElementById('projYear').textContent = yearVal;
+    const yearBlock = document.getElementById('projYear').closest('.proj-detail-block');
+    if (yearBlock) yearBlock.style.display = yearVal ? '' : 'none';
+
     document.getElementById('projCategory').textContent = p.type;
 
-    // Credits
+    // Credits — skip blank rows so half-filled entries don't render as empty gaps.
     const creditsEl = document.getElementById('projCredits');
-    creditsEl.innerHTML = p.credits.map(c =>
+    const credits = (p.credits || []).filter(c => (c.role && c.role.trim()) || (c.name && c.name.trim()));
+    creditsEl.innerHTML = credits.map(c =>
         `<div class="proj-credit anim" data-anim="fade-up">
-            <span class="proj-credit-role">${c.role}</span>
-            <span class="proj-credit-name">${c.name}</span>
+            <span class="proj-credit-role">${escapeHtml(c.role)}</span>
+            <span class="proj-credit-name">${escapeHtml(c.name)}</span>
         </div>`
     ).join('');
 
@@ -239,11 +268,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // ─── BTS — photos + film combined into one balanced masonry grid ───
+    // Order comes from p.btsMedia (a single mixed, hand-ordered list managed in
+    // the portal). Falls back to the legacy split arrays — photos then clips —
+    // so older content still renders.
     const btsGrid = document.getElementById('projBtsGrid');
     const btsSection = document.getElementById('projBtsSection');
-    const btsPhotos = (p.bts || []).map(b => ({ kind: 'image', src: b.img, label: b.label || '' }));
-    const btsClips = (p.videos || []).map(v => ({ kind: 'video', src: v.src, poster: v.poster || '', label: v.label || '', w: v.w, h: v.h }));
-    const btsItems = [...btsPhotos, ...btsClips];
+    let btsItems;
+    if (Array.isArray(p.btsMedia) && p.btsMedia.length) {
+        btsItems = p.btsMedia.map(m => m.kind === 'video'
+            ? { kind: 'video', src: m.src, poster: m.poster || '', label: m.label || '', w: m.w, h: m.h }
+            : { kind: 'image', src: m.img || m.src, label: m.label || '' });
+    } else {
+        const btsPhotos = (p.bts || []).map(b => ({ kind: 'image', src: b.img, label: b.label || '' }));
+        const btsClips = (p.videos || []).map(v => ({ kind: 'video', src: v.src, poster: v.poster || '', label: v.label || '', w: v.w, h: v.h }));
+        btsItems = [...btsPhotos, ...btsClips];
+    }
 
     if (btsItems.length) {
         btsGrid.innerHTML = btsItems.map((m, i) => {

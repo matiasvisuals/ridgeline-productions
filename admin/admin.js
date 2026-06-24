@@ -351,6 +351,49 @@ function deleteButton(onClick, title = 'Remove') {
     return b;
 }
 
+// Generic drag-to-reorder for a row backed by an array `list`. `handle` is the
+// only element that initiates a drag (so inputs inside the row stay usable).
+// `getIndex` returns this row's current index; `rerender` repaints after a move.
+function makeRowReorderable({ row, handle, getIndex, list, rerender }) {
+    handle.classList.add('admin-drag-handle');
+    handle.addEventListener('mousedown', () => { row.draggable = true; });
+    handle.addEventListener('touchstart', () => { row.draggable = true; }, { passive: true });
+    row.addEventListener('dragstart', e => {
+        row.classList.add('is-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', String(getIndex()));
+    });
+    row.addEventListener('dragend', () => {
+        row.draggable = false;
+        row.classList.remove('is-dragging');
+    });
+    row.addEventListener('dragover', e => { e.preventDefault(); row.classList.add('is-dragover'); });
+    row.addEventListener('dragleave', () => row.classList.remove('is-dragover'));
+    row.addEventListener('drop', e => {
+        e.preventDefault();
+        row.classList.remove('is-dragover');
+        const from = parseInt(e.dataTransfer.getData('text/plain'), 10);
+        const to = getIndex();
+        if (Number.isNaN(from) || from === to) return;
+        const [moved] = list.splice(from, 1);
+        list.splice(to, 0, moved);
+        setDirty(true);
+        rerender();
+    });
+}
+
+// Reorder the projects object (keyed by id) by moving fromId to toId's slot.
+function reorderProjects(fromId, toId) {
+    const ids = Object.keys(state.content.projects);
+    const from = ids.indexOf(fromId);
+    const to = ids.indexOf(toId);
+    if (from < 0 || to < 0 || from === to) return;
+    ids.splice(to, 0, ids.splice(from, 1)[0]);
+    const next = {};
+    ids.forEach(id => { next[id] = state.content.projects[id]; });
+    state.content.projects = next;
+}
+
 /* ────────────── Tabs / nav ────────────── */
 
 function initTabs() {
@@ -602,11 +645,12 @@ function renderProjectList() {
         const p = state.content.projects[id];
         const item = document.createElement('div');
         item.className = 'admin-list-item' + (id === state.selectedProject ? ' is-selected' : '');
+        item.dataset.id = id;
         const thumb = p.thumb
             ? `<img src="${escapeAttr(p.thumb)}" alt="">`
             : IMG_ICON;
         item.innerHTML = `
-            <div class="admin-list-thumb">${thumb}</div>
+            <div class="admin-list-thumb" title="Drag to reorder">${thumb}</div>
             <div class="admin-list-item-info">
                 <div class="admin-list-item-title">${escapeText(p.title || '(untitled)')}</div>
                 <div class="admin-list-item-sub">${escapeText(p.client || '')}${p.year ? ' · ' + escapeText(p.year) : ''}</div>
@@ -615,6 +659,30 @@ function renderProjectList() {
                 <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-action="delete" title="Delete project">✕</button>
             </div>
         `;
+
+        // Drag-to-reorder — the thumbnail is the handle (so the row stays clickable
+        // to open the editor). Reordering here drives the All Work grid order.
+        const handle = item.querySelector('.admin-list-thumb');
+        handle.classList.add('admin-drag-handle');
+        handle.addEventListener('mousedown', () => { item.draggable = true; });
+        item.addEventListener('dragstart', e => {
+            item.classList.add('is-dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', id);
+        });
+        item.addEventListener('dragend', () => { item.draggable = false; item.classList.remove('is-dragging'); });
+        item.addEventListener('dragover', e => { e.preventDefault(); item.classList.add('is-dragover'); });
+        item.addEventListener('dragleave', () => item.classList.remove('is-dragover'));
+        item.addEventListener('drop', e => {
+            e.preventDefault();
+            item.classList.remove('is-dragover');
+            const fromId = e.dataTransfer.getData('text/plain');
+            if (!fromId || fromId === id) return;
+            reorderProjects(fromId, id);
+            setDirty(true);
+            renderProjectList();
+        });
+
         item.addEventListener('click', (e) => {
             if (e.target.closest('[data-action="delete"]')) return;
             state.selectedProject = id;
@@ -773,16 +841,12 @@ function renderProjectEditor() {
 
         <div class="admin-card admin-card-accent">
             <div class="admin-card-head">
-                <div class="admin-card-head-l"><h3>Behind the scenes <span class="sub" data-media-count="bts"></span></h3></div>
+                <div class="admin-card-head-l"><h3>Behind the scenes <span class="sub" data-media-count="btsMedia"></span></h3></div>
             </div>
-            <div class="admin-card-body"><div data-media="bts"></div></div>
-        </div>
-
-        <div class="admin-card admin-card-accent">
-            <div class="admin-card-head">
-                <div class="admin-card-head-l"><h3>Behind the scenes — film <span class="sub" data-media-count="videos"></span></h3></div>
+            <div class="admin-card-body">
+                <p class="admin-field-hint" style="margin-top:0;margin-bottom:.7rem">Photos and videos together, in one place. Drag any tile to set the exact order they appear on the site. Drop in photos or videos below — large videos are compressed for the web automatically.</p>
+                <div data-media="btsMedia"></div>
             </div>
-            <div class="admin-card-body"><div data-media="videos"></div></div>
         </div>
     `;
 
@@ -813,8 +877,7 @@ function renderProjectEditor() {
     // Repeaters / media managers
     renderRepeater(root, id, 'credits');
     renderMediaManager(root, id, 'gallery');
-    renderMediaManager(root, id, 'bts');
-    renderMediaManager(root, id, 'videos');
+    renderBtsManager(root, id);
 
     root.querySelectorAll('[data-add]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -888,7 +951,8 @@ function buildHeroRow(root, projectId, v, idx) {
     head.className = 'admin-hero-row-head';
     const label = document.createElement('span');
     label.className = 'admin-repeater-handle';
-    label.textContent = `Hero ${idx + 1} · ${v.type === 'file' ? 'Upload' : 'Vimeo'}`;
+    label.title = 'Drag to reorder';
+    label.innerHTML = `<span class="admin-grip">⠿</span> Hero ${idx + 1} · ${v.type === 'file' ? 'Upload' : 'Vimeo'}`;
     const acts = document.createElement('span');
     acts.className = 'admin-hero-row-acts';
 
@@ -913,6 +977,13 @@ function buildHeroRow(root, projectId, v, idx) {
     acts.append(up, down, del);
     head.append(label, acts);
     row.appendChild(head);
+
+    // Drag-to-reorder (in addition to the ↑/↓ buttons). Keep the legacy single
+    // vimeo field mirrored to the first clip after a move.
+    makeRowReorderable({
+        row, handle: label, getIndex: () => idx, list,
+        rerender: () => { syncLegacyVimeo(p); renderHeroVideos(root, projectId); },
+    });
 
     if (v.type === 'file') {
         const srcField = textField('Video URL (.mp4)', v.src, val => { v.src = val.trim(); setDirty(true); });
@@ -974,11 +1045,16 @@ function renderRepeater(root, projectId, field, focusIndex = null) {
 
         if (field === 'credits') {
             row.className = 'admin-repeater-item admin-repeater-item--credit';
+            const grip = document.createElement('span');
+            grip.className = 'admin-grip';
+            grip.title = 'Drag to reorder';
+            grip.textContent = '⠿';
             const roleI = textField('ROLE', item.role, v => { items[idx].role = v; setDirty(true); });
             roleI.className = 'credit-role';
             const nameI = textField('Full name', item.name, v => { items[idx].name = v; setDirty(true); });
             nameI.className = 'credit-name';
-            row.append(roleI, nameI, deleteButton(() => { items.splice(idx, 1); setDirty(true); renderRepeater(root, projectId, field); }));
+            row.append(grip, roleI, nameI, deleteButton(() => { items.splice(idx, 1); setDirty(true); renderRepeater(root, projectId, field); }));
+            makeRowReorderable({ row, handle: grip, getIndex: () => idx, list: items, rerender: () => renderRepeater(root, projectId, field) });
         } else if (field === 'bts') {
             row.className = 'admin-repeater-item admin-repeater-item--media';
             const top = document.createElement('div');
@@ -1203,6 +1279,365 @@ function buildMediaTile(root, projectId, type, item, idx) {
     });
 
     return tile;
+}
+
+/* ────────────── Combined BTS (photos + videos, hand-ordered) ────────────── */
+// `btsMedia` is the single ordered source of truth. Each entry is either
+//   { kind:'image', img, label }   or   { kind:'video', src, poster, label, w, h }
+// We migrate the legacy split arrays (bts photos + videos clips) in on first use,
+// and mirror btsMedia back out to bts/videos so anything still reading those keys
+// (the site fallback, the media pipeline) keeps working.
+function ensureBtsMedia(p) {
+    if (!Array.isArray(p.btsMedia)) {
+        const photos = (p.bts || []).map(b => ({ kind: 'image', img: b.img || '', label: b.label || '' }));
+        const clips = (p.videos || []).map(v => {
+            const o = { kind: 'video', src: v.src || '', poster: v.poster || '', label: v.label || '' };
+            if (v.w) o.w = v.w; if (v.h) o.h = v.h;
+            return o;
+        });
+        p.btsMedia = [...photos, ...clips];
+    }
+    return p.btsMedia;
+}
+
+function syncLegacyBts(p) {
+    const media = p.btsMedia || [];
+    p.bts = media.filter(m => m.kind !== 'video').map(m => ({ label: m.label || '', img: m.img || '' }));
+    p.videos = media.filter(m => m.kind === 'video').map(m => {
+        const o = { src: m.src || '', poster: m.poster || '', label: m.label || '' };
+        if (m.w) o.w = m.w; if (m.h) o.h = m.h;
+        return o;
+    });
+}
+
+function renderBtsManager(root, projectId) {
+    const host = root.querySelector('[data-media="btsMedia"]');
+    if (!host) return;
+    const project = state.content.projects[projectId];
+    const items = ensureBtsMedia(project);
+
+    const countEl = root.querySelector('[data-media-count="btsMedia"]');
+    if (countEl) {
+        const nv = items.filter(m => m.kind === 'video').length;
+        const np = items.length - nv;
+        countEl.textContent = items.length ? `— ${np} photo${np !== 1 ? 's' : ''}, ${nv} video${nv !== 1 ? 's' : ''}` : '';
+    }
+
+    const rerender = () => renderBtsManager(root, projectId);
+    const commit = () => { setDirty(true); syncLegacyBts(project); };
+
+    host.innerHTML = '';
+    const wrap = document.createElement('div');
+    wrap.className = 'admin-media-manager';
+
+    // Bulk dropzone — accepts BOTH images and videos.
+    const bulk = document.createElement('div');
+    bulk.className = 'admin-media-bulk';
+    bulk.innerHTML = `${UPLOAD_ICON}<div class="admin-media-bulk-text"><div class="t">Drop photos or videos here</div><div class="s">click to browse — large videos are compressed for the web automatically</div></div>`;
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file'; fileInput.accept = 'image/*,video/*'; fileInput.multiple = true; fileInput.hidden = true;
+
+    const addFiles = async (fileList) => {
+        const files = Array.from(fileList || []).filter(f => f.type && (f.type.startsWith('image/') || f.type.startsWith('video/')));
+        if (!files.length) return;
+        bulk.classList.add('is-busy');
+        for (const f of files) {
+            try {
+                if (f.type.startsWith('image/')) {
+                    const dataUrl = await fileToDataURL(f);
+                    items.push({ kind: 'image', img: dataUrl, label: '' });
+                    commit(); rerender();
+                } else {
+                    await addVideoFile(f, items, commit, rerender);
+                }
+            } catch (err) {
+                toast('Could not add ' + (f.name || 'file') + ': ' + err.message, 'error');
+            }
+        }
+        bulk.classList.remove('is-busy');
+    };
+
+    bulk.addEventListener('click', () => fileInput.click());
+    bulk.addEventListener('dragover', e => { e.preventDefault(); bulk.classList.add('is-dragover'); });
+    bulk.addEventListener('dragleave', () => bulk.classList.remove('is-dragover'));
+    bulk.addEventListener('drop', e => { e.preventDefault(); bulk.classList.remove('is-dragover'); addFiles(e.dataTransfer.files); });
+    fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+    wrap.append(bulk, fileInput);
+
+    // Add by URL — image or hosted video.
+    const urlRow = document.createElement('div');
+    urlRow.className = 'admin-media-urlrow';
+    const urlInput = document.createElement('input');
+    urlInput.type = 'url';
+    urlInput.placeholder = 'Paste an image or video (.mp4) URL';
+    const addImgBtn = document.createElement('button');
+    addImgBtn.type = 'button'; addImgBtn.className = 'admin-btn admin-btn--secondary admin-btn--small'; addImgBtn.textContent = '+ Photo';
+    const addVidBtn = document.createElement('button');
+    addVidBtn.type = 'button'; addVidBtn.className = 'admin-btn admin-btn--secondary admin-btn--small'; addVidBtn.textContent = '+ Video';
+    const addUrl = (kind) => {
+        const v = urlInput.value.trim();
+        if (!v) return;
+        if (kind === 'video') items.push({ kind: 'video', src: v, poster: '', label: '' });
+        else items.push({ kind: 'image', img: v, label: '' });
+        urlInput.value = '';
+        commit(); rerender();
+    };
+    addImgBtn.addEventListener('click', () => addUrl('image'));
+    addVidBtn.addEventListener('click', () => addUrl('video'));
+    urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addUrl('image'); } });
+    urlRow.append(urlInput, addImgBtn, addVidBtn);
+
+    // Tiles
+    const grid = document.createElement('div');
+    grid.className = 'admin-media-grid';
+    if (items.length === 0) {
+        grid.innerHTML = `<div class="admin-hint" style="grid-column:1/-1;margin:0">No behind-the-scenes media yet — drop some above.</div>`;
+    } else {
+        items.forEach((item, idx) => grid.appendChild(buildBtsTile(root, item, idx, items, commit, rerender)));
+    }
+
+    wrap.append(urlRow, grid);
+    host.appendChild(wrap);
+}
+
+function buildBtsTile(root, item, idx, items, commit, rerender) {
+    const isVideo = item.kind === 'video';
+    const tile = document.createElement('div');
+    tile.className = 'admin-media-tile has-cap' + (isVideo ? ' is-video' : '');
+    tile.dataset.idx = idx;
+
+    const num = document.createElement('span');
+    num.className = 'admin-media-tile-num';
+    num.textContent = String(idx + 1).padStart(2, '0');
+
+    const src = isVideo ? (item.poster || '') : (item.img || '');
+    let thumb;
+    if (src) {
+        thumb = document.createElement('img');
+        thumb.className = 'admin-media-tile-img';
+        thumb.src = src; thumb.alt = ''; thumb.loading = 'lazy';
+    } else if (isVideo && item.src) {
+        thumb = document.createElement('video');
+        thumb.className = 'admin-media-tile-img';
+        thumb.src = item.src + '#t=0.1';
+        thumb.muted = true; thumb.playsInline = true; thumb.preload = 'metadata';
+    } else {
+        thumb = document.createElement('div');
+        thumb.className = 'admin-media-tile-img admin-media-tile-ph';
+        thumb.innerHTML = IMG_ICON;
+    }
+    thumb.addEventListener('mousedown', () => { tile.draggable = true; });
+
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'admin-media-tile-del';
+    del.title = 'Remove';
+    del.textContent = '✕';
+    del.addEventListener('click', e => { e.stopPropagation(); items.splice(idx, 1); commit(); rerender(); });
+
+    tile.append(num, thumb, del);
+
+    if (isVideo) {
+        const play = document.createElement('span');
+        play.className = 'admin-media-tile-play';
+        play.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        tile.appendChild(play);
+    }
+
+    const cap = document.createElement('input');
+    cap.type = 'text';
+    cap.className = 'admin-media-tile-cap';
+    cap.placeholder = 'Caption';
+    cap.value = item.label || '';
+    cap.addEventListener('input', () => { items[idx].label = cap.value; commit(); });
+    tile.appendChild(cap);
+
+    // Drag-to-reorder — the thumbnail is the handle.
+    tile.addEventListener('dragstart', e => {
+        tile.classList.add('is-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', String(idx));
+    });
+    tile.addEventListener('dragend', () => {
+        tile.draggable = false;
+        tile.classList.remove('is-dragging');
+        root.querySelectorAll('.admin-media-tile').forEach(t => t.classList.remove('is-dragover'));
+    });
+    tile.addEventListener('dragover', e => { e.preventDefault(); tile.classList.add('is-dragover'); });
+    tile.addEventListener('dragleave', () => tile.classList.remove('is-dragover'));
+    tile.addEventListener('drop', e => {
+        e.preventDefault();
+        tile.classList.remove('is-dragover');
+        const from = parseInt(e.dataTransfer.getData('text/plain'), 10);
+        if (Number.isNaN(from) || from === idx) return;
+        const [moved] = items.splice(from, 1);
+        items.splice(idx, 0, moved);
+        commit(); rerender();
+    });
+
+    return tile;
+}
+
+/* ────────────── Video: probe / compress / poster / upload ────────────── */
+
+const VIDEO_COMPRESS_THRESHOLD = 8 * 1024 * 1024; // compress anything bigger than ~8 MB
+const VIDEO_MAX_DIM = 1280;                         // cap the long edge (≈720p vertical / 720p)
+
+// Drop/replace a single video: probe → (compress if large) → poster → upload → push.
+async function addVideoFile(file, items, commit, rerender) {
+    let blob = file;
+    let dims = null;
+    try {
+        dims = await probeVideo(file);
+        const tooBig = file.size > VIDEO_COMPRESS_THRESHOLD;
+        const tooLarge = Math.max(dims.w || 0, dims.h || 0) > VIDEO_MAX_DIM;
+        if (tooBig || tooLarge) {
+            toast('Compressing video for the web… (about as long as the clip)', '');
+            const out = await compressVideo(file, dims).catch(() => null);
+            if (out && out.blob && out.blob.size > 0 && out.blob.size < file.size) {
+                blob = out.blob;
+                dims = { w: out.w, h: out.h };
+            }
+        }
+    } catch { /* unreadable metadata — upload the original as-is */ }
+
+    let poster = '';
+    try { poster = await grabPoster(blob); } catch { /* no poster — the site falls back */ }
+
+    toast('Uploading video…', '');
+    const url = await uploadToBlob(blob, file.name);
+    const entry = { kind: 'video', src: url, poster, label: '' };
+    if (dims && dims.w) entry.w = dims.w;
+    if (dims && dims.h) entry.h = dims.h;
+    items.push(entry);
+    commit(); rerender();
+    toast('Video added', 'success');
+}
+
+function probeVideo(fileOrBlob) {
+    return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(fileOrBlob);
+        const v = document.createElement('video');
+        v.preload = 'metadata'; v.muted = true;
+        v.onloadedmetadata = () => { resolve({ w: v.videoWidth, h: v.videoHeight, duration: v.duration }); URL.revokeObjectURL(url); };
+        v.onerror = () => { URL.revokeObjectURL(url); reject(new Error('could not read video')); };
+        v.src = url;
+    });
+}
+
+function grabPoster(fileOrBlob, maxDim = 1280, quality = 0.82) {
+    return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(fileOrBlob);
+        const v = document.createElement('video');
+        v.preload = 'metadata'; v.muted = true; v.playsInline = true;
+        const done = (fn) => { URL.revokeObjectURL(url); fn(); };
+        v.onloadeddata = () => { try { v.currentTime = Math.min(0.1, (v.duration || 1) / 2); } catch { /* ignore */ } };
+        v.onseeked = () => {
+            try {
+                const scale = Math.min(1, maxDim / Math.max(v.videoWidth, v.videoHeight));
+                const w = Math.max(1, Math.round(v.videoWidth * scale));
+                const h = Math.max(1, Math.round(v.videoHeight * scale));
+                const c = document.createElement('canvas');
+                c.width = w; c.height = h;
+                c.getContext('2d').drawImage(v, 0, 0, w, h);
+                const data = c.toDataURL('image/jpeg', quality);
+                done(() => resolve(data));
+            } catch (e) { done(() => reject(e)); }
+        };
+        v.onerror = () => done(() => reject(new Error('poster failed')));
+        v.src = url;
+    });
+}
+
+function pickRecorderMime() {
+    const cands = ['video/mp4;codecs=h264,aac', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm'];
+    for (const m of cands) { if (window.MediaRecorder && MediaRecorder.isTypeSupported(m)) return m; }
+    return '';
+}
+
+// Realtime re-encode via canvas + MediaRecorder: downscale to VIDEO_MAX_DIM and
+// cap the bitrate. No external deps, no special headers. Best-effort — callers
+// fall back to the original file if this resolves null or throws.
+function compressVideo(file, probe) {
+    return new Promise((resolve, reject) => {
+        const mime = pickRecorderMime();
+        if (!mime || !window.MediaRecorder) { resolve(null); return; }
+        const url = URL.createObjectURL(file);
+        const v = document.createElement('video');
+        v.src = url; v.playsInline = true;
+        v.onloadedmetadata = () => {
+            const scale = Math.min(1, VIDEO_MAX_DIM / Math.max(probe.w, probe.h));
+            const w = Math.max(2, Math.round(probe.w * scale / 2) * 2);
+            const h = Math.max(2, Math.round(probe.h * scale / 2) * 2);
+            const canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            const canvasStream = canvas.captureStream(30);
+
+            // Pull the audio track off the source element so the clip keeps sound.
+            let stream = canvasStream;
+            try {
+                const elStream = v.captureStream ? v.captureStream() : (v.mozCaptureStream && v.mozCaptureStream());
+                const audio = elStream && elStream.getAudioTracks ? elStream.getAudioTracks() : [];
+                if (audio.length) stream = new MediaStream([...canvasStream.getVideoTracks(), audio[0]]);
+            } catch { /* video-only output */ }
+
+            const bitrate = Math.min(4_000_000, Math.max(1_200_000, Math.round(w * h * 30 * 0.07)));
+            let rec;
+            try { rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: bitrate }); }
+            catch { URL.revokeObjectURL(url); resolve(null); return; }
+
+            const chunks = [];
+            let raf = 0;
+            rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+            rec.onstop = () => { URL.revokeObjectURL(url); cancelAnimationFrame(raf); resolve({ blob: new Blob(chunks, { type: mime }), w, h, mime }); };
+
+            const draw = () => {
+                if (v.ended) { if (rec.state !== 'inactive') rec.stop(); return; }
+                ctx.drawImage(v, 0, 0, w, h);
+                raf = requestAnimationFrame(draw);
+            };
+            v.onended = () => { if (rec.state !== 'inactive') rec.stop(); };
+            let started = false;
+            v.onplay = () => { if (started) return; started = true; rec.start(250); draw(); };
+            // Try to play with sound first (keeps audio in the output). If the
+            // autoplay policy blocks it, retry muted so compression still runs.
+            v.play().catch(() => {
+                v.muted = true;
+                v.play().catch(() => { URL.revokeObjectURL(url); resolve(null); });
+            });
+        };
+        v.onerror = () => { URL.revokeObjectURL(url); reject(new Error('compress: cannot load video')); };
+    });
+}
+
+function extFromMime(m) {
+    if (!m) return '';
+    if (m.includes('mp4')) return 'mp4';
+    if (m.includes('webm')) return 'webm';
+    if (m.includes('quicktime')) return 'mov';
+    return '';
+}
+
+// Direct-to-Blob client upload (bypasses the serverless body limit). /api/upload
+// authorizes the session and mints a one-time client token.
+async function uploadToBlob(blob, originalName) {
+    const ext = extFromMime(blob.type) || (originalName && originalName.split('.').pop()) || 'mp4';
+    const base = (originalName || 'clip').replace(/\.[^.]+$/, '').replace(/[^a-z0-9_-]+/gi, '-').toLowerCase() || 'clip';
+    const pathname = `bts/${base}.${ext}`;
+    let mod;
+    try {
+        mod = await import('https://esm.sh/@vercel/blob@2/client');
+    } catch {
+        throw new Error('upload module failed to load (offline?)');
+    }
+    const result = await mod.upload(pathname, blob, {
+        access: 'public',
+        handleUploadUrl: '/api/upload',
+        contentType: blob.type || undefined,
+        multipart: true,
+    });
+    return result.url;
 }
 
 function addProject() {

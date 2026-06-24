@@ -256,6 +256,8 @@
     line-height: 1.85;
     color: var(--fg-2);
 }
+/* Multi-paragraph descriptions: preserve the spacing the editor sees in the portal. */
+.proj-desc p + p { margin-top: 1.1em; }
 .proj-details {
     display: flex;
     flex-direction: column;

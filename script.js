@@ -289,20 +289,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             return meter.getBoundingClientRect().width;
         };
 
-        // Lock the slot to the widest word (+ its period) so the headline never
-        // reflows or shifts the section when a longer word rotates in.
-        const setWidth = () => {
-            let max = 0;
-            words.forEach(w => { const x = measure(w + '.'); if (x > max) max = x; });
-            wordRotator.style.width = Math.ceil(max + 2) + 'px';
-        };
-        if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(setWidth);
-        }
-        setWidth();
-        window.addEventListener('resize', setWidth);
-
+        // Size the slot to the *current* word (+ its period) so the rotating word
+        // always sits snug after "something", with even spacing — instead of
+        // floating in a gap sized to the longest word. The width transition keeps
+        // the gentle re-center smooth as words swap.
         let idx = 0;
+        const fitTo = (text) => { wordRotator.style.width = Math.ceil(measure(text + '.') + 2) + 'px'; };
+        const refit = () => fitTo(words[idx]);
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(refit);
+        }
+        refit();
+        window.addEventListener('resize', refit);
+
         let cycling = false;
         const cycle = () => {
             if (cycling) return;
@@ -310,6 +309,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             idx = (idx + 1) % words.length;
             const next = words[idx];
 
+            fitTo(next); // animate the slot toward the new word's width as it swaps
             current.classList.add('wr-out');
 
             setTimeout(() => {

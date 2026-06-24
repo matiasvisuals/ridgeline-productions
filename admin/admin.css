@@ -554,8 +554,8 @@ textarea { resize: vertical; line-height: 1.6; min-height: 84px; }
 .admin-repeater-item--single { grid-template-columns: 1fr auto; }
 .admin-repeater-item--media { grid-template-columns: 1fr; gap: 0.6rem; }
 
-/* Credits: role reads as a label, name reads as the value */
-.admin-repeater-item--credit { grid-template-columns: minmax(150px, 0.85fr) 1.25fr auto; gap: 0.65rem; }
+/* Credits: grip handle, role reads as a label, name reads as the value */
+.admin-repeater-item--credit { grid-template-columns: auto minmax(150px, 0.85fr) 1.25fr auto; gap: 0.65rem; }
 .credit-role {
     font-family: var(--font-label);
     text-transform: uppercase;
@@ -583,6 +583,30 @@ textarea { resize: vertical; line-height: 1.6; min-height: 84px; }
 }
 .admin-repeater-handle { color: var(--fg-4); font-size: 0.78rem; padding: 0 0.2rem; }
 .admin-repeater-add { margin-top: 0.7rem; }
+
+/* ════════════ DRAG-TO-REORDER ════════════ */
+.admin-drag-handle { cursor: grab; }
+.admin-drag-handle:active { cursor: grabbing; }
+.admin-grip {
+    cursor: grab;
+    color: var(--fg-4);
+    font-size: 1rem;
+    line-height: 1;
+    letter-spacing: -1px;
+    user-select: none;
+    padding: 0 0.15rem;
+}
+.admin-grip:active { cursor: grabbing; }
+.admin-repeater-handle .admin-grip { font-size: 0.9rem; margin-right: 0.15rem; }
+/* Shared drag feedback for credit rows, hero rows, and project list items */
+.admin-repeater-item.is-dragging,
+.admin-hero-row.is-dragging,
+.admin-list-item.is-dragging { opacity: 0.4; }
+.admin-repeater-item.is-dragover,
+.admin-hero-row.is-dragover { box-shadow: inset 0 0 0 2px var(--section); }
+.admin-list-item.is-dragover { box-shadow: inset 0 2px 0 0 var(--section); }
+/* Busy state while a dropped video is compressing/uploading */
+.admin-media-bulk.is-busy { opacity: 0.6; pointer-events: none; }
 
 /* ════════════ IMAGE DROPZONE ════════════ */
 .admin-imageinput { display: flex; flex-direction: column; gap: 0.55rem; }
@@ -1055,8 +1079,8 @@ textarea { resize: vertical; line-height: 1.6; min-height: 84px; }
     input[type="text"], input[type="password"], input[type="number"],
     input[type="url"], textarea, select { font-size: 16px; }
 
-    /* Credits stack: role + delete on top, name spans full width below */
-    .admin-repeater-item--credit { grid-template-columns: 1fr auto; }
+    /* Credits stack: grip + role + delete on top, name spans full width below */
+    .admin-repeater-item--credit { grid-template-columns: auto 1fr auto; }
     .admin-repeater-item--credit .credit-name { grid-column: 1 / -1; }
 
     /* Project list shows fewer rows, full width */
