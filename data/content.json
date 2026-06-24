@@ -1595,6 +1595,10 @@
         },
         {
           "label": "",
+          "img": "/media/giant-shoes/bts/019.jpg"
+        },
+        {
+          "label": "",
           "img": "/media/giant-shoes/bts/007.jpg"
         },
         {
@@ -1640,10 +1644,6 @@
         {
           "label": "",
           "img": "/media/giant-shoes/bts/018.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/019.jpg"
         },
         {
           "label": "",
@@ -1702,15 +1702,15 @@
           "h": 1280
         },
         {
-          "src": "/media/giant-shoes/video/001.mp4",
-          "poster": "/media/giant-shoes/video/001.jpg",
+          "src": "/media/giant-shoes/video/002.mp4",
+          "poster": "/media/giant-shoes/video/002.jpg",
           "label": "",
           "w": 720,
           "h": 1280
         },
         {
-          "src": "/media/giant-shoes/video/002.mp4",
-          "poster": "/media/giant-shoes/video/002.jpg",
+          "src": "/media/giant-shoes/video/001.mp4",
+          "poster": "/media/giant-shoes/video/001.jpg",
           "label": "",
           "w": 720,
           "h": 1280
@@ -1834,6 +1834,11 @@
         },
         {
           "kind": "image",
+          "img": "/media/giant-shoes/bts/019.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
           "img": "/media/giant-shoes/bts/007.jpg",
           "label": ""
         },
@@ -1894,11 +1899,6 @@
         },
         {
           "kind": "image",
-          "img": "/media/giant-shoes/bts/019.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
           "img": "/media/giant-shoes/bts/020.jpg",
           "label": ""
         },
@@ -1949,16 +1949,16 @@
         },
         {
           "kind": "video",
-          "src": "/media/giant-shoes/video/001.mp4",
-          "poster": "/media/giant-shoes/video/001.jpg",
+          "src": "/media/giant-shoes/video/002.mp4",
+          "poster": "/media/giant-shoes/video/002.jpg",
           "label": "",
           "w": 720,
           "h": 1280
         },
         {
           "kind": "video",
-          "src": "/media/giant-shoes/video/002.mp4",
-          "poster": "/media/giant-shoes/video/002.jpg",
+          "src": "/media/giant-shoes/video/001.mp4",
+          "poster": "/media/giant-shoes/video/001.jpg",
           "label": "",
           "w": 720,
           "h": 1280
