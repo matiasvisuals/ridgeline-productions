@@ -1,5 +1,5 @@
 import { requireAuth } from './_lib/auth.js';
-import { getDraftContent, clearDraftContent } from './_lib/store.js';
+import { getDraftContent, clearDraftContent, setPublishedContent } from './_lib/store.js';
 import { putFile } from './_lib/github.js';
 
 export default async function handler(req, res) {
@@ -14,6 +14,11 @@ export default async function handler(req, res) {
         if (!draft) {
             return res.status(400).json({ error: 'no_draft_to_publish' });
         }
+        // Cache the published content first so the live site updates instantly
+        // (the GitHub commit below still runs as the durable source of truth and
+        // triggers a redeploy, but the site no longer has to wait for it).
+        await setPublishedContent(draft);
+
         const json = JSON.stringify(draft, null, 2) + '\n';
         const result = await putFile('data/content.json', json, 'chore(content): publish from admin dashboard');
         await clearDraftContent();

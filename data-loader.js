@@ -6,7 +6,10 @@
 
 (function () {
     const isDraft = /[?&]draft=1\b/.test(location.search);
-    const endpoint = isDraft ? '/api/content?draft=1' : '/data/content.json';
+    // Live content comes from the API first (reflects a publish instantly, with
+    // no-store so nothing is served stale), then falls back to the static file
+    // that ships with the deploy if the function/Redis is unavailable.
+    const endpoints = isDraft ? ['/api/content?draft=1'] : ['/api/content', '/data/content.json'];
 
     let resolveReady;
     window.contentReady = new Promise(r => { resolveReady = r; });
@@ -97,20 +100,24 @@
     }
 
     async function load() {
-        try {
-            const res = await fetch(endpoint, { credentials: 'include' });
-            if (!res.ok) throw new Error('content_fetch_failed');
-            const payload = await res.json();
-            const content = payload.content || payload;
-            hydrate(content);
-            if (isDraft && payload.source === 'draft') {
-                showDraftBadge();
+        for (const endpoint of endpoints) {
+            try {
+                const res = await fetch(endpoint, { credentials: 'include', cache: 'no-store' });
+                if (!res.ok) throw new Error('content_fetch_failed ' + res.status);
+                const payload = await res.json();
+                const content = payload.content || payload;
+                hydrate(content);
+                if (isDraft && payload.source === 'draft') {
+                    showDraftBadge();
+                }
+                resolveReady(content);
+                return;
+            } catch (err) {
+                console.warn('[content-loader] ' + endpoint + ' failed:', err.message || err);
             }
-            resolveReady(content);
-        } catch (err) {
-            console.warn('[content-loader] falling back to static HTML:', err.message || err);
-            resolveReady(null);
         }
+        console.warn('[content-loader] falling back to static HTML');
+        resolveReady(null);
     }
 
     function showDraftBadge() {
