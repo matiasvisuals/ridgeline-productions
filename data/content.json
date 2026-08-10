@@ -1276,11 +1276,11 @@
         },
         {
           "label": "",
-          "img": "/media/wtb-czr/bts/002.jpg"
+          "img": "/media/wtb-czr/bts/005.jpg"
         },
         {
           "label": "",
-          "img": "/media/wtb-czr/bts/003.jpg"
+          "img": "/media/wtb-czr/bts/002.jpg"
         },
         {
           "label": "",
@@ -1288,7 +1288,7 @@
         },
         {
           "label": "",
-          "img": "/media/wtb-czr/bts/005.jpg"
+          "img": "/media/wtb-czr/bts/003.jpg"
         },
         {
           "label": "",
@@ -1304,7 +1304,39 @@
           "poster": ""
         }
       ],
-      "videos": []
+      "videos": [],
+      "btsMedia": [
+        {
+          "kind": "image",
+          "img": "/media/wtb-czr/bts/001.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/wtb-czr/bts/005.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/wtb-czr/bts/002.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/wtb-czr/bts/004.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/wtb-czr/bts/003.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/wtb-czr/bts/006.jpg",
+          "label": ""
+        }
+      ]
     },
     "giant-helmets": {
       "client": "Giant Bicycles",
