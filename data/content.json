@@ -931,11 +931,7 @@
       "bts": [
         {
           "label": "",
-          "img": "/media/seek-thermal/bts/001.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/seek-thermal/bts/002.jpg"
+          "img": "/media/seek-thermal/bts/006.jpg"
         },
         {
           "label": "",
@@ -947,23 +943,37 @@
         },
         {
           "label": "",
+          "img": "/media/seek-thermal/bts/002.jpg"
+        },
+        {
+          "label": "",
           "img": "/media/seek-thermal/bts/005.jpg"
         },
         {
           "label": "",
-          "img": "/media/seek-thermal/bts/006.jpg"
+          "img": "/media/seek-thermal/bts/001.jpg"
         },
         {
           "label": "",
           "img": "/media/seek-thermal/bts/007.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/seek-thermal/bts/008.jpg"
         }
       ],
       "gallery": [],
       "videos": [
+        {
+          "src": "/media/seek-thermal/video/005.mp4",
+          "poster": "/media/seek-thermal/video/005.jpg",
+          "label": "",
+          "w": 1280,
+          "h": 720
+        },
+        {
+          "src": "/media/seek-thermal/video/003.mp4",
+          "poster": "/media/seek-thermal/video/003.jpg",
+          "label": "",
+          "w": 1280,
+          "h": 720
+        },
         {
           "src": "/media/seek-thermal/video/001.mp4",
           "poster": "/media/seek-thermal/video/001.jpg",
@@ -979,25 +989,11 @@
           "h": 1280
         },
         {
-          "src": "/media/seek-thermal/video/003.mp4",
-          "poster": "/media/seek-thermal/video/003.jpg",
-          "label": "",
-          "w": 1280,
-          "h": 720
-        },
-        {
           "src": "/media/seek-thermal/video/004.mp4",
           "poster": "/media/seek-thermal/video/004.jpg",
           "label": "",
           "w": 720,
           "h": 1280
-        },
-        {
-          "src": "/media/seek-thermal/video/005.mp4",
-          "poster": "/media/seek-thermal/video/005.jpg",
-          "label": "",
-          "w": 1280,
-          "h": 720
         }
       ],
       "heroVideos": [
@@ -1010,14 +1006,25 @@
       ],
       "btsMedia": [
         {
-          "kind": "image",
-          "img": "/media/seek-thermal/bts/001.jpg",
-          "label": ""
+          "kind": "video",
+          "src": "/media/seek-thermal/video/005.mp4",
+          "poster": "/media/seek-thermal/video/005.jpg",
+          "label": "",
+          "w": 1280,
+          "h": 720
         },
         {
           "kind": "image",
-          "img": "/media/seek-thermal/bts/002.jpg",
+          "img": "/media/seek-thermal/bts/006.jpg",
           "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/seek-thermal/video/003.mp4",
+          "poster": "/media/seek-thermal/video/003.jpg",
+          "label": "",
+          "w": 1280,
+          "h": 720
         },
         {
           "kind": "image",
@@ -1030,32 +1037,27 @@
           "label": ""
         },
         {
-          "kind": "image",
-          "img": "/media/seek-thermal/bts/005.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/seek-thermal/bts/006.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/seek-thermal/bts/007.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/seek-thermal/bts/008.jpg",
-          "label": ""
-        },
-        {
           "kind": "video",
           "src": "/media/seek-thermal/video/001.mp4",
           "poster": "/media/seek-thermal/video/001.jpg",
           "label": "",
           "w": 720,
           "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/seek-thermal/bts/002.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/seek-thermal/bts/005.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/seek-thermal/bts/001.jpg",
+          "label": ""
         },
         {
           "kind": "video",
@@ -1067,14 +1069,6 @@
         },
         {
           "kind": "video",
-          "src": "/media/seek-thermal/video/003.mp4",
-          "poster": "/media/seek-thermal/video/003.jpg",
-          "label": "",
-          "w": 1280,
-          "h": 720
-        },
-        {
-          "kind": "video",
           "src": "/media/seek-thermal/video/004.mp4",
           "poster": "/media/seek-thermal/video/004.jpg",
           "label": "",
@@ -1082,12 +1076,9 @@
           "h": 1280
         },
         {
-          "kind": "video",
-          "src": "/media/seek-thermal/video/005.mp4",
-          "poster": "/media/seek-thermal/video/005.jpg",
-          "label": "",
-          "w": 1280,
-          "h": 720
+          "kind": "image",
+          "img": "/media/seek-thermal/bts/007.jpg",
+          "label": ""
         }
       ]
     },
