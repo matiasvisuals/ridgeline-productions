@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // ─── Contact form (Web3Forms → info@ridgelineproductions.com) ───
-    const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+    const WEB3FORMS_ACCESS_KEY = 'fc506b43-c227-4d86-a7d8-01f473c34e7b'; // public by design (Web3Forms), tied to info@ridgelineproductions.com
     const form = document.getElementById('contactForm');
     if (form) {
         const btn = form.querySelector('.form-btn');
