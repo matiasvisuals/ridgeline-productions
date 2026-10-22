@@ -1,4 +1,4 @@
-import { setSessionCookie, timingSafeEqualStr } from './_lib/auth.js';
+import { setSessionCookie, timingSafeEqualStr, SESSION_MAX_AGE } from './_lib/auth.js';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -22,6 +22,6 @@ export default async function handler(req, res) {
     }
 
     const now = Math.floor(Date.now() / 1000);
-    setSessionCookie(res, { sub: 'admin', iat: now, exp: now + 60 * 60 * 8 });
+    setSessionCookie(res, { sub: 'admin', iat: now, exp: now + SESSION_MAX_AGE });
     return res.status(200).json({ ok: true });
 }

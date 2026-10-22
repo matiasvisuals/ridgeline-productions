@@ -130,6 +130,11 @@ async function hydrateWorkGrid() {
         // content stores type as "Commercial / Product"; the grid shows it with a
         // middot to match the existing styling.
         if (typeEl && p.type) typeEl.textContent = p.type.replace(/\s*\/\s*/g, ' · ');
+        // Keep the hand-set filter tags and add whatever the portal's Type says,
+        // so a Type edit in the portal also shows up under the filters.
+        const cats = new Set((card.dataset.category || '').split(' ').filter(Boolean));
+        categoriesFromType(p.type).forEach(c => cats.add(c));
+        card.setAttribute('data-category', [...cats].join(' '));
     });
 
     // Append any project from content that isn't already on the page.
@@ -150,11 +155,19 @@ async function hydrateWorkGrid() {
     if (countEl) countEl.textContent = grid.querySelectorAll('.work-card').length;
 }
 
+// "Commercial / Product" → ['commercial', 'product'], matching the filter pills.
+function categoriesFromType(type) {
+    return String(type || '')
+        .split(/[\/,·|]+/)
+        .map(t => t.trim().toLowerCase().replace(/\s+/g, '-'))
+        .filter(Boolean);
+}
+
 function buildWorkCard(id, p) {
     const a = document.createElement('a');
     a.href = `project.html?id=${id}`;
     a.className = 'work-card';
-    a.setAttribute('data-category', '');
+    a.setAttribute('data-category', categoriesFromType(p.type).join(' '));
 
     const imgWrap = document.createElement('div');
     imgWrap.className = 'work-card-img';

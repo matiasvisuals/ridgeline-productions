@@ -28,7 +28,7 @@ export default async function handler(req, res) {
             onBeforeGenerateToken: async () => ({
                 allowedContentTypes: [
                     'video/mp4', 'video/webm', 'video/quicktime',
-                    'image/jpeg', 'image/png', 'image/webp',
+                    'image/jpeg', 'image/png', 'image/webp', 'image/gif',
                 ],
                 addRandomSuffix: true,
                 maximumSizeInBytes: 200 * 1024 * 1024, // 200 MB ceiling

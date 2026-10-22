@@ -67,6 +67,8 @@ const api = {
         } catch {
             throw new Error('network_error');
         }
+        if (r.status === 401) { handleSessionExpired(); throw new Error('your login expired. Log in again, your changes are kept'); }
+        if (r.status === 413) throw new Error('too much data in one save');
         if (!r.ok) {
             const data = await r.json().catch(() => ({}));
             throw new Error(data.error || 'save_failed');
@@ -80,6 +82,7 @@ const api = {
         } catch {
             throw new Error('network_error');
         }
+        if (r.status === 401) { handleSessionExpired(); throw new Error('your login expired. Log in again, your changes are kept'); }
         if (!r.ok) {
             const data = await r.json().catch(() => ({}));
             throw new Error(data.error || 'publish_failed');
@@ -234,6 +237,40 @@ function fileToDataURL(file, maxDim = 1280, quality = 0.82) {
     });
 }
 
+// Photos go to Blob storage as real files. Embedding them in the content as
+// base64 made every save carry every photo, so a big batch (e.g. 18 stills)
+// pushed the save past the server's ~4.5MB request limit and it failed.
+async function imageFileToUrl(file) {
+    if (file.type === 'image/svg+xml') return fileToDataURL(file); // tiny, keep inline
+    const dataUrl = await fileToDataURL(file, 2400, 0.85);
+    const blob = await (await fetch(dataUrl)).blob();
+    return uploadToBlob(blob, file.name, 'images');
+}
+
+// Upload any leftover inline (base64) images in the content and swap in their
+// URLs. Runs before every save, so older inline photos get moved out too.
+async function moveInlineImagesToBlob(content) {
+    const refs = [];
+    (function walk(obj) {
+        if (!obj || typeof obj !== 'object') return;
+        for (const k of Object.keys(obj)) {
+            const v = obj[k];
+            if (typeof v === 'string') {
+                if (/^data:image\/(jpeg|png|webp|gif);base64,/.test(v)) refs.push([obj, k]);
+            } else walk(v);
+        }
+    })(content);
+    if (!refs.length) return 0;
+    let n = 0;
+    for (const [obj, k] of refs) {
+        n++;
+        toast(`Uploading photos… ${n} of ${refs.length}`);
+        const blob = await (await fetch(obj[k])).blob();
+        obj[k] = await uploadToBlob(blob, 'photo', 'images');
+    }
+    return refs.length;
+}
+
 const UPLOAD_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg>`;
 const IMG_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>`;
 
@@ -296,9 +333,9 @@ function imageInput({ value = '', onChange, urlPlaceholder = 'https://… or dro
 
     async function handleFile(file) {
         try {
-            toast('Processing image…');
-            const dataUrl = await fileToDataURL(file);
-            commit(dataUrl);
+            toast('Uploading image…');
+            const url = await imageFileToUrl(file);
+            commit(url);
             toast('Image added', 'success');
         } catch (err) {
             toast('Could not add image: ' + err.message, 'error');
@@ -382,18 +419,6 @@ function makeRowReorderable({ row, handle, getIndex, list, rerender }) {
     });
 }
 
-// Reorder the projects object (keyed by id) by moving fromId to toId's slot.
-function reorderProjects(fromId, toId) {
-    const ids = Object.keys(state.content.projects);
-    const from = ids.indexOf(fromId);
-    const to = ids.indexOf(toId);
-    if (from < 0 || to < 0 || from === to) return;
-    ids.splice(to, 0, ids.splice(from, 1)[0]);
-    const next = {};
-    ids.forEach(id => { next[id] = state.content.projects[id]; });
-    state.content.projects = next;
-}
-
 /* ────────────── Tabs / nav ────────────── */
 
 function initTabs() {
@@ -458,21 +483,35 @@ function initHelp() {
     });
 }
 
+// Shown when an API call comes back 401 mid-session. Keeps the in-memory edits
+// so nothing is lost: logging back in returns to the dashboard as it was.
+function handleSessionExpired() {
+    state.reauth = true;
+    showLogin();
+    $('#loginError').textContent = 'Your login expired. Sign in again. Your unsaved changes are kept.';
+    $('#loginError').hidden = false;
+}
+
 async function bootstrap() {
-    await showLogin();
+    // Check the session before showing anything, so a refresh doesn't flash the
+    // login screen (which looked like being logged out).
+    $('#adminLogin').hidden = true;
+    $('#adminShell').hidden = true;
 
     if (location.protocol !== 'http:' && location.protocol !== 'https:') {
         $('#loginError').textContent = 'Open this page on the deployed site — local file mode is preview-only.';
         $('#loginError').hidden = false;
         $('#loginBtn').disabled = true;
+        await showLogin();
         return;
     }
 
     const me = await api.me();
     if (me.authenticated) {
         await loadAndRender();
-        await showShell();
+        if (state.content) { await showShell(); return; }
     }
+    await showLogin();
 }
 
 async function loadAndRender() {
@@ -520,6 +559,13 @@ function initLogin() {
         try {
             await api.login(password);
             $('#loginPassword').value = '';
+            if (state.reauth && state.content) {
+                // Logged back in after an expired session: keep the open edits.
+                state.reauth = false;
+                await showShell();
+                toast('Signed back in. Save again to keep your changes.', 'success');
+                return;
+            }
             await loadAndRender();
             await showShell();
         } catch (err) {
@@ -634,14 +680,19 @@ function renderServices() {
 /* ────────────── Render: Projects ────────────── */
 
 function renderProjectList() {
-    const list = $('#projectList');
-    list.innerHTML = '';
+    const host = $('#projectList');
+    const scrollTop = host.scrollTop;
+    host.innerHTML = '';
     const ids = Object.keys(state.content.projects);
     if (ids.length === 0) {
-        list.innerHTML = '<div class="admin-empty" style="border:none;padding:1.5rem 1rem">No projects yet.</div>';
+        host.innerHTML = '<div class="admin-empty" style="border:none;padding:1.5rem 1rem">No projects yet.</div>';
         return;
     }
-    ids.forEach(id => {
+    // Fresh wrapper per render so the reorder listeners never stack up.
+    const list = document.createElement('div');
+    list.className = 'admin-list-items';
+    host.appendChild(list);
+    ids.forEach((id, idx) => {
         const p = state.content.projects[id];
         const item = document.createElement('div');
         item.className = 'admin-list-item' + (id === state.selectedProject ? ' is-selected' : '');
@@ -649,7 +700,9 @@ function renderProjectList() {
         const thumb = p.thumb
             ? `<img src="${escapeAttr(p.thumb)}" alt="">`
             : IMG_ICON;
+        item.dataset.idx = String(idx);
         item.innerHTML = `
+            <span class="admin-list-grip" title="Drag to reorder" aria-hidden="true">⠿</span>
             <div class="admin-list-thumb" title="Drag to reorder">${thumb}</div>
             <div class="admin-list-item-info">
                 <div class="admin-list-item-title">${escapeText(p.title || '(untitled)')}</div>
@@ -660,28 +713,8 @@ function renderProjectList() {
             </div>
         `;
 
-        // Drag-to-reorder — the thumbnail is the handle (so the row stays clickable
-        // to open the editor). Reordering here drives the All Work grid order.
-        const handle = item.querySelector('.admin-list-thumb');
-        handle.classList.add('admin-drag-handle');
-        handle.addEventListener('mousedown', () => { item.draggable = true; });
-        item.addEventListener('dragstart', e => {
-            item.classList.add('is-dragging');
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/plain', id);
-        });
-        item.addEventListener('dragend', () => { item.draggable = false; item.classList.remove('is-dragging'); });
-        item.addEventListener('dragover', e => { e.preventDefault(); item.classList.add('is-dragover'); });
-        item.addEventListener('dragleave', () => item.classList.remove('is-dragover'));
-        item.addEventListener('drop', e => {
-            e.preventDefault();
-            item.classList.remove('is-dragover');
-            const fromId = e.dataTransfer.getData('text/plain');
-            if (!fromId || fromId === id) return;
-            reorderProjects(fromId, id);
-            setDirty(true);
-            renderProjectList();
-        });
+        // Drag-to-reorder is wired once for the whole list below (pointer-based, so
+        // it works with a mouse, trackpad, or touch).
 
         item.addEventListener('click', (e) => {
             if (e.target.closest('[data-action="delete"]')) return;
@@ -707,6 +740,24 @@ function renderProjectList() {
         });
         list.appendChild(item);
     });
+
+    // Mouse: drag the whole row. Touch: drag by the grip or thumbnail so the
+    // list can still be scrolled with a finger. Order here drives All Work.
+    enableGridReorder(list, ids, () => {
+        const next = {};
+        ids.forEach(id => { next[id] = state.content.projects[id]; });
+        state.content.projects = next;
+        setDirty(true);
+        renderProjectList();
+    }, {
+        tileClass: 'admin-list-item',
+        handleSel: '.admin-list-grip, .admin-list-thumb',
+        mouseHandleSel: '.admin-list-item',
+        ignoreSel: '[data-action]',
+        axis: 'y',
+        scroller: host,
+    });
+    host.scrollTop = scrollTop;
 }
 
 function buildVimeoField(project) {
@@ -1132,19 +1183,19 @@ function renderMediaManager(root, projectId, type) {
             const files = Array.from(fileList || []).filter(f => f.type && f.type.startsWith('image/'));
             if (!files.length) return;
             bulk.classList.add('is-busy');
-            toast(`Processing ${files.length} image${files.length > 1 ? 's' : ''}…`);
-            let added = 0;
+            let added = 0, failed = 0;
             for (const f of files) {
+                toast(`Uploading ${added + failed + 1} of ${files.length}…`);
                 try {
-                    const dataUrl = await fileToDataURL(f);
-                    if (type === 'gallery') items.push(dataUrl);
-                    else items.push({ label: '', img: dataUrl });
+                    const url = await imageFileToUrl(f);
+                    if (type === 'gallery') items.push(url);
+                    else items.push({ label: '', img: url });
                     added++;
-                } catch { /* skip bad file */ }
+                } catch { failed++; }
             }
             setDirty(true);
             renderMediaManager(root, projectId, type);
-            toast(`Added ${added} image${added !== 1 ? 's' : ''}`, 'success');
+            toast(`Added ${added} image${added !== 1 ? 's' : ''}` + (failed ? ` · ${failed} failed` : ''), failed ? 'error' : 'success');
         };
 
         bulk.addEventListener('click', () => fileInput.click());
@@ -1264,19 +1315,41 @@ function buildMediaTile(root, projectId, type, item, idx) {
 // gap, committing on release. Replaces native HTML5 DnD for the photo/video
 // grids. `items` is the backing array (mutated in place); `onReorder` persists +
 // repaints once, only if the order actually changed.
-function enableGridReorder(grid, items, onReorder) {
+// Options (used by the project list): `tileClass`, `handleSel` (touch/pen handle),
+// `mouseHandleSel` (mouse handle — can be the whole row), `ignoreSel` (never starts
+// a drag, e.g. buttons), `axis` ('grid' or 'y' for a single column) and `scroller`
+// (the element to auto-scroll; defaults to the page).
+function enableGridReorder(grid, items, onReorder, opts = {}) {
     const THRESHOLD = 4;
+    const tileClass = opts.tileClass || 'admin-media-tile';
+    const handleSel = opts.handleSel || '.admin-media-tile-img';
+    const mouseHandleSel = opts.mouseHandleSel || handleSel;
+    const axis = opts.axis || 'grid';
+    const scroller = opts.scroller || null;
     let st = null;
+    let suppressClick = false;
 
-    const tilesIn = () => [...grid.children].filter(c => c.classList.contains('admin-media-tile'));
+    const tilesIn = () => [...grid.children].filter(c => c.classList.contains(tileClass));
     const orderKey = () => tilesIn().map(t => t.dataset.idx).join(',');
+
+    // A drag ends with a click on the row underneath; swallow it so dropping a
+    // project doesn't also open it.
+    grid.addEventListener('click', (e) => {
+        if (!suppressClick) return;
+        suppressClick = false;
+        e.stopPropagation();
+        e.preventDefault();
+    }, true);
 
     grid.addEventListener('pointerdown', (e) => {
         if (e.pointerType === 'mouse' && e.button !== 0) return;
-        const handle = e.target.closest('.admin-media-tile-img');
+        if (opts.ignoreSel && e.target.closest(opts.ignoreSel)) return;
+        const handle = e.target.closest(e.pointerType === 'mouse' ? mouseHandleSel : handleSel);
         if (!handle || !grid.contains(handle)) return;
-        const tile = handle.closest('.admin-media-tile');
+        const tile = handle.closest('.' + tileClass);
         if (!tile) return;
+        // Keep text fields usable inside a draggable row.
+        if (e.target.closest('input, textarea, select')) return;
         e.preventDefault();
         st = { tile, startX: e.clientX, startY: e.clientY, lastX: e.clientX, lastY: e.clientY, active: false, clone: null, dx: 0, dy: 0, raf: 0, startOrder: orderKey() };
         window.addEventListener('pointermove', onMove);
@@ -1313,7 +1386,9 @@ function enableGridReorder(grid, items, onReorder) {
         let ref = null;
         for (const t of others) {
             const r = t.getBoundingClientRect();
-            const before = st.lastY < r.top ? true
+            const before = axis === 'y'
+                ? st.lastY < r.top + r.height / 2
+                : st.lastY < r.top ? true
                 : st.lastY > r.bottom ? false
                 : st.lastX < r.left + r.width / 2;
             if (before) { ref = t; break; }
@@ -1326,15 +1401,21 @@ function enableGridReorder(grid, items, onReorder) {
     // that direction so a tile can be dropped beyond what's currently on screen.
     function autoScrollTick() {
         if (!st || !st.active) return;
-        const MARGIN = 100, MAX = 22;
-        const vh = window.innerHeight;
+        const MAX = 22;
+        let top = 0, bottom = window.innerHeight, MARGIN = 100;
+        if (scroller) {
+            const r = scroller.getBoundingClientRect();
+            top = Math.max(0, r.top); bottom = Math.min(window.innerHeight, r.bottom);
+            MARGIN = Math.min(60, (bottom - top) / 4);
+        }
         let dy = 0;
-        if (st.lastY < MARGIN) dy = -MAX * (1 - st.lastY / MARGIN);
-        else if (st.lastY > vh - MARGIN) dy = MAX * (1 - (vh - st.lastY) / MARGIN);
+        if (st.lastY < top + MARGIN) dy = -MAX * Math.min(1, 1 - (st.lastY - top) / MARGIN);
+        else if (st.lastY > bottom - MARGIN) dy = MAX * Math.min(1, 1 - (bottom - st.lastY) / MARGIN);
         if (dy) {
-            const before = window.scrollY;
-            window.scrollBy(0, dy);
-            if (window.scrollY !== before) updateInsertion(); // tiles moved under the pointer
+            const target = scroller || document.scrollingElement || document.documentElement;
+            const before = target.scrollTop;
+            if (scroller) scroller.scrollTop += dy; else window.scrollBy(0, dy);
+            if (target.scrollTop !== before) updateInsertion(); // tiles moved under the pointer
         }
         st.raf = requestAnimationFrame(autoScrollTick);
     }
@@ -1388,6 +1469,8 @@ function enableGridReorder(grid, items, onReorder) {
             s.clone.remove();
             s.tile.classList.remove('is-drag-src');
             document.body.classList.remove('is-grid-dragging');
+            suppressClick = true;
+            setTimeout(() => { suppressClick = false; }, 0);
             if (orderKey() === s.startOrder) return; // nothing actually moved
             const newOrder = tilesIn().map(t => items[+t.dataset.idx]);
             items.splice(0, items.length, ...newOrder);
@@ -1461,8 +1544,9 @@ function renderBtsManager(root, projectId) {
         for (const f of files) {
             try {
                 if (f.type.startsWith('image/')) {
-                    const dataUrl = await fileToDataURL(f);
-                    items.push({ kind: 'image', img: dataUrl, label: '' });
+                    toast('Uploading ' + (f.name || 'photo') + '…');
+                    const url = await imageFileToUrl(f);
+                    items.push({ kind: 'image', img: url, label: '' });
                     commit(); rerender();
                 } else {
                     await addVideoFile(f, items, commit, rerender);
@@ -1711,15 +1795,19 @@ function extFromMime(m) {
     if (m.includes('mp4')) return 'mp4';
     if (m.includes('webm')) return 'webm';
     if (m.includes('quicktime')) return 'mov';
+    if (m.includes('jpeg')) return 'jpg';
+    if (m.includes('png')) return 'png';
+    if (m.includes('webp')) return 'webp';
+    if (m.includes('gif')) return 'gif';
     return '';
 }
 
 // Direct-to-Blob client upload (bypasses the serverless body limit). /api/upload
 // authorizes the session and mints a one-time client token.
-async function uploadToBlob(blob, originalName) {
+async function uploadToBlob(blob, originalName, folder = 'bts') {
     const ext = extFromMime(blob.type) || (originalName && originalName.split('.').pop()) || 'mp4';
     const base = (originalName || 'clip').replace(/\.[^.]+$/, '').replace(/[^a-z0-9_-]+/gi, '-').toLowerCase() || 'clip';
-    const pathname = `bts/${base}.${ext}`;
+    const pathname = `${folder}/${base}.${ext}`;
     let mod;
     try {
         mod = await import('https://esm.sh/@vercel/blob@2/client');
@@ -1796,10 +1884,11 @@ async function saveDraft() {
     btn.disabled = true;
     btn.textContent = 'Saving…';
     try {
+        await moveInlineImagesToBlob(state.content);
         await api.saveDraft(state.content);
         state.original = JSON.parse(JSON.stringify(state.content));
         setDirty(false);
-        toast('Draft saved. Preview at /?draft=1', 'success');
+        toast('Draft saved. Preview it from the Preview button.', 'success');
     } catch (err) {
         toast('Save failed: ' + err.message, 'error');
     } finally {
@@ -1816,6 +1905,12 @@ async function publish() {
     });
     if (!ok) return;
 
+    try {
+        if (await moveInlineImagesToBlob(state.content)) setDirty(true);
+    } catch (err) {
+        toast('Could not upload photos: ' + err.message, 'error');
+        return;
+    }
     if (state.dirty) {
         try { await api.saveDraft(state.content); } catch (err) {
             toast('Could not save before publishing: ' + err.message, 'error');

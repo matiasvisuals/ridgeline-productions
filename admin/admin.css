@@ -1139,3 +1139,26 @@ body.is-grid-dragging { cursor: grabbing; user-select: none; -webkit-user-select
     margin-bottom: 0.6rem;
 }
 .admin-hero-row-acts { display: inline-flex; gap: 0.3rem; }
+
+/* Project list reorder (pointer drag — mouse drags the row, touch uses the grip/thumb) */
+.admin-list-grip {
+    flex-shrink: 0;
+    width: 12px;
+    margin-right: -0.3rem;
+    color: var(--fg-4);
+    font-size: 0.9rem;
+    line-height: 1;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    transition: color 0.15s var(--ease);
+}
+.admin-list-item:hover .admin-list-grip { color: var(--fg-2); }
+.admin-list-thumb { touch-action: none; }
+.admin-list-item.is-drag-src { opacity: 0; }
+.admin-list-item.is-drag-src * { visibility: hidden; }
+.admin-list-item.admin-media-drag-clone {
+    background: var(--elevated);
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-sm);
+}

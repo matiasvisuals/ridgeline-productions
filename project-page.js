@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const p = projects[id];
 
     if (!p) {
-        window.location.href = 'index.html';
+        window.location.href = 'index.html' + (/[?&]draft=1\b/.test(location.search) ? '?draft=1' : '');
         return;
     }
 

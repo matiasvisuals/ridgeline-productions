@@ -2,7 +2,9 @@
 import crypto from 'node:crypto';
 
 const COOKIE_NAME = 'rdgl_admin';
-const MAX_AGE_SECONDS = 60 * 60 * 8; // 8h
+// 14 days, refreshed on every portal visit (see /api/me), so an active editor
+// never gets bounced back to the login screen mid-session.
+const MAX_AGE_SECONDS = 60 * 60 * 24 * 14;
 
 function b64url(buf) {
     return Buffer.from(buf).toString('base64')

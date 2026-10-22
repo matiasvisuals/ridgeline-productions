@@ -120,6 +120,31 @@
         resolveReady(null);
     }
 
+    // Keep draft preview on while clicking around the site: any same-site link
+    // gets ?draft=1 carried over (it used to drop off after the homepage). Runs in
+    // the capture phase, before the page-transition handlers read the href.
+    function keepDraftOnLinks() {
+        const tag = (a) => {
+            const raw = a.getAttribute('href');
+            if (!raw || raw.startsWith('#') || /^(mailto|tel|javascript):/i.test(raw)) return;
+            let url;
+            try { url = new URL(raw, location.href); } catch { return; }
+            if (url.origin !== location.origin || url.pathname.startsWith('/admin') || url.pathname.startsWith('/api')) return;
+            if (url.searchParams.get('draft') === '1') return;
+            url.searchParams.set('draft', '1');
+            a.setAttribute('href', url.pathname + url.search + url.hash);
+        };
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest && e.target.closest('a[href]');
+            if (a) tag(a);
+        }, true);
+        document.addEventListener('auxclick', (e) => {
+            const a = e.target.closest && e.target.closest('a[href]');
+            if (a) tag(a);
+        }, true);
+    }
+    if (isDraft) keepDraftOnLinks();
+
     function showDraftBadge() {
         if (document.getElementById('draftBadge')) return;
         const badge = document.createElement('div');
