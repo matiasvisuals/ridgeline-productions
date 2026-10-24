@@ -439,6 +439,7 @@ function updateCounts() {
     if (!state.content) return;
     setText('#countProjects', Object.keys(state.content.projects || {}).length);
     setText('#countServices', (state.content.services || []).length);
+    setText('#countReel', (state.content.reel || []).length);
 }
 
 /* ────────────── Login ────────────── */
@@ -519,7 +520,12 @@ async function loadAndRender() {
         const data = await api.loadContent();
         state.content = JSON.parse(JSON.stringify(data.content));
         state.original = JSON.parse(JSON.stringify(data.content));
+        // Photos still pointing at the old Squarespace site → our own copies, and
+        // fill in the Homepage tab's data if this content predates it.
+        const moved = window.rdglLocalizeImages ? window.rdglLocalizeImages(state.content) : 0;
+        const seeded = await seedHomepageContent(state.content);
         renderAll();
+        if (moved || seeded) setDirty(true);
         if (data.source === 'draft') {
             toast('Loaded unpublished draft', '');
         }
@@ -832,10 +838,10 @@ function renderProjectEditor() {
                         <span class="admin-field-label">Title</span>
                         <input type="text" data-field="title" value="${escapeAttr(p.title)}">
                     </label>
-                    <label class="admin-field">
-                        <span class="admin-field-label">Type / category</span>
-                        <input type="text" data-field="type" value="${escapeAttr(p.type)}" placeholder="Commercial / Product">
-                    </label>
+                    <div class="admin-field admin-field--wide">
+                        <span class="admin-field-label">Categories <span class="admin-field-sub">— pick one or more; these drive the filters on All Work</span></span>
+                        <div data-mount="categories"></div>
+                    </div>
                     <label class="admin-field">
                         <span class="admin-field-label">Year</span>
                         <input type="text" data-field="year" value="${escapeAttr(p.year)}">
@@ -915,6 +921,9 @@ function renderProjectEditor() {
             }
         });
     });
+
+    root.querySelector('[data-mount="categories"]').appendChild(
+        buildCategoryPicker(state.content.projects[id], () => setDirty(true)));
 
     // Hero videos (carousel)
     renderHeroVideos(root, id);
@@ -1804,7 +1813,7 @@ function extFromMime(m) {
 
 // Direct-to-Blob client upload (bypasses the serverless body limit). /api/upload
 // authorizes the session and mints a one-time client token.
-async function uploadToBlob(blob, originalName, folder = 'bts') {
+async function uploadToBlob(blob, originalName, folder = 'bts', onProgress = null) {
     const ext = extFromMime(blob.type) || (originalName && originalName.split('.').pop()) || 'mp4';
     const base = (originalName || 'clip').replace(/\.[^.]+$/, '').replace(/[^a-z0-9_-]+/gi, '-').toLowerCase() || 'clip';
     const pathname = `${folder}/${base}.${ext}`;
@@ -1819,6 +1828,7 @@ async function uploadToBlob(blob, originalName, folder = 'bts') {
         handleUploadUrl: '/api/upload',
         contentType: blob.type || undefined,
         multipart: true,
+        onUploadProgress: onProgress ? (e) => onProgress(Math.round(e.percentage || 0)) : undefined,
     });
     return result.url;
 }
@@ -1871,6 +1881,7 @@ function escapeAttr(s) {
 function renderAll() {
     renderAbout();
     renderServices();
+    renderHomepage();
     renderProjectList();
     renderProjectEditor();
     updateCounts();
@@ -2022,3 +2033,323 @@ function initShellButtons() {
         }
     }
 })();
+
+/* ────────────── Homepage: banner video, The Reel, client logos ────────────── */
+
+const DEFAULT_HERO = {
+    src: '/media/hero/hero-1080.mp4',
+    mobile: '/media/hero/hero-720.mp4',
+    poster: '/media/hero/hero-poster.jpg',
+};
+
+// Older saved content has no hero / reel / clients yet. Fill them in from the
+// deployed content.json (which has them) so the Homepage tab starts from what
+// the site shows today.
+async function seedHomepageContent(content) {
+    if (content.hero && Array.isArray(content.reel) && Array.isArray(content.clients)) return false;
+    let base = null;
+    try {
+        const r = await fetch('/data/content.json', { cache: 'no-store' });
+        if (r.ok) base = await r.json();
+    } catch { /* use built-in defaults */ }
+    let changed = false;
+    if (!content.hero) { content.hero = (base && base.hero) || { ...DEFAULT_HERO }; changed = true; }
+    if (!Array.isArray(content.reel)) {
+        const ids = Object.keys(content.projects || {});
+        content.reel = ((base && base.reel) || ids.slice(0, 5)).filter(id => content.projects[id]);
+        changed = true;
+    }
+    if (!Array.isArray(content.clients)) { content.clients = (base && base.clients) || []; changed = true; }
+    return changed;
+}
+
+// Site-relative asset paths (brand/clients/x.svg) need a leading slash here,
+// because the dashboard lives under /admin/.
+function siteSrc(src) {
+    if (!src) return '';
+    if (/^(https?:|data:|blob:|\/)/.test(src)) return src;
+    return '/' + src;
+}
+
+function renderHomepage() {
+    if (!state.content) return;
+    renderHomeHero();
+    renderHomeReel();
+    renderHomeClients();
+}
+
+function renderHomeHero() {
+    const host = $('#homeHero');
+    if (!host) return;
+    const hero = state.content.hero || (state.content.hero = { ...DEFAULT_HERO });
+    host.innerHTML = `
+        <div class="admin-hero-preview">
+            <video muted loop playsinline autoplay preload="metadata"></video>
+        </div>
+        <div class="admin-hero-actions">
+            <button type="button" class="admin-btn admin-btn--primary admin-btn--small" data-act="upload">Upload new banner video</button>
+            <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-act="mobile">${hero.mobile ? 'Replace phone version' : 'Add phone version (optional)'}</button>
+            ${hero.src !== DEFAULT_HERO.src ? '<button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-act="reset">Back to the current banner</button>' : ''}
+        </div>
+        <p class="admin-field-hint admin-hero-meta"></p>
+        <span class="admin-field-label" style="display:block;margin:1rem 0 .35rem">Still image (shows while the video loads)</span>
+        <div data-mount="poster"></div>
+        <input type="file" accept="video/mp4,video/quicktime,video/webm" hidden data-file="main">
+        <input type="file" accept="video/mp4,video/quicktime,video/webm" hidden data-file="mobile">
+    `;
+    const video = host.querySelector('video');
+    video.src = siteSrc(hero.src);
+    if (hero.poster) video.poster = siteSrc(hero.poster);
+    host.querySelector('.admin-hero-meta').textContent = hero.mobile
+        ? 'Phones get the lighter phone version; computers get the main video.'
+        : 'Phones and computers both play this video.';
+
+    host.querySelector('[data-mount="poster"]').appendChild(imageInput({
+        value: hero.poster || '',
+        onChange: v => { hero.poster = v; setDirty(true); if (v) video.poster = siteSrc(v); },
+    }));
+
+    const pick = (which) => host.querySelector(`[data-file="${which}"]`).click();
+    host.querySelector('[data-act="upload"]').addEventListener('click', () => pick('main'));
+    host.querySelector('[data-act="mobile"]').addEventListener('click', () => pick('mobile'));
+    const reset = host.querySelector('[data-act="reset"]');
+    if (reset) reset.addEventListener('click', () => {
+        state.content.hero = { ...DEFAULT_HERO };
+        setDirty(true);
+        renderHomeHero();
+    });
+
+    host.querySelectorAll('input[type="file"]').forEach(input => {
+        input.addEventListener('change', async () => {
+            const file = input.files && input.files[0];
+            input.value = '';
+            if (!file) return;
+            await uploadHeroVideo(file, input.dataset.file === 'mobile');
+        });
+    });
+}
+
+async function uploadHeroVideo(file, isMobile) {
+    const hero = state.content.hero;
+    const mb = file.size / (1024 * 1024);
+    if (mb > 60) {
+        const ok = await confirmDialog({
+            title: 'This video is large',
+            message: `It's ${Math.round(mb)} MB, so the homepage will be slow to start on phones. For a fast banner, export it at 1080p, about 20–30 MB, with no audio. Upload it anyway?`,
+            okLabel: 'Upload anyway',
+        });
+        if (!ok) return;
+    }
+    try {
+        let poster = '';
+        if (!isMobile) { try { poster = await grabPoster(file, 1920, 0.82); } catch { /* keep the old still */ } }
+        const url = await uploadToBlob(file, file.name, 'hero', pct => toast(`Uploading banner video… ${pct}%`));
+        if (isMobile) {
+            hero.mobile = url;
+        } else {
+            hero.src = url;
+            hero.mobile = ''; // the old phone version would show the old video
+            if (poster) hero.poster = poster;
+        }
+        setDirty(true);
+        renderHomeHero();
+        toast(isMobile ? 'Phone version added. Save draft, then Preview.' : 'Banner video uploaded. Save draft, then Preview.', 'success');
+    } catch (err) {
+        toast('Upload failed: ' + err.message, 'error');
+    }
+}
+
+function renderHomeReel() {
+    const host = $('#homeReel');
+    if (!host) return;
+    const projects = state.content.projects || {};
+    const reel = state.content.reel = (state.content.reel || []).filter(id => projects[id]);
+    host.innerHTML = '';
+
+    const list = document.createElement('div');
+    list.className = 'admin-list-items admin-reel-list';
+    host.appendChild(list);
+    if (!reel.length) {
+        list.innerHTML = '<div class="admin-hint" style="margin:0">No projects in the Reel. Add some below.</div>';
+    }
+    reel.forEach((id, idx) => {
+        const p = projects[id];
+        const row = document.createElement('div');
+        row.className = 'admin-list-item admin-reel-item';
+        row.dataset.idx = String(idx);
+        row.innerHTML = `
+            <span class="admin-list-grip" title="Drag to reorder" aria-hidden="true">⠿</span>
+            <span class="admin-reel-num">${String(idx + 1).padStart(2, '0')}</span>
+            <div class="admin-list-thumb" title="Drag to reorder">${p.thumb ? `<img src="${escapeAttr(siteSrc(p.thumb))}" alt="">` : IMG_ICON}</div>
+            <div class="admin-list-item-info">
+                <div class="admin-list-item-title">${escapeText(p.title || '(untitled)')}</div>
+                <div class="admin-list-item-sub">${escapeText(p.client || '')}</div>
+            </div>
+            <div class="admin-list-item-actions">
+                <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-action="remove" title="Take out of the Reel">✕</button>
+            </div>`;
+        row.querySelector('[data-action="remove"]').addEventListener('click', () => {
+            reel.splice(idx, 1);
+            setDirty(true);
+            renderHomeReel();
+        });
+        list.appendChild(row);
+    });
+    enableGridReorder(list, reel, () => { setDirty(true); renderHomeReel(); }, {
+        tileClass: 'admin-reel-item',
+        handleSel: '.admin-list-grip, .admin-list-thumb',
+        mouseHandleSel: '.admin-reel-item',
+        ignoreSel: '[data-action]',
+        axis: 'y',
+    });
+
+    const rest = Object.keys(projects).filter(id => !reel.includes(id));
+    const add = document.createElement('div');
+    add.className = 'admin-reel-add';
+    add.innerHTML = `
+        <select ${rest.length ? '' : 'disabled'}>
+            <option value="">${rest.length ? '+ Add a project to the Reel…' : 'Every project is already in the Reel'}</option>
+            ${rest.map(id => `<option value="${escapeAttr(id)}">${escapeText((projects[id].client ? projects[id].client + ' — ' : '') + (projects[id].title || id))}</option>`).join('')}
+        </select>`;
+    add.querySelector('select').addEventListener('change', (e) => {
+        const id = e.target.value;
+        if (!id) return;
+        reel.push(id);
+        setDirty(true);
+        renderHomeReel();
+    });
+    host.appendChild(add);
+    updateCounts();
+}
+
+function renderHomeClients() {
+    const host = $('#homeClients');
+    if (!host) return;
+    const clients = state.content.clients || (state.content.clients = []);
+    host.innerHTML = '';
+    const list = document.createElement('div');
+    list.className = 'admin-client-list';
+    host.appendChild(list);
+
+    clients.forEach((c, idx) => {
+        const row = document.createElement('div');
+        row.className = 'admin-client-item';
+        row.dataset.idx = String(idx);
+        const scale = c.scale || 1;
+        row.innerHTML = `
+            <span class="admin-list-grip" title="Drag to reorder" aria-hidden="true">⠿</span>
+            <button type="button" class="admin-client-logo ${c.invert ? 'is-invert' : ''}" data-action="logo" title="Click to replace the logo">
+                ${c.src ? `<img src="${escapeAttr(siteSrc(c.src))}" alt="" style="transform:scale(${scale})">` : '<span>Add logo</span>'}
+            </button>
+            <input type="text" class="admin-client-name" value="${escapeAttr(c.name || '')}" placeholder="Brand name" aria-label="Brand name">
+            <label class="admin-client-opt" title="Turns a dark logo white so it shows on the black strip">
+                <input type="checkbox" data-opt="invert" ${c.invert ? 'checked' : ''}> Make white
+            </label>
+            <label class="admin-client-opt admin-client-size" title="Logo size">
+                Size <input type="range" min="0.5" max="1.8" step="0.05" value="${scale}" data-opt="scale">
+            </label>
+            <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-action="delete" title="Remove logo">✕</button>
+            <input type="file" accept="image/svg+xml,image/png,image/webp,image/jpeg" hidden>`;
+
+        const nameI = row.querySelector('.admin-client-name');
+        nameI.addEventListener('input', () => { c.name = nameI.value; setDirty(true); });
+        row.querySelector('[data-opt="invert"]').addEventListener('change', (e) => {
+            c.invert = e.target.checked;
+            row.querySelector('.admin-client-logo').classList.toggle('is-invert', c.invert);
+            setDirty(true);
+        });
+        row.querySelector('[data-opt="scale"]').addEventListener('input', (e) => {
+            const v = parseFloat(e.target.value);
+            if (Math.abs(v - 1) < 0.001) delete c.scale; else c.scale = v;
+            const img = row.querySelector('.admin-client-logo img');
+            if (img) img.style.transform = `scale(${v})`;
+            setDirty(true);
+        });
+        const file = row.querySelector('input[type="file"]');
+        row.querySelector('[data-action="logo"]').addEventListener('click', () => file.click());
+        file.addEventListener('change', async () => {
+            const f = file.files && file.files[0];
+            file.value = '';
+            if (!f) return;
+            try {
+                toast('Uploading logo…');
+                c.src = await imageFileToUrl(f);
+                if (!c.name) c.name = f.name.replace(/\.[^.]+$/, '');
+                setDirty(true);
+                renderHomeClients();
+                toast('Logo updated', 'success');
+            } catch (err) {
+                toast('Could not add logo: ' + err.message, 'error');
+            }
+        });
+        row.querySelector('[data-action="delete"]').addEventListener('click', () => {
+            clients.splice(idx, 1);
+            setDirty(true);
+            renderHomeClients();
+        });
+        list.appendChild(row);
+    });
+
+    enableGridReorder(list, clients, () => { setDirty(true); renderHomeClients(); }, {
+        tileClass: 'admin-client-item',
+        handleSel: '.admin-list-grip',
+        mouseHandleSel: '.admin-list-grip',
+        axis: 'y',
+    });
+
+    const addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'admin-btn admin-btn--secondary admin-btn--small';
+    addBtn.textContent = '+ Add logo';
+    addBtn.style.marginTop = '.8rem';
+    addBtn.addEventListener('click', () => {
+        clients.push({ name: '', src: '', invert: true });
+        setDirty(true);
+        renderHomeClients();
+        const rows = list.querySelectorAll('.admin-client-item');
+        const last = rows[rows.length - 1];
+        if (last) last.querySelector('[data-action="logo"]').click();
+    });
+    host.appendChild(addBtn);
+    updateCounts();
+}
+
+/* ────────────── Project categories ────────────── */
+// The filter pills on All Work come from these. Stored on the project as
+// "Commercial / Product" (the format the site already reads).
+const PROJECT_CATEGORIES = ['Commercial', 'Product', 'Sport', 'Automotive', 'Documentary', 'Adventure', 'Social', 'Corporate'];
+
+function parseTypeList(type) {
+    return String(type || '').split(/[\/,·|]+/).map(t => t.trim()).filter(Boolean);
+}
+
+function buildCategoryPicker(project, onChange) {
+    const wrap = document.createElement('div');
+    wrap.className = 'admin-cat-picker';
+    const render = () => {
+        const chosen = parseTypeList(project.type);
+        const lower = chosen.map(c => c.toLowerCase());
+        // Keep any older free-text labels (e.g. "Brand Film") visible so nothing is lost.
+        const extras = chosen.filter(c => !PROJECT_CATEGORIES.some(k => k.toLowerCase() === c.toLowerCase()));
+        wrap.innerHTML = '';
+        [...PROJECT_CATEGORIES, ...extras].forEach(cat => {
+            const on = lower.includes(cat.toLowerCase());
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'admin-cat-chip' + (on ? ' is-on' : '');
+            b.textContent = cat;
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            b.addEventListener('click', () => {
+                let next = parseTypeList(project.type);
+                if (on) next = next.filter(c => c.toLowerCase() !== cat.toLowerCase());
+                else next.push(cat);
+                project.type = next.join(' / ');
+                onChange();
+                render();
+            });
+            wrap.appendChild(b);
+        });
+    };
+    render();
+    return wrap;
+}

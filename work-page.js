@@ -107,7 +107,11 @@ async function hydrateWorkGrid() {
     if (!grid) return;
 
     const idOf = (card) => {
-        try { return new URL(card.href, location.href).searchParams.get('id'); }
+        try {
+            const u = new URL(card.href, location.href);
+            const m = u.pathname.match(/^\/work\/([^/]+)\/?$/);
+            return m ? decodeURIComponent(m[1]) : u.searchParams.get('id');
+        }
         catch { return null; }
     };
 
@@ -153,6 +157,35 @@ async function hydrateWorkGrid() {
 
     const countEl = document.getElementById('workCount');
     if (countEl) countEl.textContent = grid.querySelectorAll('.work-card').length;
+
+    syncFilterPills(grid);
+}
+
+// Filter pills follow the portal's categories: a pill shows only when at least
+// one project uses it, and Social / Corporate appear once a project is tagged.
+const FILTER_ORDER = ['commercial', 'product', 'sport', 'automotive', 'documentary', 'adventure', 'social', 'corporate'];
+function syncFilterPills(grid) {
+    const used = new Set();
+    grid.querySelectorAll('.work-card').forEach(card =>
+        (card.dataset.category || '').split(' ').filter(Boolean).forEach(c => used.add(c)));
+    document.querySelectorAll('.filter-pills').forEach(row => {
+        FILTER_ORDER.forEach(cat => {
+            let pill = row.querySelector(`.filter-pill[data-filter="${cat}"]`);
+            if (!pill && used.has(cat)) {
+                pill = document.createElement('button');
+                pill.className = 'filter-pill';
+                pill.dataset.filter = cat;
+                pill.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+                row.appendChild(pill);
+            }
+            if (pill) pill.hidden = !used.has(cat);
+        });
+        // keep pills in the standard order
+        FILTER_ORDER.forEach(cat => {
+            const pill = row.querySelector(`.filter-pill[data-filter="${cat}"]`);
+            if (pill) row.appendChild(pill);
+        });
+    });
 }
 
 // "Commercial / Product" → ['commercial', 'product'], matching the filter pills.
@@ -165,7 +198,7 @@ function categoriesFromType(type) {
 
 function buildWorkCard(id, p) {
     const a = document.createElement('a');
-    a.href = `project.html?id=${id}`;
+    a.href = `/work/${id}`;
     a.className = 'work-card';
     a.setAttribute('data-category', categoriesFromType(p.type).join(' '));
 

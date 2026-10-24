@@ -3,14 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ridgeline Productions</title>
-    <meta name="description" content="Full-service production company based in Santa Barbara, California.">
+    <title>Santa Barbara Video Production | Ridgeline Productions</title>
+    <meta name="description" content="Ridgeline Productions is a director-led video and photography production company in Santa Barbara, CA, making commercials, product films and brand stories.">
+    <link rel="canonical" href="https://ridgelineproductions.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ridgeline Productions">
+    <meta property="og:url" content="https://ridgelineproductions.com/">
+    <meta property="og:title" content="Santa Barbara Video Production | Ridgeline Productions">
+    <meta property="og:description" content="Director-led video and photography production in Santa Barbara, CA. Commercials, product films and brand stories.">
+    <meta property="og:image" content="https://ridgelineproductions.com/media/hero/hero-poster.jpg">
+    <meta property="og:image:width" content="1920">
+    <meta property="og:image:height" content="1080">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Ridgeline Productions",
+        "url": "https://ridgelineproductions.com/",
+        "logo": "https://ridgelineproductions.com/brand/favicon-500.png",
+        "image": "https://ridgelineproductions.com/media/hero/hero-poster.jpg",
+        "description": "Director-led video and photography production company in Santa Barbara, California.",
+        "email": "info@ridgelineproductions.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Santa Barbara", "addressRegion": "CA", "addressCountry": "US" },
+        "areaServed": "Worldwide",
+        "founder": [
+            { "@type": "Person", "name": "Tye French" },
+            { "@type": "Person", "name": "Maxwell Frank" }
+        ],
+        "sameAs": [
+            "https://www.instagram.com/a_ridgeline_production/",
+            "https://vimeo.com/ridgelineproductions"
+        ]
+    }
+    </script>
     <link rel="icon" type="image/png" href="brand/favicon-100.png">
     <link rel="apple-touch-icon" href="brand/favicon-500.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20261022a">
+    <link rel="stylesheet" href="styles.css?v=20261024a">
 </head>
 <body>
 
@@ -65,15 +97,18 @@
 
     <!-- Hero -->
     <section class="hero" id="hero">
+        <h1 class="sr-only">Ridgeline Productions: commercial video and photography production in Santa Barbara, California</h1>
         <div class="hero-video-wrap">
-            <iframe
-                id="heroIframe"
-                class="hero-video-iframe"
-                data-src="https://player.vimeo.com/video/1092336745?h=3dfe3a93d0&background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
-                frameborder="0"
-                allow="autoplay; fullscreen"
-                allowfullscreen
-            ></iframe>
+            <video
+                id="heroVideo"
+                class="hero-video"
+                muted loop playsinline autoplay
+                preload="none"
+                poster="/media/hero/hero-poster.jpg"
+                data-src="/media/hero/hero-1080.mp4"
+                data-src-mobile="/media/hero/hero-720.mp4"
+                aria-hidden="true"
+            ></video>
         </div>
         <div class="hero-overlay"></div>
 
@@ -138,9 +173,9 @@
 
         <div class="reel-stack container">
 
-            <a href="project.html?id=rabbit-cadence" class="reel-card" data-cursor="view" data-vimeo="1165842696">
+            <a href="/work/rabbit-cadence" class="reel-card" data-cursor="view" data-vimeo="1165842696">
                 <div class="reel-card-img">
-                    <img src="https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/9282ce5b-d108-4bcb-b5ea-d98c1fb6792d/60_sec_rabbit_Cadence_Kit_Edit_V9_FINAL_16x9_ProRes_422.00_00_32_08.Still020-16x9.jpg" alt="rabbit Cadence Kit" loading="lazy">
+                    <img src="/media/legacy/9282ce5b-60-sec-rabbit-cadence-kit-edit-v9-final-16x9-prores-422-00-0.jpg" alt="rabbit Cadence Kit" loading="lazy">
                 </div>
                 <div class="reel-card-overlay">
                     <span class="reel-card-idx">01</span>
@@ -152,9 +187,9 @@
                 </div>
             </a>
 
-            <a href="project.html?id=hoka-transport" class="reel-card" data-cursor="view" data-vimeo="1145515475" data-h="5a6661faac">
+            <a href="/work/hoka-transport" class="reel-card" data-cursor="view" data-vimeo="1145515475" data-h="5a6661faac">
                 <div class="reel-card-img">
-                    <img src="https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/91728399-0512-46d3-8c1e-85ae65aa3fa5/HOKA_TRANSPORT_GTX_Thumbnail_Webpage.jpg" alt="Hoka Transport GTX" loading="lazy">
+                    <img src="/media/legacy/91728399-hoka-transport-gtx-thumbnail-webpage.jpg" alt="Hoka Transport GTX" loading="lazy">
                 </div>
                 <div class="reel-card-overlay">
                     <span class="reel-card-idx">02</span>
@@ -166,9 +201,9 @@
                 </div>
             </a>
 
-            <a href="project.html?id=giant-recon" class="reel-card" data-cursor="view" data-vimeo="1100710110">
+            <a href="/work/giant-recon" class="reel-card" data-cursor="view" data-vimeo="1100710110">
                 <div class="reel-card-img">
-                    <img src="https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg" alt="Giant Bicycles Recon+ Taillight" loading="lazy">
+                    <img src="/media/legacy/cb4ee12b-ridgeline-productions-taillight-image-1.jpg" alt="Giant Bicycles Recon+ Taillight" loading="lazy">
                 </div>
                 <div class="reel-card-overlay">
                     <span class="reel-card-idx">03</span>
@@ -180,9 +215,9 @@
                 </div>
             </a>
 
-            <a href="project.html?id=rabbit-highcountry" class="reel-card" data-cursor="view" data-vimeo="1096761450">
+            <a href="/work/rabbit-highcountry" class="reel-card" data-cursor="view" data-vimeo="1096761450">
                 <div class="reel-card-img">
-                    <img src="https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg" alt="rabbit High Country" loading="lazy">
+                    <img src="/media/legacy/58aa37e8-rabbit-high-country-ridgeline-productions.jpg" alt="rabbit High Country" loading="lazy">
                 </div>
                 <div class="reel-card-overlay">
                     <span class="reel-card-idx">04</span>
@@ -194,9 +229,9 @@
                 </div>
             </a>
 
-            <a href="project.html?id=lexus-gx" class="reel-card" data-cursor="view" data-vimeo="1001449124" data-h="b530c58300">
+            <a href="/work/lexus-gx" class="reel-card" data-cursor="view" data-vimeo="1001449124" data-h="b530c58300">
                 <div class="reel-card-img">
-                    <img src="https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90/cf427124-d5e7-4ecb-ac76-02dd32ea88bf/thumb+%281%29.jpg" alt="Lexus GX 550" loading="lazy">
+                    <img src="/media/legacy/cf427124-thumb-1.jpg" alt="Lexus GX 550" loading="lazy">
                 </div>
                 <div class="reel-card-overlay">
                     <span class="reel-card-idx">05</span>
@@ -389,13 +424,16 @@
                 <div class="contact-right anim" data-anim="fade-up">
                     <form class="form" id="contactForm">
                         <div class="form-field">
-                            <input type="text" name="name" required placeholder="Name">
+                            <label class="form-label" for="cfName">Name</label>
+                            <input type="text" id="cfName" name="name" required autocomplete="name" placeholder="Your name">
                         </div>
                         <div class="form-field">
-                            <input type="email" name="email" required placeholder="Email">
+                            <label class="form-label" for="cfEmail">Email</label>
+                            <input type="email" id="cfEmail" name="email" required autocomplete="email" placeholder="you@company.com">
                         </div>
                         <div class="form-field">
-                            <textarea name="message" required placeholder="About your project..." rows="4"></textarea>
+                            <label class="form-label" for="cfMessage">Project details</label>
+                            <textarea id="cfMessage" name="message" required placeholder="What you're making, timing, and anything else we should know" rows="4"></textarea>
                         </div>
                         <!-- Spam honeypot — hidden from people, bots fill it and get rejected -->
                         <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none !important;position:absolute;left:-9999px">
@@ -427,11 +465,12 @@
     <!-- Page Transition -->
     <div class="page-transition" id="pageTransition"></div>
 
-    <script src="phenomenon.js?v=20261022a"></script>
+    <script src="phenomenon.js?v=20261024a"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="data-loader.js?v=20261022a"></script>
-    <script src="script.js?v=20261022a"></script>
-    <script src="transitions.js?v=20261022a"></script>
+    <script src="/legacy-images.js?v=20261024a"></script>
+    <script src="data-loader.js?v=20261024a"></script>
+    <script src="script.js?v=20261024a"></script>
+    <script src="transitions.js?v=20261024a"></script>
 </body>
 </html>

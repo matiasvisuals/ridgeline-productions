@@ -197,3 +197,4 @@
     .work-grid { grid-template-columns: 1fr; }
     .work-hero { padding-top: 7rem; }
 }
+.filter-pill[hidden] { display: none; }

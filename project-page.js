@@ -13,12 +13,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const projectKeys = Object.keys(projects);
 
     // Get project ID from URL
+    // Clean URLs: /work/<id>. Old links (project.html?id=<id>) still work.
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+    const pathId = (location.pathname.match(/^\/work\/([^/]+)\/?$/) || [])[1];
+    const id = pathId ? decodeURIComponent(pathId) : params.get('id');
     const p = projects[id];
 
     if (!p) {
-        window.location.href = 'index.html' + (/[?&]draft=1\b/.test(location.search) ? '?draft=1' : '');
+        window.location.href = '/' + (/[?&]draft=1\b/.test(location.search) ? '?draft=1' : '');
         return;
     }
 
@@ -26,8 +28,30 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const escapeHtml = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-    // Set page title
+    // Old-style link (project.html?id=…): show the clean address instead.
+    if (!pathId && history.replaceState) {
+        const keep = /[?&]draft=1\b/.test(location.search) ? '?draft=1' : '';
+        history.replaceState(null, '', `/work/${encodeURIComponent(id)}${keep}`);
+    }
+
+    // Set page title, description and the canonical address for search engines.
     document.title = `${p.client} — ${p.title} | Ridgeline Productions`;
+    const setHeadTag = (selector, tag, attrs) => {
+        let el = document.head.querySelector(selector);
+        if (!el) { el = document.createElement(tag); document.head.appendChild(el); }
+        Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    };
+    const pageUrl = `https://ridgelineproductions.com/work/${encodeURIComponent(id)}`;
+    const summary = String(p.description || '').replace(/\s+/g, ' ').trim().slice(0, 155) ||
+        `${p.client} — ${p.title}. A film by Ridgeline Productions, Santa Barbara, CA.`;
+    setHeadTag('link[rel="canonical"]', 'link', { rel: 'canonical', href: pageUrl });
+    setHeadTag('meta[name="description"]', 'meta', { name: 'description', content: summary });
+    setHeadTag('meta[property="og:url"]', 'meta', { property: 'og:url', content: pageUrl });
+    setHeadTag('meta[property="og:title"]', 'meta', { property: 'og:title', content: document.title });
+    setHeadTag('meta[property="og:description"]', 'meta', { property: 'og:description', content: summary });
+    if (p.thumb && /^(https?:)?\//.test(p.thumb)) {
+        setHeadTag('meta[property="og:image"]', 'meta', { property: 'og:image', content: new URL(p.thumb, 'https://ridgelineproductions.com').href });
+    }
 
     // Populate hero
     const heroImg = document.getElementById('projHeroImg');
@@ -312,9 +336,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const next = projects[projectKeys[nextIdx]];
 
     document.getElementById('projPrevName').textContent = `${prev.client} — ${prev.title}`;
-    document.getElementById('projPrev').href = `project.html?id=${projectKeys[prevIdx]}`;
+    document.getElementById('projPrev').href = `/work/${projectKeys[prevIdx]}`;
     document.getElementById('projNextName').textContent = `${next.client} — ${next.title}`;
-    document.getElementById('projNext').href = `project.html?id=${projectKeys[nextIdx]}`;
+    document.getElementById('projNext').href = `/work/${projectKeys[nextIdx]}`;
 
     // --- Animations ---
     // Delay entrance if arriving via page transition

@@ -44,11 +44,14 @@
     }
 
     // --- Intercept project card clicks (homepage/work → project) ---
-    document.querySelectorAll('a.work-card, a.reel-card').forEach(card => {
-        card.addEventListener('click', function (e) {
-            e.preventDefault();
-            triggerTransition(this.href, 'up');
-        });
+    // Delegated, so cards built after load (the Reel and new projects come from
+    // the portal content) get the transition too.
+    document.addEventListener('click', function (e) {
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        const card = e.target.closest && e.target.closest('a.work-card, a.reel-card');
+        if (!card) return;
+        e.preventDefault();
+        triggerTransition(card.href, 'up');
     });
 
     // --- Intercept project nav links (project → project) ---

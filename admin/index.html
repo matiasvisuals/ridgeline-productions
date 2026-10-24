@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" href="/brand/favicon-100.png">
     <link rel="preload" as="font" type="font/otf" href="/fonts/SharpSansNo2-Book.otf" crossorigin>
     <link rel="preload" as="font" type="font/otf" href="/fonts/SharpSansNo2-Medium.otf" crossorigin>
-    <link rel="stylesheet" href="/admin/admin.css?v=20261022a">
+    <link rel="stylesheet" href="/admin/admin.css?v=20261024a">
 </head>
 <body class="admin">
 
@@ -59,6 +59,13 @@
                     <span class="admin-tab-count" id="countProjects">0</span>
                 </button>
 
+                <button type="button" class="admin-tab" data-tab="homepage" role="tab"
+                        data-title="Homepage" data-desc="The banner video, The Reel and the client logo strip."
+                        style="--dot: var(--sec-homepage)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10Z"/><path d="M9 22V12h6v10"/></svg>
+                    <span class="admin-tab-text">Homepage</span>
+                    <span class="admin-tab-count" id="countReel">0</span>
+                </button>
                 <button type="button" class="admin-tab" data-tab="about" role="tab"
                         data-title="About" data-desc="The who / the why / the how, studio stats and philosophy."
                         style="--dot: var(--sec-about)">
@@ -118,6 +125,43 @@
                         <aside class="admin-list" id="projectList" aria-label="Project list"></aside>
                         <div class="admin-editor" id="projectEditor">
                             <div class="admin-empty">Select a project to edit, or click <strong>Add project</strong>.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- HOMEPAGE -->
+                <section class="admin-panel" data-panel="homepage">
+                    <div class="section-head">
+                        <div class="section-head-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10Z"/><path d="M9 22V12h6v10"/></svg>
+                        </div>
+                        <div class="section-head-text">
+                            <h2>Homepage</h2>
+                            <p>The banner video at the top, The Reel and the scrolling client logos.</p>
+                        </div>
+                    </div>
+
+                    <div class="admin-card admin-card-accent">
+                        <div class="admin-card-head"><div class="admin-card-head-l"><h3>Banner video</h3></div></div>
+                        <div class="admin-card-body">
+                            <p class="admin-field-hint" style="margin-top:0;margin-bottom:.7rem">The full-screen video at the top of the homepage. It plays muted on a loop. For a fast start, export it at 1080p, about 20–30 MB, with no audio. A lighter phone version is optional.</p>
+                            <div id="homeHero"></div>
+                        </div>
+                    </div>
+
+                    <div class="admin-card admin-card-accent">
+                        <div class="admin-card-head"><div class="admin-card-head-l"><h3>The Reel</h3></div></div>
+                        <div class="admin-card-body">
+                            <p class="admin-field-hint" style="margin-top:0;margin-bottom:.7rem">The stacked project cards on the homepage. Pick which projects show and drag them into order. This is separate from the All Work order. Five works well.</p>
+                            <div id="homeReel"></div>
+                        </div>
+                    </div>
+
+                    <div class="admin-card admin-card-accent">
+                        <div class="admin-card-head"><div class="admin-card-head-l"><h3>Client logos</h3></div></div>
+                        <div class="admin-card-body">
+                            <p class="admin-field-hint" style="margin-top:0;margin-bottom:.7rem">The scrolling logo strip under the banner. Drag to reorder. SVG or PNG logos with a transparent background look best; use "Make white" for dark logos. The brand name is what search engines read.</p>
+                            <div id="homeClients"></div>
                         </div>
                     </div>
                 </section>
@@ -292,6 +336,7 @@
 
     </div>
 
-    <script src="/admin/admin.js?v=20261022a"></script>
+    <script src="/legacy-images.js?v=20261024a"></script>
+    <script src="/admin/admin.js?v=20261024a"></script>
 </body>
 </html>

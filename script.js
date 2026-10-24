@@ -14,11 +14,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     const transitionDelay = sessionStorage.getItem('pt-active') ? 600 : 100;
     setTimeout(() => document.body.classList.add('loaded'), transitionDelay);
 
-    // Hero video — lazy load iframe
-    const heroIframe = document.getElementById('heroIframe');
-    if (heroIframe && heroIframe.dataset.src) {
-        heroIframe.onload = () => heroIframe.classList.add('loaded');
-        heroIframe.src = heroIframe.dataset.src;
+    // Hero video — a plain video file (no Vimeo player), so it starts fast. The
+    // poster shows right away; phones get the lighter 720p file. The portal can
+    // swap the files (data-loader sets the data-src values from the content).
+    const heroVideo = document.getElementById('heroVideo');
+    if (heroVideo) {
+        const small = window.matchMedia('(max-width: 900px)').matches ||
+            (navigator.connection && navigator.connection.saveData);
+        const src = (small && heroVideo.dataset.srcMobile) || heroVideo.dataset.src;
+        if (src) {
+            heroVideo.src = src;
+            const p = heroVideo.play();
+            if (p && p.catch) p.catch(() => { /* autoplay blocked — the poster stays */ });
+        }
     }
 
     // ─── Client logo marquee — local SVGs + simple-icons + text fallback ───

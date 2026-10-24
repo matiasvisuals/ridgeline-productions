@@ -1,6 +1,5 @@
 /* Shared project data — fallback used if data-loader.js hasn't hydrated window.projects yet.
    data-loader.js fetches /data/content.json (or /api/content?draft=1) and overwrites window.projects. */
-const SQSP = 'https://images.squarespace-cdn.com/content/v1/646e4d2fd6c6c57558701e90';
 
 const _legacyProjects = {
     'rabbit-cadence': {
@@ -9,7 +8,7 @@ const _legacyProjects = {
         type: 'Commercial / Product',
         year: '2024',
         vimeo: '1165842696',
-        thumb: `${SQSP}/9282ce5b-d108-4bcb-b5ea-d98c1fb6792d/60_sec_rabbit_Cadence_Kit_Edit_V9_FINAL_16x9_ProRes_422.00_00_32_08.Still020-16x9.jpg`,
+        thumb: `/media/legacy/9282ce5b-60-sec-rabbit-cadence-kit-edit-v9-final-16x9-prores-422-00-0.jpg`,
         description: 'A high-energy product launch film for rabbit\'s Cadence Kit, blending cinematic storytelling with sleek product visuals to capture the spirit of movement and rhythm.',
         credits: [
             { role: 'Production Company', name: 'Ridgeline Productions' },
@@ -24,13 +23,13 @@ const _legacyProjects = {
             { role: 'Talent', name: 'Sam Box & Isabela Zawistowska' },
         ],
         bts: [
-            { label: 'On set with talent', img: `${SQSP}/9282ce5b-d108-4bcb-b5ea-d98c1fb6792d/60_sec_rabbit_Cadence_Kit_Edit_V9_FINAL_16x9_ProRes_422.00_00_32_08.Still020-16x9.jpg` },
-            { label: 'Lighting setup', img: `${SQSP}/4f343d97-dd8f-468d-a48f-2d1516aa3d21/TRAVEL_REEL_EDIT_V10+WHITE.00_00_16_18.Still001.jpg` },
-            { label: 'Product detail shot', img: `${SQSP}/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg` },
+            { label: 'On set with talent', img: `/media/legacy/9282ce5b-60-sec-rabbit-cadence-kit-edit-v9-final-16x9-prores-422-00-0.jpg` },
+            { label: 'Lighting setup', img: `/media/legacy/4f343d97-travel-reel-edit-v10-white-00-00-16-18-still001.jpg` },
+            { label: 'Product detail shot', img: `/media/legacy/58aa37e8-rabbit-high-country-ridgeline-productions.jpg` },
         ],
         gallery: [
-            `${SQSP}/9282ce5b-d108-4bcb-b5ea-d98c1fb6792d/60_sec_rabbit_Cadence_Kit_Edit_V9_FINAL_16x9_ProRes_422.00_00_32_08.Still020-16x9.jpg`,
-            `${SQSP}/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg`,
+            `/media/legacy/9282ce5b-60-sec-rabbit-cadence-kit-edit-v9-final-16x9-prores-422-00-0.jpg`,
+            `/media/legacy/58aa37e8-rabbit-high-country-ridgeline-productions.jpg`,
         ]
     },
     'hoka-transport': {
@@ -40,7 +39,7 @@ const _legacyProjects = {
         year: '2024',
         vimeo: '1145515475',
         vimeoHash: '5a6661faac',
-        thumb: `${SQSP}/91728399-0512-46d3-8c1e-85ae65aa3fa5/HOKA_TRANSPORT_GTX_Thumbnail_Webpage.jpg`,
+        thumb: `/media/legacy/91728399-hoka-transport-gtx-thumbnail-webpage.jpg`,
         description: 'An authentic lifestyle campaign for Hoka\'s Transport GTX, shot across urban and natural landscapes to showcase the shoe\'s versatility from city streets to mountain trails.',
         credits: [
             { role: 'Production Company', name: 'BaM Productions & Ridgeline' },
@@ -51,12 +50,12 @@ const _legacyProjects = {
             { role: 'Colorist', name: 'Ian Matthews Color' },
         ],
         bts: [
-            { label: 'Location scout', img: `${SQSP}/91728399-0512-46d3-8c1e-85ae65aa3fa5/HOKA_TRANSPORT_GTX_Thumbnail_Webpage.jpg` },
-            { label: 'Steadicam prep', img: `${SQSP}/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg` },
+            { label: 'Location scout', img: `/media/legacy/91728399-hoka-transport-gtx-thumbnail-webpage.jpg` },
+            { label: 'Steadicam prep', img: `/media/legacy/b3c85e73-thumbnail-01.jpg` },
         ],
         gallery: [
-            `${SQSP}/91728399-0512-46d3-8c1e-85ae65aa3fa5/HOKA_TRANSPORT_GTX_Thumbnail_Webpage.jpg`,
-            `${SQSP}/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg`,
+            `/media/legacy/91728399-hoka-transport-gtx-thumbnail-webpage.jpg`,
+            `/media/legacy/b3c85e73-thumbnail-01.jpg`,
         ]
     },
     'giant-recon': {
@@ -65,7 +64,7 @@ const _legacyProjects = {
         type: 'Product / Commercial',
         year: '2024',
         vimeo: '1100710110',
-        thumb: `${SQSP}/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg`,
+        thumb: `/media/legacy/cb4ee12b-ridgeline-productions-taillight-image-1.jpg`,
         description: 'A sleek product film for Giant\'s Recon+ Taillight, combining dramatic night cinematography with precision product shots to highlight safety innovation.',
         credits: [
             { role: 'Production Company', name: 'Ridgeline Productions' },
@@ -78,12 +77,12 @@ const _legacyProjects = {
             { role: 'Talent', name: 'Huy Doan' },
         ],
         bts: [
-            { label: 'Night shoot setup', img: `${SQSP}/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg` },
-            { label: 'Product rigging', img: `${SQSP}/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg` },
+            { label: 'Night shoot setup', img: `/media/legacy/cb4ee12b-ridgeline-productions-taillight-image-1.jpg` },
+            { label: 'Product rigging', img: `/media/legacy/95384b8c-maxwell-frank-20210910-10224.jpg` },
         ],
         gallery: [
-            `${SQSP}/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg`,
-            `${SQSP}/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg`,
+            `/media/legacy/cb4ee12b-ridgeline-productions-taillight-image-1.jpg`,
+            `/media/legacy/95384b8c-maxwell-frank-20210910-10224.jpg`,
         ]
     },
     'rabbit-highcountry': {
@@ -92,7 +91,7 @@ const _legacyProjects = {
         type: 'Adventure / Brand Film',
         year: '2024',
         vimeo: '1096761450',
-        thumb: `${SQSP}/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg`,
+        thumb: `/media/legacy/58aa37e8-rabbit-high-country-ridgeline-productions.jpg`,
         description: 'An immersive brand film following runners into the mountains, capturing the raw beauty and endurance of high-altitude trail running for rabbit.',
         credits: [
             { role: 'Production Company', name: 'Ridgeline Productions' },
@@ -101,14 +100,14 @@ const _legacyProjects = {
             { role: 'Colorist', name: 'Ian Matthews Color' },
         ],
         bts: [
-            { label: 'Mountain trail', img: `${SQSP}/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg` },
-            { label: 'Golden hour', img: `${SQSP}/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg` },
-            { label: 'Running shots', img: `${SQSP}/4f343d97-dd8f-468d-a48f-2d1516aa3d21/TRAVEL_REEL_EDIT_V10+WHITE.00_00_16_18.Still001.jpg` },
+            { label: 'Mountain trail', img: `/media/legacy/58aa37e8-rabbit-high-country-ridgeline-productions.jpg` },
+            { label: 'Golden hour', img: `/media/legacy/95384b8c-maxwell-frank-20210910-10224.jpg` },
+            { label: 'Running shots', img: `/media/legacy/4f343d97-travel-reel-edit-v10-white-00-00-16-18-still001.jpg` },
         ],
         gallery: [
-            `${SQSP}/58aa37e8-dfab-4ce7-ba63-9450d2eb835c/rabbit_High+Country+Ridgeline+Productions.jpg`,
-            `${SQSP}/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg`,
-            `${SQSP}/4f343d97-dd8f-468d-a48f-2d1516aa3d21/TRAVEL_REEL_EDIT_V10+WHITE.00_00_16_18.Still001.jpg`,
+            `/media/legacy/58aa37e8-rabbit-high-country-ridgeline-productions.jpg`,
+            `/media/legacy/95384b8c-maxwell-frank-20210910-10224.jpg`,
+            `/media/legacy/4f343d97-travel-reel-edit-v10-white-00-00-16-18-still001.jpg`,
         ]
     },
     'lexus-gx': {
@@ -118,7 +117,7 @@ const _legacyProjects = {
         year: '2024',
         vimeo: '1001449124',
         vimeoHash: 'b530c58300',
-        thumb: `${SQSP}/cf427124-d5e7-4ecb-ac76-02dd32ea88bf/thumb+%281%29.jpg`,
+        thumb: `/media/legacy/cf427124-thumb-1.jpg`,
         description: 'A cinematic automotive spot for the Lexus GX 550, featuring sweeping desert landscapes and dynamic driving sequences with Frieda Pinto.',
         credits: [
             { role: 'Production Company', name: 'Outside Interactive, Inc.' },
@@ -129,12 +128,12 @@ const _legacyProjects = {
             { role: 'Talent', name: 'Frieda Pinto & Cory Tran' },
         ],
         bts: [
-            { label: 'Camera car rig', img: `${SQSP}/cf427124-d5e7-4ecb-ac76-02dd32ea88bf/thumb+%281%29.jpg` },
-            { label: 'Desert location', img: `${SQSP}/572345b8-f4f3-4557-845e-b9738723308e/thumb.png` },
+            { label: 'Camera car rig', img: `/media/legacy/cf427124-thumb-1.jpg` },
+            { label: 'Desert location', img: `/media/legacy/572345b8-thumb.png` },
         ],
         gallery: [
-            `${SQSP}/cf427124-d5e7-4ecb-ac76-02dd32ea88bf/thumb+%281%29.jpg`,
-            `${SQSP}/572345b8-f4f3-4557-845e-b9738723308e/thumb.png`,
+            `/media/legacy/cf427124-thumb-1.jpg`,
+            `/media/legacy/572345b8-thumb.png`,
         ]
     },
     'seek-thermal': {
@@ -144,7 +143,7 @@ const _legacyProjects = {
         year: '2023',
         vimeo: '1064896236',
         vimeoHash: 'c797bec601',
-        thumb: `${SQSP}/fa0a82ef-8453-4864-915f-c2233bf703d6/thumb.jpg`,
+        thumb: `/media/legacy/fa0a82ef-thumb.jpg`,
         description: 'A technical product film showcasing Seek Thermal\'s Reveal Fire Pro, combining dramatic fire scenarios with precise product demonstrations.',
         credits: [
             { role: 'Production Company', name: 'Venture Visuals' },
@@ -152,10 +151,10 @@ const _legacyProjects = {
             { role: 'AC', name: 'Sam Hall' },
         ],
         bts: [
-            { label: 'Fire scene', img: `${SQSP}/fa0a82ef-8453-4864-915f-c2233bf703d6/thumb.jpg` },
+            { label: 'Fire scene', img: `/media/legacy/fa0a82ef-thumb.jpg` },
         ],
         gallery: [
-            `${SQSP}/fa0a82ef-8453-4864-915f-c2233bf703d6/thumb.jpg`,
+            `/media/legacy/fa0a82ef-thumb.jpg`,
         ]
     },
     'masimo-mightysat': {
@@ -164,7 +163,7 @@ const _legacyProjects = {
         type: 'Commercial / Health Tech',
         year: '2023',
         vimeo: '814794438',
-        thumb: `${SQSP}/490c06c5-4276-4f72-8cd1-531639bea4d9/MASIMO.jpg`,
+        thumb: `/media/legacy/490c06c5-masimo.jpg`,
         description: 'A commercial spot for Masimo\'s MightySat pulse oximeter, featuring athletes Tommy Hass and Taylor Fritz to demonstrate peak performance monitoring.',
         credits: [
             { role: 'Agency', name: 'Veracity Colab' },
@@ -175,12 +174,12 @@ const _legacyProjects = {
             { role: 'Talent', name: 'Tommy Hass & Taylor Fritz' },
         ],
         bts: [
-            { label: 'Studio setup', img: `${SQSP}/490c06c5-4276-4f72-8cd1-531639bea4d9/MASIMO.jpg` },
-            { label: 'Athlete on set', img: `${SQSP}/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg` },
+            { label: 'Studio setup', img: `/media/legacy/490c06c5-masimo.jpg` },
+            { label: 'Athlete on set', img: `/media/legacy/b3c85e73-thumbnail-01.jpg` },
         ],
         gallery: [
-            `${SQSP}/490c06c5-4276-4f72-8cd1-531639bea4d9/MASIMO.jpg`,
-            `${SQSP}/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg`,
+            `/media/legacy/490c06c5-masimo.jpg`,
+            `/media/legacy/b3c85e73-thumbnail-01.jpg`,
         ]
     },
     'hoka-carbon': {
@@ -190,16 +189,16 @@ const _legacyProjects = {
         year: '2023',
         vimeo: '1064900400',
         vimeoHash: 'b897e45d4b',
-        thumb: `${SQSP}/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg`,
+        thumb: `/media/legacy/b3c85e73-thumbnail-01.jpg`,
         description: 'A dynamic product film for Hoka\'s Carbon X2 racing shoe, capturing speed and precision on the track.',
         credits: [
             { role: 'Director / DP', name: 'Maxwell Frank' },
         ],
         bts: [
-            { label: 'Track shoot', img: `${SQSP}/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg` },
+            { label: 'Track shoot', img: `/media/legacy/b3c85e73-thumbnail-01.jpg` },
         ],
         gallery: [
-            `${SQSP}/b3c85e73-45dc-4c52-bc72-de3cdde46b66/Thumbnail+01.jpg`,
+            `/media/legacy/b3c85e73-thumbnail-01.jpg`,
         ]
     },
     'wtb-tread': {
@@ -209,7 +208,7 @@ const _legacyProjects = {
         year: '2023',
         vimeo: '1067859697',
         vimeoHash: 'c7fe926db5',
-        thumb: `${SQSP}/51d2e274-0db9-4b71-9d11-6ad5849810a3/thumb+%282%29.jpg`,
+        thumb: `/media/legacy/51d2e274-thumb-2.jpg`,
         description: 'A documentary following rider Israel Carrillo on a personal journey through trail and terrain, produced in partnership with WTB and Kona Bicycles.',
         credits: [
             { role: 'Production Company', name: 'Ridgeline Productions' },
@@ -218,14 +217,14 @@ const _legacyProjects = {
             { role: 'Talent', name: 'Israel Carrillo' },
         ],
         bts: [
-            { label: 'Trail riding', img: `${SQSP}/51d2e274-0db9-4b71-9d11-6ad5849810a3/thumb+%282%29.jpg` },
-            { label: 'Interview setup', img: `${SQSP}/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg` },
-            { label: 'Drone shot prep', img: `${SQSP}/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg` },
+            { label: 'Trail riding', img: `/media/legacy/51d2e274-thumb-2.jpg` },
+            { label: 'Interview setup', img: `/media/legacy/95384b8c-maxwell-frank-20210910-10224.jpg` },
+            { label: 'Drone shot prep', img: `/media/legacy/cffa3cfa-wtb-czr-video-tile.jpg` },
         ],
         gallery: [
-            `${SQSP}/51d2e274-0db9-4b71-9d11-6ad5849810a3/thumb+%282%29.jpg`,
-            `${SQSP}/95384b8c-2575-40e4-a2d0-de7da9ac70e0/Maxwell_Frank_20210910_10224.jpg`,
-            `${SQSP}/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg`,
+            `/media/legacy/51d2e274-thumb-2.jpg`,
+            `/media/legacy/95384b8c-maxwell-frank-20210910-10224.jpg`,
+            `/media/legacy/cffa3cfa-wtb-czr-video-tile.jpg`,
         ]
     },
     'liv-avow': {
@@ -235,7 +234,7 @@ const _legacyProjects = {
         year: '2023',
         vimeo: '1065668595',
         vimeoHash: '5d68b75758',
-        thumb: `${SQSP}/3b9a8747-c450-43f8-8a50-e509516add81/thumb.jpg`,
+        thumb: `/media/legacy/3b9a8747-thumb.jpg`,
         description: 'A high-performance commercial for Liv Cycling\'s Avow triathlon bike, filmed in the velodrome with precision camera work.',
         credits: [
             { role: 'Production Company', name: 'Ridgeline Productions' },
@@ -245,12 +244,12 @@ const _legacyProjects = {
             { role: 'Colorist', name: 'Ian Matthews Color' },
         ],
         bts: [
-            { label: 'Velodrome', img: `${SQSP}/3b9a8747-c450-43f8-8a50-e509516add81/thumb.jpg` },
-            { label: 'Bike prep', img: `${SQSP}/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg` },
+            { label: 'Velodrome', img: `/media/legacy/3b9a8747-thumb.jpg` },
+            { label: 'Bike prep', img: `/media/legacy/cb4ee12b-ridgeline-productions-taillight-image-1.jpg` },
         ],
         gallery: [
-            `${SQSP}/3b9a8747-c450-43f8-8a50-e509516add81/thumb.jpg`,
-            `${SQSP}/cb4ee12b-f1dc-4431-bec8-fe111b91bcd6/RIDGELINE_PRODUCTIONS_TAILLIGHT+IMAGE_1.jpg`,
+            `/media/legacy/3b9a8747-thumb.jpg`,
+            `/media/legacy/cb4ee12b-ridgeline-productions-taillight-image-1.jpg`,
         ]
     },
     'wtb-czr': {
@@ -259,7 +258,7 @@ const _legacyProjects = {
         type: 'Product / Cycling',
         year: '2023',
         vimeo: '1064899375',
-        thumb: `${SQSP}/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg`,
+        thumb: `/media/legacy/cffa3cfa-wtb-czr-video-tile.jpg`,
         description: 'A product showcase for WTB\'s CZR wheel line, highlighting engineering and performance through dynamic riding footage.',
         credits: [
             { role: 'Producer', name: 'Becky Gardner' },
@@ -267,10 +266,10 @@ const _legacyProjects = {
             { role: 'Editor', name: 'Ridgeline Productions' },
         ],
         bts: [
-            { label: 'Wheel detail', img: `${SQSP}/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg` },
+            { label: 'Wheel detail', img: `/media/legacy/cffa3cfa-wtb-czr-video-tile.jpg` },
         ],
         gallery: [
-            `${SQSP}/cffa3cfa-8ab8-45a1-bdb1-f380ad9cfa85/WTB+CZR+Video+Tile.jpg`,
+            `/media/legacy/cffa3cfa-wtb-czr-video-tile.jpg`,
         ]
     },
 };

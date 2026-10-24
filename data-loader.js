@@ -91,12 +91,78 @@
         });
     }
 
+    // Homepage banner video (set in the portal's Homepage tab).
+    function hydrateHero(hero) {
+        const v = document.getElementById('heroVideo');
+        if (!v || !hero || !hero.src) return;
+        v.dataset.src = hero.src;
+        // A new banner without its own phone version plays the same file on phones.
+        if (hero.mobile) v.dataset.srcMobile = hero.mobile;
+        else delete v.dataset.srcMobile;
+        if (hero.poster) v.setAttribute('poster', hero.poster);
+    }
+
+    // Client logo strip — script.js builds the strip from this attribute.
+    function hydrateClients(clients) {
+        const host = document.getElementById('clientLogoData');
+        if (!host || !Array.isArray(clients) || !clients.length) return;
+        host.setAttribute('data-clients', JSON.stringify(clients));
+    }
+
+    const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    // The Reel (homepage stacking cards). Uses the order picked in the portal;
+    // without one, it shows the first five projects.
+    function hydrateReel(content) {
+        const stack = document.querySelector('.reel-stack');
+        const projects = content.projects || {};
+        if (!stack) return;
+        const ids = (Array.isArray(content.reel) ? content.reel : Object.keys(projects).slice(0, 5))
+            .filter(id => projects[id]);
+        if (!ids.length) return;
+        const cta = stack.querySelector('.reel-card--cta');
+        stack.querySelectorAll('.reel-card:not(.reel-card--cta)').forEach(el => el.remove());
+        ids.forEach((id, i) => {
+            const p = projects[id];
+            const type = String(p.type || '').split(/[\/,·|]+/).map(t => esc(t.trim())).filter(Boolean).join(' &middot; ');
+            const a = document.createElement('a');
+            a.className = 'reel-card';
+            a.href = '/work/' + encodeURIComponent(id);
+            a.setAttribute('data-cursor', 'view');
+            a.innerHTML =
+                '<div class="reel-card-img">' +
+                    (p.thumb ? '<img src="' + esc(p.thumb) + '" alt="' + esc(((p.client || '') + ' ' + (p.title || '')).trim()) + '" loading="lazy">' : '') +
+                '</div>' +
+                '<div class="reel-card-overlay">' +
+                    '<span class="reel-card-idx">' + String(i + 1).padStart(2, '0') + '</span>' +
+                    '<div class="reel-card-info">' +
+                        '<span class="reel-card-client">' + esc(p.client) + '</span>' +
+                        '<h3 class="reel-card-title">' + esc(p.title) + '</h3>' +
+                        '<span class="reel-card-type">' + type + '</span>' +
+                    '</div>' +
+                '</div>';
+            stack.insertBefore(a, cta);
+        });
+        // "+N More Projects" on the last card
+        const more = Object.keys(projects).length - ids.length;
+        const num = cta && cta.querySelector('.reel-cta-number');
+        if (num) {
+            num.textContent = '+' + more;
+            num.hidden = more <= 0;
+        }
+    }
+
     function hydrate(content) {
         if (!content) return;
+        // Swap any photos still pointing at the old Squarespace site to our copies.
+        if (window.rdglLocalizeImages) window.rdglLocalizeImages(content);
         window.SITE_CONTENT = content;
         if (content.projects) window.projects = content.projects;
         hydrateAbout(content.about);
         hydrateServices(content.services);
+        hydrateHero(content.hero);
+        hydrateClients(content.clients);
+        hydrateReel(content);
     }
 
     async function load() {
