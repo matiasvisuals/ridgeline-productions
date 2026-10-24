@@ -28,8 +28,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const escapeHtml = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-    // Old-style link (project.html?id=…): show the clean address instead.
-    if (!pathId && history.replaceState) {
+    // Old-style link (project.html?id=…, which the server forwards to
+    // /work/<id>?id=<id>): show the clean address instead.
+    if ((!pathId || params.has('id')) && history.replaceState) {
         const keep = /[?&]draft=1\b/.test(location.search) ? '?draft=1' : '';
         history.replaceState(null, '', `/work/${encodeURIComponent(id)}${keep}`);
     }
