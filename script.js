@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 : '';
 
             const imgTag = c.src
-                ? `<img src="${c.src}" alt="${safeName}" class="client-logo-img" ` +
+                ? `<img src="${c.src}" alt="${safeName} logo" class="client-logo-img" ` +
                   `loading="lazy" ` +
                   `onerror="this.parentElement.classList.add('client-logo--text');this.remove();">`
                 : '';

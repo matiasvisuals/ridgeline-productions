@@ -42,7 +42,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20261024a">
+    <link rel="stylesheet" href="styles.css?v=20261024b">
 </head>
 <body>
 
@@ -131,9 +131,31 @@
     </section>
 
     <!-- Client Logo Marquee -->
-    <div class="client-marquee" aria-label="Client brands">
+    <div class="client-marquee" role="region" aria-label="Brands we have worked with: Sonos, Patagonia, HOKA, Giant, Specialized, rabbit, Toyota, Lexus, Porsche, Teva, Taos, Procore, Nikon, Liv, Polaris, Intuit, UGG, Urban Decay, AHNU, WTB, NVIDIA">
         <div class="client-marquee-track" id="clientLogoTrack">
-            <!-- logos populated by script.js from data-clients -->
+            <!-- Static copy so search engines read the client names without running JS.
+                 script.js rebuilds this from data-clients (the portal's list). -->
+            <span class="client-logo client-logo--invert" style="--logo-scale:0.9" data-name="Sonos"><img src="brand/clients/sonos.svg" alt="Sonos logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Sonos</span></span>
+            <span class="client-logo client-logo--invert" data-name="Patagonia"><img src="brand/clients/patagonia.svg" alt="Patagonia logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Patagonia</span></span>
+            <span class="client-logo client-logo--invert" data-name="HOKA"><img src="brand/clients/hoka.svg" alt="HOKA logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">HOKA</span></span>
+            <span class="client-logo client-logo--invert" data-name="Giant"><img src="brand/clients/giant.svg" alt="Giant logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Giant</span></span>
+            <span class="client-logo client-logo--invert" data-name="Specialized"><img src="brand/clients/specialized.svg" alt="Specialized logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Specialized</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:1.4" data-name="rabbit"><img src="brand/clients/rabbit.png" alt="rabbit logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">rabbit</span></span>
+            <span class="client-logo client-logo--invert" data-name="Toyota"><img src="brand/clients/toyota.svg" alt="Toyota logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Toyota</span></span>
+            <span class="client-logo client-logo--invert" data-name="Lexus"><img src="brand/clients/lexus.svg" alt="Lexus logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Lexus</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:0.85" data-name="Porsche"><img src="brand/clients/porsche.svg" alt="Porsche logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Porsche</span></span>
+            <span class="client-logo client-logo--invert" data-name="Teva"><img src="brand/clients/teva.svg" alt="Teva logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Teva</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:0.8" data-name="Taos"><img src="brand/clients/taos.svg" alt="Taos logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Taos</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:0.7" data-name="Procore"><img src="brand/clients/procore.svg" alt="Procore logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Procore</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:1.05" data-name="Nikon"><img src="brand/clients/nikon.svg" alt="Nikon logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Nikon</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:1.1" data-name="Liv"><img src="brand/clients/liv.png" alt="Liv logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Liv</span></span>
+            <span class="client-logo" style="--logo-scale:0.95" data-name="Polaris"><img src="brand/clients/polaris.svg" alt="Polaris logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Polaris</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:0.9" data-name="Intuit"><img src="brand/clients/intuit.svg" alt="Intuit logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Intuit</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:1.3" data-name="UGG"><img src="brand/clients/ugg.svg" alt="UGG logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">UGG</span></span>
+            <span class="client-logo client-logo--invert" data-name="Urban Decay"><img src="brand/clients/urbandecay.svg" alt="Urban Decay logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">Urban Decay</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:0.85" data-name="AHNU"><img src="brand/clients/ahnu.svg" alt="AHNU logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">AHNU</span></span>
+            <span class="client-logo" style="--logo-scale:0.95" data-name="WTB"><img src="brand/clients/wtb.svg" alt="WTB logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">WTB</span></span>
+            <span class="client-logo client-logo--invert" style="--logo-scale:0.9" data-name="NVIDIA"><img src="brand/clients/nvidia.svg" alt="NVIDIA logo" class="client-logo-img" loading="lazy"><span class="client-logo-text">NVIDIA</span></span>
         </div>
         <div id="clientLogoData"
              data-clients='[
@@ -465,12 +487,12 @@
     <!-- Page Transition -->
     <div class="page-transition" id="pageTransition"></div>
 
-    <script src="phenomenon.js?v=20261024a"></script>
+    <script src="phenomenon.js?v=20261024b"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="/legacy-images.js?v=20261024a"></script>
-    <script src="data-loader.js?v=20261024a"></script>
-    <script src="script.js?v=20261024a"></script>
-    <script src="transitions.js?v=20261024a"></script>
+    <script src="/legacy-images.js?v=20261024b"></script>
+    <script src="data-loader.js?v=20261024b"></script>
+    <script src="script.js?v=20261024b"></script>
+    <script src="transitions.js?v=20261024b"></script>
 </body>
 </html>
