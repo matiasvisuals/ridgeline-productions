@@ -2511,6 +2511,206 @@
         }
       ],
       "btsMedia": []
+    },
+    "new-project-2": {
+      "client": "rabbit",
+      "title": "Pace Chaser",
+      "type": "",
+      "year": "",
+      "vimeo": "1238478844",
+      "vimeoHash": "",
+      "thumb": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/rabbit_pace_chaser_edit_tech_50sec_v8-for-color-00_00_37_17-still033-eAC4609jutM2qeykZmwpTd3ix1zsIL.jpg",
+      "description": "A fast turnaround for a fast shoe. \n\nWe recently worked with Santa Barbara-based running brand rabbit on a launch film for their new Pace Chaser running shoe. \n\nThe concept started with the name. We wanted to create a visual element that represented speed and consistency, so we built the film around a continuous line of light inspired by the pace lights used at races. \n\nFrom there, we pulled apart different elements of the shoe, using materials like carbon, foam, and woven thread to create abstract visuals that tied back to its construction and performance. Combined with quick cuts, camera movement, and a technical editing style, the goal was to make the entire film feel fast just as the shoe was designed to be. \n\nWe had one week of pre-production and prop building, a day and a half in the studio, and another half day shooting outdoors. A tight schedule, but with a small, nimble crew and a consistent creative direction, we were able to bring everything together. \n\nAlways fun when a simple idea carries through an entire production, from the first concept to the final edit. ",
+      "credits": [],
+      "bts": [
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4629-50CVopbm6W2sUk8b6F8gC25FFx1Dbd.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4634-ZpqpIgdDzKkbzoDi64iW1XeuCIyA5k.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5644-6FYvPHbC7tKfM6ShVPGyaiiPEWV0aw.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5655-3NkRiR0Y6YgNCg6MCnH4q7DKbvTREn.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7396-2NX7Yu7M2tzO753NcVsSF2k3JolgzS.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7428-UKk4ImCt7q0UQrSuT8ZVe84BSAN0WZ.jpg"
+        }
+      ],
+      "gallery": [],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1238478844",
+          "vimeoHash": "",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/rabbit_pace_chaser_edit_tech_50sec_v8-for-color-00_00_37_17-still033-XoOn9ITzprC86pvWtCSl30NvnnFXg6.jpg"
+        }
+      ],
+      "btsMedia": [
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_23-xsczVV32IaxMqqzEcutRG87hIPXA8w.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-L0IwEpYeVr0pw4mcU2spUL73EFnWqY.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4629-50CVopbm6W2sUk8b6F8gC25FFx1Dbd.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_11-rvD5qi2UHsnDijy1XIVUXD8O9zZv45.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-aosbTZudEmCWR2vzjvvjVLwMwQfn4d.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4634-ZpqpIgdDzKkbzoDi64iW1XeuCIyA5k.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_8-v2x8pnik8RSch8BurHWyjSMbJ3Zx6i.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-cMsCg4OBCUGyjCfEZlMw9S3EoUehFH.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5644-6FYvPHbC7tKfM6ShVPGyaiiPEWV0aw.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_12-axN0Reb9xJB3GgLEgpTcTchntfD3GH.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-rmYVHsjRzNGa7bH4tRFtQYgNB9i2IL.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5655-3NkRiR0Y6YgNCg6MCnH4q7DKbvTREn.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_7-vw0T3ATfbyPhPHczoVfffyY0x16fQn.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-9YvO1faw9KqyYZ0wtSo7vDYdzgrTdZ.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7396-2NX7Yu7M2tzO753NcVsSF2k3JolgzS.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_18-ODlr6S13VeZdQjyKxVUqcT0vPZqcxm.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-j8KIt2OdsIAIFjzuSexoeKQezVlkj8.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7428-UKk4ImCt7q0UQrSuT8ZVe84BSAN0WZ.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_6-M53ATMCs5A3MYkyMRVXwI3fIoneGn7.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-3c9hoDMiKmXnIVSDsKy4oLOaX4pOWi.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_16-pWVdcfpCle1ZgdNJipXAVDaSKNwrt6.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-K7Q1EbcqzMihQnDKDpxWkJlVUAOUgI.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_23-xsczVV32IaxMqqzEcutRG87hIPXA8w.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-IEbbRoRqLqUpcPlVCUDUG4SNcsMG6I.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_11-rvD5qi2UHsnDijy1XIVUXD8O9zZv45.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-hC8OK9z2ot2IDmBbdeiI8I4piKFUSO.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_8-v2x8pnik8RSch8BurHWyjSMbJ3Zx6i.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-2PeZtrD9WUv86vmz8Nhzz5oA5xzM7e.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_12-axN0Reb9xJB3GgLEgpTcTchntfD3GH.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-3R60mzo3GwE8W72Cvqc7KPtalDcnwX.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_7-vw0T3ATfbyPhPHczoVfffyY0x16fQn.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-kI4C3oxJOAsfiDIyCpqzbOUwcfxZYd.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_18-ODlr6S13VeZdQjyKxVUqcT0vPZqcxm.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-9R8bYqmHDJ1V1PGvpTSxilD1AKS71m.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_6-M53ATMCs5A3MYkyMRVXwI3fIoneGn7.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-1NHNTTcEii6ZqWQR2EIZP1KFe89m2I.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_16-pWVdcfpCle1ZgdNJipXAVDaSKNwrt6.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-eC1xqNpt4uHdCE8zZ4NwJRAmtZeXMt.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        }
+      ]
     }
   },
   "hero": {
