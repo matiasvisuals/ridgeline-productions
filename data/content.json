@@ -2909,7 +2909,7 @@
       "client": "Masimo",
       "title": "MightySat",
       "type": "Commercial / Health Tech",
-      "year": "2023",
+      "year": "",
       "vimeo": "814794438",
       "vimeoHash": "",
       "thumb": "/media/legacy/490c06c5-masimo.jpg",
@@ -2942,7 +2942,16 @@
       ],
       "bts": [],
       "gallery": [],
-      "videos": []
+      "videos": [],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "814794438",
+          "vimeoHash": "",
+          "poster": ""
+        }
+      ],
+      "btsMedia": []
     },
     "hoka-carbon": {
       "client": "Hoka",
