@@ -2514,7 +2514,7 @@
       "client": "rabbit",
       "title": "High Country",
       "type": "Adventure / Brand Film",
-      "year": "2024",
+      "year": "",
       "vimeo": "1096761450",
       "vimeoHash": "",
       "thumb": "/media/legacy/58aa37e8-rabbit-high-country-ridgeline-productions.jpg",
@@ -2578,6 +2578,20 @@
       "gallery": [],
       "videos": [
         {
+          "src": "/media/rabbit-highcountry/video/005.mp4",
+          "poster": "/media/rabbit-highcountry/video/005.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/rabbit-highcountry/video/006.mp4",
+          "poster": "/media/rabbit-highcountry/video/006.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
           "src": "/media/rabbit-highcountry/video/001.mp4",
           "poster": "/media/rabbit-highcountry/video/001.jpg",
           "label": "",
@@ -2604,20 +2618,6 @@
           "label": "",
           "w": 720,
           "h": 1280
-        },
-        {
-          "src": "/media/rabbit-highcountry/video/005.mp4",
-          "poster": "/media/rabbit-highcountry/video/005.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/rabbit-highcountry/video/006.mp4",
-          "poster": "/media/rabbit-highcountry/video/006.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
         }
       ],
       "heroVideos": [
@@ -2635,6 +2635,14 @@
           "label": ""
         },
         {
+          "kind": "video",
+          "src": "/media/rabbit-highcountry/video/005.mp4",
+          "poster": "/media/rabbit-highcountry/video/005.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
           "kind": "image",
           "img": "/media/rabbit-highcountry/bts/002.jpg",
           "label": ""
@@ -2643,6 +2651,14 @@
           "kind": "image",
           "img": "/media/rabbit-highcountry/bts/003.jpg",
           "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/rabbit-highcountry/video/006.mp4",
+          "poster": "/media/rabbit-highcountry/video/006.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
         },
         {
           "kind": "image",
@@ -2702,22 +2718,6 @@
           "kind": "video",
           "src": "/media/rabbit-highcountry/video/004.mp4",
           "poster": "/media/rabbit-highcountry/video/004.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "/media/rabbit-highcountry/video/005.mp4",
-          "poster": "/media/rabbit-highcountry/video/005.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "/media/rabbit-highcountry/video/006.mp4",
-          "poster": "/media/rabbit-highcountry/video/006.jpg",
           "label": "",
           "w": 720,
           "h": 1280
