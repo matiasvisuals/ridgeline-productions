@@ -1481,7 +1481,7 @@
       "client": "Hoka",
       "title": "Transport GTX",
       "type": "Commercial / Lifestyle",
-      "year": "2024",
+      "year": "",
       "vimeo": "1145515475",
       "vimeoHash": "5a6661faac",
       "thumb": "/media/legacy/91728399-hoka-transport-gtx-thumbnail-webpage.jpg",
@@ -1574,6 +1574,93 @@
           "h": 1280
         },
         {
+          "src": "/media/hoka-transport/video/004.mp4",
+          "poster": "/media/hoka-transport/video/004.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        }
+      ],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1145515475",
+          "vimeoHash": "5a6661faac",
+          "poster": ""
+        }
+      ],
+      "btsMedia": [
+        {
+          "kind": "image",
+          "img": "/media/hoka-transport/bts/001.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/hoka-transport/bts/002.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/hoka-transport/bts/003.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/hoka-transport/bts/004.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/hoka-transport/bts/005.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/hoka-transport/bts/006.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/hoka-transport/bts/007.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/hoka-transport/bts/008.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/hoka-transport/bts/009.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/hoka-transport/video/001.mp4",
+          "poster": "/media/hoka-transport/video/001.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "video",
+          "src": "/media/hoka-transport/video/002.mp4",
+          "poster": "/media/hoka-transport/video/002.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "video",
+          "src": "/media/hoka-transport/video/003.mp4",
+          "poster": "/media/hoka-transport/video/003.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "video",
           "src": "/media/hoka-transport/video/004.mp4",
           "poster": "/media/hoka-transport/video/004.jpg",
           "label": "",
