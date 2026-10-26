@@ -2592,8 +2592,8 @@
           "h": 1280
         },
         {
-          "src": "/media/rabbit-highcountry/video/001.mp4",
-          "poster": "/media/rabbit-highcountry/video/001.jpg",
+          "src": "/media/rabbit-highcountry/video/003.mp4",
+          "poster": "/media/rabbit-highcountry/video/003.jpg",
           "label": "",
           "w": 720,
           "h": 1280
@@ -2606,8 +2606,8 @@
           "h": 1280
         },
         {
-          "src": "/media/rabbit-highcountry/video/003.mp4",
-          "poster": "/media/rabbit-highcountry/video/003.jpg",
+          "src": "/media/rabbit-highcountry/video/001.mp4",
+          "poster": "/media/rabbit-highcountry/video/001.jpg",
           "label": "",
           "w": 720,
           "h": 1280
@@ -2666,6 +2666,14 @@
           "label": ""
         },
         {
+          "kind": "video",
+          "src": "/media/rabbit-highcountry/video/003.mp4",
+          "poster": "/media/rabbit-highcountry/video/003.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
           "kind": "image",
           "img": "/media/rabbit-highcountry/bts/005.jpg",
           "label": ""
@@ -2674,6 +2682,14 @@
           "kind": "image",
           "img": "/media/rabbit-highcountry/bts/006.jpg",
           "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/rabbit-highcountry/video/002.mp4",
+          "poster": "/media/rabbit-highcountry/video/002.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
         },
         {
           "kind": "image",
@@ -2694,22 +2710,6 @@
           "kind": "video",
           "src": "/media/rabbit-highcountry/video/001.mp4",
           "poster": "/media/rabbit-highcountry/video/001.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "/media/rabbit-highcountry/video/002.mp4",
-          "poster": "/media/rabbit-highcountry/video/002.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "/media/rabbit-highcountry/video/003.mp4",
-          "poster": "/media/rabbit-highcountry/video/003.jpg",
           "label": "",
           "w": 720,
           "h": 1280
