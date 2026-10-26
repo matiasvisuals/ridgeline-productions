@@ -68,6 +68,235 @@
     }
   ],
   "projects": {
+    "new-project-2": {
+      "client": "rabbit",
+      "title": "Pace Chaser",
+      "type": "Commercial / Sport",
+      "year": "",
+      "vimeo": "1238478844",
+      "vimeoHash": "",
+      "thumb": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/rabbit_pace_chaser_edit_tech_50sec_v8-for-color-00_00_37_17-still033-eAC4609jutM2qeykZmwpTd3ix1zsIL.jpg",
+      "description": "A fast turnaround for a fast shoe. \n\nWe recently worked with Santa Barbara-based running brand rabbit on a launch film for their new Pace Chaser running shoe. \n\nThe concept started with the name. We wanted to create a visual element that represented speed and consistency, so we built the film around a continuous line of light inspired by the pace lights used at races. \n\nFrom there, we pulled apart different elements of the shoe, using materials like carbon, foam, and woven thread to create abstract visuals that tied back to its construction and performance. Combined with quick cuts, camera movement, and a technical editing style, the goal was to make the entire film feel fast just as the shoe was designed to be. \n\nWe had one week of pre-production and prop building, a day and a half in the studio, and another half day shooting outdoors. A tight schedule, but with a small, nimble crew and a consistent creative direction, we were able to bring everything together. \n\nAlways fun when a simple idea carries through an entire production, from the first concept to the final edit. ",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Tye French"
+        },
+        {
+          "role": "DoP + Cretive director",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "gaffer",
+          "name": "Brady Berryhill"
+        },
+        {
+          "role": "editor + SFX",
+          "name": "Brian Szymanski"
+        },
+        {
+          "role": "VFX + Graphics",
+          "name": "James Prola"
+        },
+        {
+          "role": "color",
+          "name": "Pinto Color"
+        },
+        {
+          "role": "athlete",
+          "name": "Nyenuchi Okemgbo"
+        }
+      ],
+      "bts": [
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4629-50CVopbm6W2sUk8b6F8gC25FFx1Dbd.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4634-ZpqpIgdDzKkbzoDi64iW1XeuCIyA5k.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5644-6FYvPHbC7tKfM6ShVPGyaiiPEWV0aw.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5655-3NkRiR0Y6YgNCg6MCnH4q7DKbvTREn.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7396-2NX7Yu7M2tzO753NcVsSF2k3JolgzS.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7428-UKk4ImCt7q0UQrSuT8ZVe84BSAN0WZ.jpg"
+        }
+      ],
+      "gallery": [],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1238478844",
+          "vimeoHash": "",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/rabbit_pace_chaser_edit_tech_50sec_v8-for-color-00_00_37_17-still033-XoOn9ITzprC86pvWtCSl30NvnnFXg6.jpg"
+        }
+      ],
+      "btsMedia": [
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_23-xsczVV32IaxMqqzEcutRG87hIPXA8w.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-L0IwEpYeVr0pw4mcU2spUL73EFnWqY.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4629-50CVopbm6W2sUk8b6F8gC25FFx1Dbd.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_11-rvD5qi2UHsnDijy1XIVUXD8O9zZv45.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-aosbTZudEmCWR2vzjvvjVLwMwQfn4d.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4634-ZpqpIgdDzKkbzoDi64iW1XeuCIyA5k.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_8-v2x8pnik8RSch8BurHWyjSMbJ3Zx6i.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-cMsCg4OBCUGyjCfEZlMw9S3EoUehFH.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5644-6FYvPHbC7tKfM6ShVPGyaiiPEWV0aw.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_12-axN0Reb9xJB3GgLEgpTcTchntfD3GH.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-rmYVHsjRzNGa7bH4tRFtQYgNB9i2IL.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5655-3NkRiR0Y6YgNCg6MCnH4q7DKbvTREn.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_7-vw0T3ATfbyPhPHczoVfffyY0x16fQn.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-9YvO1faw9KqyYZ0wtSo7vDYdzgrTdZ.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7396-2NX7Yu7M2tzO753NcVsSF2k3JolgzS.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_18-ODlr6S13VeZdQjyKxVUqcT0vPZqcxm.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-j8KIt2OdsIAIFjzuSexoeKQezVlkj8.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7428-UKk4ImCt7q0UQrSuT8ZVe84BSAN0WZ.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_6-M53ATMCs5A3MYkyMRVXwI3fIoneGn7.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-3c9hoDMiKmXnIVSDsKy4oLOaX4pOWi.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_16-pWVdcfpCle1ZgdNJipXAVDaSKNwrt6.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-K7Q1EbcqzMihQnDKDpxWkJlVUAOUgI.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_23-xsczVV32IaxMqqzEcutRG87hIPXA8w.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-IEbbRoRqLqUpcPlVCUDUG4SNcsMG6I.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_11-rvD5qi2UHsnDijy1XIVUXD8O9zZv45.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-hC8OK9z2ot2IDmBbdeiI8I4piKFUSO.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_8-v2x8pnik8RSch8BurHWyjSMbJ3Zx6i.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-2PeZtrD9WUv86vmz8Nhzz5oA5xzM7e.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_12-axN0Reb9xJB3GgLEgpTcTchntfD3GH.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-3R60mzo3GwE8W72Cvqc7KPtalDcnwX.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_7-vw0T3ATfbyPhPHczoVfffyY0x16fQn.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-kI4C3oxJOAsfiDIyCpqzbOUwcfxZYd.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_18-ODlr6S13VeZdQjyKxVUqcT0vPZqcxm.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-9R8bYqmHDJ1V1PGvpTSxilD1AKS71m.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_6-M53ATMCs5A3MYkyMRVXwI3fIoneGn7.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-1NHNTTcEii6ZqWQR2EIZP1KFe89m2I.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_16-pWVdcfpCle1ZgdNJipXAVDaSKNwrt6.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-eC1xqNpt4uHdCE8zZ4NwJRAmtZeXMt.jpg",
+          "label": "",
+          "w": 1024,
+          "h": 1280
+        }
+      ]
+    },
     "giant-helmets": {
       "client": "Giant Bicycles",
       "title": "Helmet Campaign",
@@ -500,6 +729,86 @@
         }
       ]
     },
+    "lexus-gx": {
+      "client": "Lexus",
+      "title": "GX 550",
+      "type": "Automotive / Commercial",
+      "year": "2024",
+      "vimeo": "1001449124",
+      "vimeoHash": "b530c58300",
+      "thumb": "/media/legacy/cf427124-thumb-1.jpg",
+      "description": "A cinematic automotive spot for the Lexus GX 550, featuring sweeping desert landscapes and dynamic driving sequences with Frieda Pinto.",
+      "credits": [
+        {
+          "role": "Production Company",
+          "name": "Outside Interactive, Inc."
+        },
+        {
+          "role": "Director",
+          "name": "Brian Syzmanski"
+        },
+        {
+          "role": "DP",
+          "name": "Tory Power & Colin Witherill"
+        },
+        {
+          "role": "Camera Car",
+          "name": "Ridgeline Productions"
+        },
+        {
+          "role": "Sound",
+          "name": "Dave Girtsman"
+        },
+        {
+          "role": "Talent",
+          "name": "Frieda Pinto & Cory Tran"
+        }
+      ],
+      "bts": [
+        {
+          "label": "",
+          "img": "/media/lexus-gx/bts/001.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/lexus-gx/bts/002.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/lexus-gx/bts/003.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/lexus-gx/bts/004.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/lexus-gx/bts/005.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/lexus-gx/bts/006.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/lexus-gx/bts/007.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/lexus-gx/bts/008.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/lexus-gx/bts/009.jpg"
+        }
+      ],
+      "gallery": [
+        "/media/lexus-gx/stills/001.jpg",
+        "/media/lexus-gx/stills/002.jpg",
+        "/media/lexus-gx/stills/003.jpg"
+      ],
+      "videos": []
+    },
     "rabbit-cadence": {
       "client": "rabbit",
       "title": "Cadence Kit",
@@ -885,6 +1194,563 @@
         }
       ]
     },
+    "giant-shoes": {
+      "client": "Giant Bicycles",
+      "title": "Shoe Campaign",
+      "type": "Commercial / Product",
+      "year": "2026",
+      "vimeo": "1189536407",
+      "vimeoHash": "63b8c8e4e4",
+      "thumb": "/media/giant-shoes/stills/001.jpg",
+      "description": "When we were approached by Giant Bicycles to create an ad campaign for a few of their new shoe lineups we were stoked! There were three categories, road, gravel and gravity. We asked ourselves how we would make these videos and images unique.\n\nThe recipe:\n- Research\n- Lots of custom props\n- Unique angles\n- Two days of shooting on location\n- A great team",
+      "credits": [
+        {
+          "role": "Photographer",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "Producer",
+          "name": "Chaparral Studio"
+        },
+        {
+          "role": "Gaffer",
+          "name": "Brady Berryhill"
+        },
+        {
+          "role": "Swing",
+          "name": "Noah Spiece"
+        },
+        {
+          "role": "Studio AC",
+          "name": "Jesse Natale"
+        },
+        {
+          "role": "1st AC",
+          "name": "Joseph Cunningham"
+        },
+        {
+          "role": "Camera Car Driver",
+          "name": "Mark Romanov"
+        },
+        {
+          "role": "PA/2nd AC",
+          "name": "Nate Stephensonn"
+        },
+        {
+          "role": "Edit Supervisor",
+          "name": "Tye French"
+        },
+        {
+          "role": "Editor",
+          "name": "Brian Szymanski"
+        },
+        {
+          "role": "Colorist",
+          "name": "Ian Matthews"
+        },
+        {
+          "role": "VFX + Compositing",
+          "name": "James Prola"
+        },
+        {
+          "role": "Athlete",
+          "name": "Brandon Baker"
+        },
+        {
+          "role": "studio",
+          "name": "Summit Studios"
+        }
+      ],
+      "gallery": [
+        "/media/giant-shoes/stills/002.jpg",
+        "/media/giant-shoes/stills/020.jpg",
+        "/media/giant-shoes/stills/003.jpg",
+        "/media/giant-shoes/stills/033.jpg",
+        "/media/giant-shoes/stills/021.jpg",
+        "/media/giant-shoes/stills/022.jpg",
+        "/media/giant-shoes/stills/004.jpg",
+        "/media/giant-shoes/stills/005.jpg",
+        "/media/giant-shoes/stills/030.jpg",
+        "/media/giant-shoes/stills/034.jpg",
+        "/media/giant-shoes/stills/007.jpg",
+        "/media/giant-shoes/stills/027.jpg",
+        "/media/giant-shoes/stills/008.jpg",
+        "/media/giant-shoes/stills/016.jpg",
+        "/media/giant-shoes/stills/035.jpg",
+        "/media/giant-shoes/stills/018.jpg",
+        "/media/giant-shoes/stills/028.jpg",
+        "/media/giant-shoes/stills/010.jpg",
+        "/media/giant-shoes/stills/029.jpg",
+        "/media/giant-shoes/stills/009.jpg",
+        "/media/giant-shoes/stills/031.jpg",
+        "/media/giant-shoes/stills/011.jpg",
+        "/media/giant-shoes/stills/012.jpg",
+        "/media/giant-shoes/stills/013.jpg",
+        "/media/giant-shoes/stills/014.jpg",
+        "/media/giant-shoes/stills/015.jpg",
+        "/media/giant-shoes/stills/017.jpg",
+        "/media/giant-shoes/stills/001.jpg",
+        "/media/giant-shoes/stills/019.jpg",
+        "/media/giant-shoes/stills/023.jpg",
+        "/media/giant-shoes/stills/006.jpg",
+        "/media/giant-shoes/stills/024.jpg",
+        "/media/giant-shoes/stills/025.jpg",
+        "/media/giant-shoes/stills/026.jpg",
+        "/media/giant-shoes/stills/032.jpg"
+      ],
+      "bts": [
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/001.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/002.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/003.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/004.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/005.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/006.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/019.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/024.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/007.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/008.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/009.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/010.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/011.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/012.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/013.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/014.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/015.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/016.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/017.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/018.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/020.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/021.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/022.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/023.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/025.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/026.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/027.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/028.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-shoes/bts/029.jpg"
+        }
+      ],
+      "videos": [
+        {
+          "src": "/media/giant-shoes/video/010.mp4",
+          "poster": "/media/giant-shoes/video/010.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/004.mp4",
+          "poster": "/media/giant-shoes/video/004.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/003.mp4",
+          "poster": "/media/giant-shoes/video/003.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/009.mp4",
+          "poster": "/media/giant-shoes/video/009.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/007.mp4",
+          "poster": "/media/giant-shoes/video/007.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/006.mp4",
+          "poster": "/media/giant-shoes/video/006.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/001.mp4",
+          "poster": "/media/giant-shoes/video/001.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/005.mp4",
+          "poster": "/media/giant-shoes/video/005.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/008.mp4",
+          "poster": "/media/giant-shoes/video/008.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/002.mp4",
+          "poster": "/media/giant-shoes/video/002.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/giant-shoes/video/011.mp4",
+          "poster": "/media/giant-shoes/video/011.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        }
+      ],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1189536407",
+          "vimeoHash": "63b8c8e4e4",
+          "poster": ""
+        },
+        {
+          "type": "vimeo",
+          "vimeo": "1189536579",
+          "vimeoHash": "2893f835b7",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-8XZYEbvqGTZV8L886DWJ4hvdZ4oOQq.jpg"
+        },
+        {
+          "type": "vimeo",
+          "vimeo": "1189536254",
+          "vimeoHash": "89bd709228",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-W1eyP2Y3gLE0pwQaxQrex0g1qc0ps1.jpg"
+        }
+      ],
+      "btsMedia": [
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/001.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/010.mp4",
+          "poster": "/media/giant-shoes/video/010.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/004.mp4",
+          "poster": "/media/giant-shoes/video/004.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/002.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/003.mp4",
+          "poster": "/media/giant-shoes/video/003.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/003.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/004.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/005.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/009.mp4",
+          "poster": "/media/giant-shoes/video/009.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/006.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/007.mp4",
+          "poster": "/media/giant-shoes/video/007.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/019.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/006.mp4",
+          "poster": "/media/giant-shoes/video/006.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/024.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/007.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/008.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/001.mp4",
+          "poster": "/media/giant-shoes/video/001.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/009.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/005.mp4",
+          "poster": "/media/giant-shoes/video/005.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/010.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/011.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/012.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/008.mp4",
+          "poster": "/media/giant-shoes/video/008.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/013.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/014.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/002.mp4",
+          "poster": "/media/giant-shoes/video/002.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/015.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/016.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/017.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-shoes/video/011.mp4",
+          "poster": "/media/giant-shoes/video/011.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/018.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/020.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/021.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/022.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/023.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/025.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/026.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/027.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/028.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-shoes/bts/029.jpg",
+          "label": ""
+        }
+      ]
+    },
     "giant-recon": {
       "client": "Giant Bicycles",
       "title": "Recon+ Taillight",
@@ -1256,86 +2122,6 @@
           "h": 1280
         }
       ]
-    },
-    "lexus-gx": {
-      "client": "Lexus",
-      "title": "GX 550",
-      "type": "Automotive / Commercial",
-      "year": "2024",
-      "vimeo": "1001449124",
-      "vimeoHash": "b530c58300",
-      "thumb": "/media/legacy/cf427124-thumb-1.jpg",
-      "description": "A cinematic automotive spot for the Lexus GX 550, featuring sweeping desert landscapes and dynamic driving sequences with Frieda Pinto.",
-      "credits": [
-        {
-          "role": "Production Company",
-          "name": "Outside Interactive, Inc."
-        },
-        {
-          "role": "Director",
-          "name": "Brian Syzmanski"
-        },
-        {
-          "role": "DP",
-          "name": "Tory Power & Colin Witherill"
-        },
-        {
-          "role": "Camera Car",
-          "name": "Ridgeline Productions"
-        },
-        {
-          "role": "Sound",
-          "name": "Dave Girtsman"
-        },
-        {
-          "role": "Talent",
-          "name": "Frieda Pinto & Cory Tran"
-        }
-      ],
-      "bts": [
-        {
-          "label": "",
-          "img": "/media/lexus-gx/bts/001.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/lexus-gx/bts/002.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/lexus-gx/bts/003.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/lexus-gx/bts/004.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/lexus-gx/bts/005.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/lexus-gx/bts/006.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/lexus-gx/bts/007.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/lexus-gx/bts/008.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/lexus-gx/bts/009.jpg"
-        }
-      ],
-      "gallery": [
-        "/media/lexus-gx/stills/001.jpg",
-        "/media/lexus-gx/stills/002.jpg",
-        "/media/lexus-gx/stills/003.jpg"
-      ],
-      "videos": []
     },
     "seek-thermal": {
       "client": "Seek Thermal",
@@ -1933,563 +2719,6 @@
         }
       ]
     },
-    "giant-shoes": {
-      "client": "Giant Bicycles",
-      "title": "Shoe Campaign",
-      "type": "Commercial / Product",
-      "year": "2026",
-      "vimeo": "1189536407",
-      "vimeoHash": "63b8c8e4e4",
-      "thumb": "/media/giant-shoes/stills/001.jpg",
-      "description": "When we were approached by Giant Bicycles to create an ad campaign for a few of their new shoe lineups we were stoked! There were three categories, road, gravel and gravity. We asked ourselves how we would make these videos and images unique.\n\nThe recipe:\n- Research\n- Lots of custom props\n- Unique angles\n- Two days of shooting on location\n- A great team",
-      "credits": [
-        {
-          "role": "Photographer",
-          "name": "Maxwell Frank"
-        },
-        {
-          "role": "Producer",
-          "name": "Chaparral Studio"
-        },
-        {
-          "role": "Gaffer",
-          "name": "Brady Berryhill"
-        },
-        {
-          "role": "Swing",
-          "name": "Noah Spiece"
-        },
-        {
-          "role": "Studio AC",
-          "name": "Jesse Natale"
-        },
-        {
-          "role": "1st AC",
-          "name": "Joseph Cunningham"
-        },
-        {
-          "role": "Camera Car Driver",
-          "name": "Mark Romanov"
-        },
-        {
-          "role": "PA/2nd AC",
-          "name": "Nate Stephensonn"
-        },
-        {
-          "role": "Edit Supervisor",
-          "name": "Tye French"
-        },
-        {
-          "role": "Editor",
-          "name": "Brian Szymanski"
-        },
-        {
-          "role": "Colorist",
-          "name": "Ian Matthews"
-        },
-        {
-          "role": "VFX + Compositing",
-          "name": "James Prola"
-        },
-        {
-          "role": "Athlete",
-          "name": "Brandon Baker"
-        },
-        {
-          "role": "studio",
-          "name": "Summit Studios"
-        }
-      ],
-      "gallery": [
-        "/media/giant-shoes/stills/002.jpg",
-        "/media/giant-shoes/stills/020.jpg",
-        "/media/giant-shoes/stills/003.jpg",
-        "/media/giant-shoes/stills/033.jpg",
-        "/media/giant-shoes/stills/021.jpg",
-        "/media/giant-shoes/stills/022.jpg",
-        "/media/giant-shoes/stills/004.jpg",
-        "/media/giant-shoes/stills/005.jpg",
-        "/media/giant-shoes/stills/030.jpg",
-        "/media/giant-shoes/stills/034.jpg",
-        "/media/giant-shoes/stills/007.jpg",
-        "/media/giant-shoes/stills/027.jpg",
-        "/media/giant-shoes/stills/008.jpg",
-        "/media/giant-shoes/stills/016.jpg",
-        "/media/giant-shoes/stills/035.jpg",
-        "/media/giant-shoes/stills/018.jpg",
-        "/media/giant-shoes/stills/028.jpg",
-        "/media/giant-shoes/stills/010.jpg",
-        "/media/giant-shoes/stills/029.jpg",
-        "/media/giant-shoes/stills/009.jpg",
-        "/media/giant-shoes/stills/031.jpg",
-        "/media/giant-shoes/stills/011.jpg",
-        "/media/giant-shoes/stills/012.jpg",
-        "/media/giant-shoes/stills/013.jpg",
-        "/media/giant-shoes/stills/014.jpg",
-        "/media/giant-shoes/stills/015.jpg",
-        "/media/giant-shoes/stills/017.jpg",
-        "/media/giant-shoes/stills/001.jpg",
-        "/media/giant-shoes/stills/019.jpg",
-        "/media/giant-shoes/stills/023.jpg",
-        "/media/giant-shoes/stills/006.jpg",
-        "/media/giant-shoes/stills/024.jpg",
-        "/media/giant-shoes/stills/025.jpg",
-        "/media/giant-shoes/stills/026.jpg",
-        "/media/giant-shoes/stills/032.jpg"
-      ],
-      "bts": [
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/001.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/002.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/003.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/004.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/005.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/006.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/019.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/024.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/007.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/008.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/009.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/010.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/011.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/012.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/013.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/014.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/015.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/016.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/017.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/018.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/020.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/021.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/022.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/023.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/025.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/026.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/027.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/028.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-shoes/bts/029.jpg"
-        }
-      ],
-      "videos": [
-        {
-          "src": "/media/giant-shoes/video/010.mp4",
-          "poster": "/media/giant-shoes/video/010.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/004.mp4",
-          "poster": "/media/giant-shoes/video/004.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/003.mp4",
-          "poster": "/media/giant-shoes/video/003.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/009.mp4",
-          "poster": "/media/giant-shoes/video/009.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/007.mp4",
-          "poster": "/media/giant-shoes/video/007.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/006.mp4",
-          "poster": "/media/giant-shoes/video/006.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/001.mp4",
-          "poster": "/media/giant-shoes/video/001.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/005.mp4",
-          "poster": "/media/giant-shoes/video/005.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/008.mp4",
-          "poster": "/media/giant-shoes/video/008.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/002.mp4",
-          "poster": "/media/giant-shoes/video/002.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/giant-shoes/video/011.mp4",
-          "poster": "/media/giant-shoes/video/011.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        }
-      ],
-      "heroVideos": [
-        {
-          "type": "vimeo",
-          "vimeo": "1189536407",
-          "vimeoHash": "63b8c8e4e4",
-          "poster": ""
-        },
-        {
-          "type": "vimeo",
-          "vimeo": "1189536579",
-          "vimeoHash": "2893f835b7",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-8XZYEbvqGTZV8L886DWJ4hvdZ4oOQq.jpg"
-        },
-        {
-          "type": "vimeo",
-          "vimeo": "1189536254",
-          "vimeoHash": "89bd709228",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-W1eyP2Y3gLE0pwQaxQrex0g1qc0ps1.jpg"
-        }
-      ],
-      "btsMedia": [
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/001.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/010.mp4",
-          "poster": "/media/giant-shoes/video/010.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/004.mp4",
-          "poster": "/media/giant-shoes/video/004.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/002.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/003.mp4",
-          "poster": "/media/giant-shoes/video/003.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/003.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/004.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/005.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/009.mp4",
-          "poster": "/media/giant-shoes/video/009.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/006.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/007.mp4",
-          "poster": "/media/giant-shoes/video/007.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/019.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/006.mp4",
-          "poster": "/media/giant-shoes/video/006.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/024.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/007.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/008.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/001.mp4",
-          "poster": "/media/giant-shoes/video/001.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/009.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/005.mp4",
-          "poster": "/media/giant-shoes/video/005.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/010.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/011.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/012.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/008.mp4",
-          "poster": "/media/giant-shoes/video/008.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/013.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/014.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/002.mp4",
-          "poster": "/media/giant-shoes/video/002.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/015.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/016.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/017.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "/media/giant-shoes/video/011.mp4",
-          "poster": "/media/giant-shoes/video/011.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/018.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/020.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/021.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/022.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/023.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/025.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/026.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/027.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/028.jpg",
-          "label": ""
-        },
-        {
-          "kind": "image",
-          "img": "/media/giant-shoes/bts/029.jpg",
-          "label": ""
-        }
-      ]
-    },
     "new-project": {
       "client": "Ford Motors",
       "title": "Bronco // Unleash your inner child",
@@ -2511,206 +2740,6 @@
         }
       ],
       "btsMedia": []
-    },
-    "new-project-2": {
-      "client": "rabbit",
-      "title": "Pace Chaser",
-      "type": "",
-      "year": "",
-      "vimeo": "1238478844",
-      "vimeoHash": "",
-      "thumb": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/rabbit_pace_chaser_edit_tech_50sec_v8-for-color-00_00_37_17-still033-eAC4609jutM2qeykZmwpTd3ix1zsIL.jpg",
-      "description": "A fast turnaround for a fast shoe. \n\nWe recently worked with Santa Barbara-based running brand rabbit on a launch film for their new Pace Chaser running shoe. \n\nThe concept started with the name. We wanted to create a visual element that represented speed and consistency, so we built the film around a continuous line of light inspired by the pace lights used at races. \n\nFrom there, we pulled apart different elements of the shoe, using materials like carbon, foam, and woven thread to create abstract visuals that tied back to its construction and performance. Combined with quick cuts, camera movement, and a technical editing style, the goal was to make the entire film feel fast just as the shoe was designed to be. \n\nWe had one week of pre-production and prop building, a day and a half in the studio, and another half day shooting outdoors. A tight schedule, but with a small, nimble crew and a consistent creative direction, we were able to bring everything together. \n\nAlways fun when a simple idea carries through an entire production, from the first concept to the final edit. ",
-      "credits": [],
-      "bts": [
-        {
-          "label": "",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4629-50CVopbm6W2sUk8b6F8gC25FFx1Dbd.jpg"
-        },
-        {
-          "label": "",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4634-ZpqpIgdDzKkbzoDi64iW1XeuCIyA5k.jpg"
-        },
-        {
-          "label": "",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5644-6FYvPHbC7tKfM6ShVPGyaiiPEWV0aw.jpg"
-        },
-        {
-          "label": "",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5655-3NkRiR0Y6YgNCg6MCnH4q7DKbvTREn.jpg"
-        },
-        {
-          "label": "",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7396-2NX7Yu7M2tzO753NcVsSF2k3JolgzS.jpg"
-        },
-        {
-          "label": "",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7428-UKk4ImCt7q0UQrSuT8ZVe84BSAN0WZ.jpg"
-        }
-      ],
-      "gallery": [],
-      "heroVideos": [
-        {
-          "type": "vimeo",
-          "vimeo": "1238478844",
-          "vimeoHash": "",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/rabbit_pace_chaser_edit_tech_50sec_v8-for-color-00_00_37_17-still033-XoOn9ITzprC86pvWtCSl30NvnnFXg6.jpg"
-        }
-      ],
-      "btsMedia": [
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_23-xsczVV32IaxMqqzEcutRG87hIPXA8w.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-L0IwEpYeVr0pw4mcU2spUL73EFnWqY.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4629-50CVopbm6W2sUk8b6F8gC25FFx1Dbd.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_11-rvD5qi2UHsnDijy1XIVUXD8O9zZv45.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-aosbTZudEmCWR2vzjvvjVLwMwQfn4d.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_4634-ZpqpIgdDzKkbzoDi64iW1XeuCIyA5k.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_8-v2x8pnik8RSch8BurHWyjSMbJ3Zx6i.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-cMsCg4OBCUGyjCfEZlMw9S3EoUehFH.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5644-6FYvPHbC7tKfM6ShVPGyaiiPEWV0aw.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_12-axN0Reb9xJB3GgLEgpTcTchntfD3GH.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-rmYVHsjRzNGa7bH4tRFtQYgNB9i2IL.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_5655-3NkRiR0Y6YgNCg6MCnH4q7DKbvTREn.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_7-vw0T3ATfbyPhPHczoVfffyY0x16fQn.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-9YvO1faw9KqyYZ0wtSo7vDYdzgrTdZ.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7396-2NX7Yu7M2tzO753NcVsSF2k3JolgzS.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_18-ODlr6S13VeZdQjyKxVUqcT0vPZqcxm.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-j8KIt2OdsIAIFjzuSexoeKQezVlkj8.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "kind": "image",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7428-UKk4ImCt7q0UQrSuT8ZVe84BSAN0WZ.jpg",
-          "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_6-M53ATMCs5A3MYkyMRVXwI3fIoneGn7.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-3c9hoDMiKmXnIVSDsKy4oLOaX4pOWi.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_16-pWVdcfpCle1ZgdNJipXAVDaSKNwrt6.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-K7Q1EbcqzMihQnDKDpxWkJlVUAOUgI.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        }
-      ],
-      "videos": [
-        {
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_23-xsczVV32IaxMqqzEcutRG87hIPXA8w.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-IEbbRoRqLqUpcPlVCUDUG4SNcsMG6I.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_11-rvD5qi2UHsnDijy1XIVUXD8O9zZv45.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-hC8OK9z2ot2IDmBbdeiI8I4piKFUSO.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_8-v2x8pnik8RSch8BurHWyjSMbJ3Zx6i.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-2PeZtrD9WUv86vmz8Nhzz5oA5xzM7e.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_12-axN0Reb9xJB3GgLEgpTcTchntfD3GH.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-3R60mzo3GwE8W72Cvqc7KPtalDcnwX.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_7-vw0T3ATfbyPhPHczoVfffyY0x16fQn.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-kI4C3oxJOAsfiDIyCpqzbOUwcfxZYd.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_18-ODlr6S13VeZdQjyKxVUqcT0vPZqcxm.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-9R8bYqmHDJ1V1PGvpTSxilD1AKS71m.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_6-M53ATMCs5A3MYkyMRVXwI3fIoneGn7.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-1NHNTTcEii6ZqWQR2EIZP1KFe89m2I.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        },
-        {
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_4630_16-pWVdcfpCle1ZgdNJipXAVDaSKNwrt6.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-eC1xqNpt4uHdCE8zZ4NwJRAmtZeXMt.jpg",
-          "label": "",
-          "w": 1024,
-          "h": 1280
-        }
-      ]
     }
   },
   "hero": {
