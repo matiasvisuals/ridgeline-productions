@@ -1070,7 +1070,7 @@
       "client": "Lexus",
       "title": "GX 550",
       "type": "Automotive / Commercial",
-      "year": "2024",
+      "year": "",
       "vimeo": "1001449124",
       "vimeoHash": "b530c58300",
       "thumb": "/media/legacy/cf427124-thumb-1.jpg",
@@ -1139,12 +1139,63 @@
           "img": "/media/lexus-gx/bts/009.jpg"
         }
       ],
-      "gallery": [
-        "/media/lexus-gx/stills/001.jpg",
-        "/media/lexus-gx/stills/002.jpg",
-        "/media/lexus-gx/stills/003.jpg"
+      "gallery": [],
+      "videos": [],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1001449124",
+          "vimeoHash": "b530c58300",
+          "poster": ""
+        }
       ],
-      "videos": []
+      "btsMedia": [
+        {
+          "kind": "image",
+          "img": "/media/lexus-gx/bts/001.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/lexus-gx/bts/002.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/lexus-gx/bts/003.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/lexus-gx/bts/004.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/lexus-gx/bts/005.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/lexus-gx/bts/006.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/lexus-gx/bts/007.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/lexus-gx/bts/008.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/lexus-gx/bts/009.jpg",
+          "label": ""
+        }
+      ]
     },
     "rabbit-cadence": {
       "client": "rabbit",
