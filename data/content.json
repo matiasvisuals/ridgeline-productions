@@ -2230,7 +2230,7 @@
       "client": "Giant Bicycles",
       "title": "Recon+ Taillight",
       "type": "Product / Commercial",
-      "year": "2024",
+      "year": "",
       "vimeo": "1100710110",
       "vimeoHash": "",
       "thumb": "/media/legacy/cb4ee12b-ridgeline-productions-taillight-image-1.jpg",
@@ -2288,19 +2288,11 @@
         },
         {
           "label": "",
-          "img": "/media/giant-recon/bts/005.jpg"
-        },
-        {
-          "label": "",
           "img": "/media/giant-recon/bts/006.jpg"
         },
         {
           "label": "",
           "img": "/media/giant-recon/bts/007.jpg"
-        },
-        {
-          "label": "",
-          "img": "/media/giant-recon/bts/008.jpg"
         },
         {
           "label": "",
@@ -2312,7 +2304,15 @@
         },
         {
           "label": "",
+          "img": "/media/giant-recon/bts/020.jpg"
+        },
+        {
+          "label": "",
           "img": "/media/giant-recon/bts/011.jpg"
+        },
+        {
+          "label": "",
+          "img": "/media/giant-recon/bts/008.jpg"
         },
         {
           "label": "",
@@ -2348,7 +2348,7 @@
         },
         {
           "label": "",
-          "img": "/media/giant-recon/bts/020.jpg"
+          "img": "/media/giant-recon/bts/005.jpg"
         }
       ],
       "gallery": [
@@ -2381,6 +2381,132 @@
           "label": "",
           "w": 720,
           "h": 1280
+        }
+      ],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1100710110",
+          "vimeoHash": "",
+          "poster": ""
+        }
+      ],
+      "btsMedia": [
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/001.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/002.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-recon/video/001.mp4",
+          "poster": "/media/giant-recon/video/001.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/003.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/004.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/giant-recon/video/002.mp4",
+          "poster": "/media/giant-recon/video/002.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/006.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/007.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/009.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/010.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/020.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/011.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/008.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/012.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/013.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/014.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/015.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/016.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/017.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/018.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/019.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/giant-recon/bts/005.jpg",
+          "label": ""
         }
       ]
     },
