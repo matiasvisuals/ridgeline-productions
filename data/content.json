@@ -2957,7 +2957,7 @@
       "client": "Hoka",
       "title": "Carbon X2",
       "type": "Sport / Product",
-      "year": "2023",
+      "year": "",
       "vimeo": "1064900400",
       "vimeoHash": "b897e45d4b",
       "thumb": "/media/legacy/b3c85e73-thumbnail-01.jpg",
@@ -2984,7 +2984,16 @@
         "/media/hoka-carbon/stills/012.jpg",
         "/media/hoka-carbon/stills/013.jpg"
       ],
-      "videos": []
+      "videos": [],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1064900400",
+          "vimeoHash": "b897e45d4b",
+          "poster": ""
+        }
+      ],
+      "btsMedia": []
     },
     "wtb-tread": {
       "client": "WTB & Kona Bicycles",
@@ -3032,15 +3041,36 @@
         },
         {
           "label": "",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-drqs1mJR6h4tV6BnpfLJFCikIrvu7E.jpg"
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-BgfsZxe3vUDSk5jzE2RqKCsTGHpfD6.jpg"
         },
         {
           "label": "",
-          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-ayQfjdFxJX8Y26Mk0WIrBvK5QgP6gW.jpg"
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-iEOcSMQyJEnXHa0I9RGjdevhFi2E5k.jpg"
         }
       ],
       "gallery": [],
       "videos": [
+        {
+          "src": "/media/wtb-tread/video/006.mp4",
+          "poster": "/media/wtb-tread/video/006.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/wtb-tread/video/004.mp4",
+          "poster": "/media/wtb-tread/video/004.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "/media/wtb-tread/video/005.mp4",
+          "poster": "/media/wtb-tread/video/005.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
         {
           "src": "/media/wtb-tread/video/001.mp4",
           "poster": "/media/wtb-tread/video/001.jpg",
@@ -3061,27 +3091,6 @@
           "label": "",
           "w": 720,
           "h": 1280
-        },
-        {
-          "src": "/media/wtb-tread/video/004.mp4",
-          "poster": "/media/wtb-tread/video/004.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/wtb-tread/video/005.mp4",
-          "poster": "/media/wtb-tread/video/005.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "src": "/media/wtb-tread/video/006.mp4",
-          "poster": "/media/wtb-tread/video/006.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
         }
       ],
       "heroVideos": [
@@ -3099,14 +3108,38 @@
           "label": ""
         },
         {
+          "kind": "video",
+          "src": "/media/wtb-tread/video/006.mp4",
+          "poster": "/media/wtb-tread/video/006.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
           "kind": "image",
           "img": "/media/wtb-tread/bts/002.jpg",
           "label": ""
         },
         {
+          "kind": "video",
+          "src": "/media/wtb-tread/video/004.mp4",
+          "poster": "/media/wtb-tread/video/004.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
           "kind": "image",
           "img": "/media/wtb-tread/bts/003.jpg",
           "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "/media/wtb-tread/video/005.mp4",
+          "poster": "/media/wtb-tread/video/005.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
         },
         {
           "kind": "image",
@@ -3138,30 +3171,6 @@
           "h": 1280
         },
         {
-          "kind": "video",
-          "src": "/media/wtb-tread/video/004.mp4",
-          "poster": "/media/wtb-tread/video/004.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "/media/wtb-tread/video/005.mp4",
-          "poster": "/media/wtb-tread/video/005.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "/media/wtb-tread/video/006.mp4",
-          "poster": "/media/wtb-tread/video/006.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
           "kind": "image",
           "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-BgfsZxe3vUDSk5jzE2RqKCsTGHpfD6.jpg",
           "label": ""
@@ -3177,7 +3186,7 @@
       "client": "Liv Cycling",
       "title": "Avow",
       "type": "Sport / Commercial",
-      "year": "2023",
+      "year": "",
       "vimeo": "1065668595",
       "vimeoHash": "5d68b75758",
       "thumb": "/media/legacy/3b9a8747-thumb.jpg",
@@ -3235,13 +3244,58 @@
         }
       ],
       "gallery": [],
-      "videos": []
+      "videos": [],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1065668595",
+          "vimeoHash": "5d68b75758",
+          "poster": ""
+        }
+      ],
+      "btsMedia": [
+        {
+          "kind": "image",
+          "img": "/media/liv-avow/bts/001.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/liv-avow/bts/002.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/liv-avow/bts/003.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/liv-avow/bts/004.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/liv-avow/bts/005.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/liv-avow/bts/006.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "/media/liv-avow/bts/007.jpg",
+          "label": ""
+        }
+      ]
     },
     "wtb-czr": {
       "client": "WTB",
       "title": "CZR Wheels",
       "type": "Product / Cycling",
-      "year": "2023",
+      "year": "",
       "vimeo": "1064899375",
       "vimeoHash": "",
       "thumb": "/media/legacy/cffa3cfa-wtb-czr-video-tile.jpg",
