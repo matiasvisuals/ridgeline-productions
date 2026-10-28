@@ -170,6 +170,32 @@ function uniqueProjectId(base) {
     return id;
 }
 
+// Change a project's id (its /work/<id> address). Keeps its place in the list,
+// updates the homepage Reel, and remembers the old id so old links forward.
+function renameProject(oldId, newId) {
+    const projects = state.content.projects;
+    if (!projects[oldId] || projects[newId]) return false;
+    const p = projects[oldId];
+    const aliases = new Set(Array.isArray(p.aliases) ? p.aliases : []);
+    aliases.add(oldId);
+    aliases.delete(newId);
+    p.aliases = [...aliases];
+
+    const renamed = {};
+    Object.keys(projects).forEach(k => { renamed[k === oldId ? newId : k] = projects[k]; });
+    state.content.projects = renamed;
+
+    if (Array.isArray(state.content.reel)) {
+        state.content.reel = state.content.reel.map(r => (r === oldId ? newId : r));
+    }
+    if (state.selectedProject === oldId) state.selectedProject = newId;
+    setDirty(true);
+    renderProjectList();
+    renderProjectEditor();
+    if (typeof renderHomepage === 'function') renderHomepage();
+    return true;
+}
+
 /* ────────────── Vimeo parsing ────────────── */
 // Accepts a full Vimeo URL (public or unlisted) or a bare numeric ID and
 // returns { id, hash }. The site uses these two fields separately to build
@@ -823,7 +849,7 @@ function renderProjectEditor() {
     root.innerHTML = `
         <div class="admin-editor-titlebar">
             <h3>Editing <span>${escapeText(p.title || '(untitled)')}</span></h3>
-            <span class="admin-id-chip">id: ${escapeText(id)}</span>
+            <span class="admin-id-chip">/work/${escapeText(id)}</span>
         </div>
 
         <div class="admin-card admin-card-accent">
@@ -846,6 +872,15 @@ function renderProjectEditor() {
                         <span class="admin-field-label">Year</span>
                         <input type="text" data-field="year" value="${escapeAttr(p.year)}">
                     </label>
+                    <div class="admin-field admin-field--wide">
+                        <span class="admin-field-label">Page URL <span class="admin-field-sub">— the link you share for this project</span></span>
+                        <div class="admin-slug">
+                            <span class="admin-slug-prefix">ridgelineproductions.com/work/</span>
+                            <input type="text" data-slug value="${escapeAttr(id)}" spellcheck="false" autocomplete="off">
+                            <button type="button" class="admin-btn admin-btn--secondary admin-btn--small" data-slug-suggest>Use client + title</button>
+                        </div>
+                        <p class="admin-field-hint">Lowercase letters, numbers and dashes. Press Enter to apply. The old link keeps working and forwards here. Publish to make it live.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -920,6 +955,30 @@ function renderProjectEditor() {
                 }
             }
         });
+    });
+
+    // Page URL (project id)
+    const slugInput = root.querySelector('[data-slug]');
+    const applySlug = () => {
+        const next = slugify(slugInput.value);
+        if (!next || next === id) { slugInput.value = id; return; }
+        if (state.content.projects[next]) {
+            toast(`"${next}" is already used by another project`, 'error');
+            slugInput.value = id;
+            return;
+        }
+        renameProject(id, next);
+        toast(`Page URL is now /work/${next} — Publish to make it live`, 'success');
+    };
+    slugInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); slugInput.blur(); }
+        if (e.key === 'Escape') { slugInput.value = id; slugInput.blur(); }
+    });
+    slugInput.addEventListener('change', applySlug);
+    root.querySelector('[data-slug-suggest]').addEventListener('click', () => {
+        const cur = state.content.projects[id];
+        slugInput.value = slugify(`${cur.client || ''} ${cur.title || ''}`);
+        applySlug();
     });
 
     root.querySelector('[data-mount="categories"]').appendChild(

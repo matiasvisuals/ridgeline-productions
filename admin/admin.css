@@ -1224,3 +1224,14 @@ body.is-grid-dragging { cursor: grabbing; user-select: none; -webkit-user-select
     background: transparent; color: inherit; font: inherit; font-size: .8rem; cursor: pointer;
 }
 .admin-cat-chip.is-on { background: var(--section, #d2b38a); border-color: transparent; color: #111; }
+
+/* Page URL (project id) */
+.admin-slug { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.admin-slug-prefix {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.8rem; color: var(--fg-3); white-space: nowrap;
+}
+.admin-slug input[data-slug] {
+    flex: 1 1 14rem; min-width: 0;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+}

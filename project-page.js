@@ -20,6 +20,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const p = projects[id];
 
     if (!p) {
+        // Renamed project: forward its old address to the new one.
+        const moved = id && projectKeys.find(k => Array.isArray(projects[k].aliases) && projects[k].aliases.includes(id));
+        if (moved) {
+            const keep = /[?&]draft=1\b/.test(location.search) ? '?draft=1' : '';
+            window.location.replace(`/work/${encodeURIComponent(moved)}${keep}`);
+            return;
+        }
         window.location.href = '/' + (/[?&]draft=1\b/.test(location.search) ? '?draft=1' : '');
         return;
     }
