@@ -644,7 +644,7 @@
     "giant-helmets": {
       "client": "Giant Bicycles",
       "title": "Helmet Campaign",
-      "type": "Commercial / Product",
+      "type": "Commercial / Product / Sport / Social",
       "year": "",
       "vimeo": "1172404776",
       "vimeoHash": "",
@@ -1207,7 +1207,7 @@
     "rabbit-cadence": {
       "client": "rabbit",
       "title": "Cadence Kit",
-      "type": "Commercial / Product",
+      "type": "Commercial / Product / Sport / Social",
       "year": "",
       "vimeo": "1165842696",
       "vimeoHash": "",
@@ -1457,7 +1457,7 @@
     "hoka-transport": {
       "client": "Hoka",
       "title": "Transport GTX",
-      "type": "Commercial / Lifestyle",
+      "type": "Commercial / Lifestyle / Product / Social",
       "year": "",
       "vimeo": "1145515475",
       "vimeoHash": "5a6661faac",
@@ -1649,7 +1649,7 @@
     "giant-shoes": {
       "client": "Giant Bicycles",
       "title": "Shoe Campaign",
-      "type": "Commercial / Product",
+      "type": "Commercial / Product / Sport / Social",
       "year": "",
       "vimeo": "1189536407",
       "vimeoHash": "63b8c8e4e4",
@@ -2206,7 +2206,7 @@
     "giant-recon": {
       "client": "Giant Bicycles",
       "title": "Recon+ Taillight",
-      "type": "Product / Commercial",
+      "type": "Product / Commercial / Sport / Social",
       "year": "",
       "vimeo": "1100710110",
       "vimeoHash": "",
@@ -2490,7 +2490,7 @@
     "rabbit-highcountry": {
       "client": "rabbit",
       "title": "High Country",
-      "type": "Adventure / Brand Film",
+      "type": "Adventure / Brand Film / Commercial / Product / Social",
       "year": "",
       "vimeo": "1096761450",
       "vimeoHash": "",
@@ -3362,9 +3362,9 @@
     }
   },
   "hero": {
-    "src": "/media/hero/hero-1080.mp4",
-    "mobile": "/media/hero/hero-720.mp4",
-    "poster": "/media/hero/hero-poster.jpg"
+    "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/hero/ridgeline-website-banner_v3-lndjqqinWdgV6d4YQ4EXEDz1KhzY80.mp4",
+    "mobile": "",
+    "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-wBCFAarKWLooLol6SBVpQRyYpRg0Aw.jpg"
   },
   "reel": [
     "rabbit-pace-chaser",
