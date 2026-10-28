@@ -68,7 +68,7 @@
     }
   ],
   "projects": {
-    "new-project-2": {
+    "rabbit-pace-chaser": {
       "client": "rabbit",
       "title": "Pace Chaser",
       "type": "Commercial / Sport / Product",
@@ -295,6 +295,10 @@
           "w": 1024,
           "h": 1280
         }
+      ],
+      "aliases": [
+        "new-project-2",
+        "rabbit"
       ]
     },
     "new-project": {
@@ -3360,7 +3364,7 @@
     "poster": "/media/hero/hero-poster.jpg"
   },
   "reel": [
-    "new-project-2",
+    "rabbit-pace-chaser",
     "giant-helmets",
     "new-project",
     "rabbit-cadence",
