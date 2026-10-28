@@ -301,7 +301,7 @@
         "rabbit"
       ]
     },
-    "new-project": {
+    "ford-bronco": {
       "client": "Ford Motors",
       "title": "Bronco // Unleash Your Inner Child",
       "type": "commercial / Automotive / Adventure",
@@ -636,6 +636,9 @@
           "w": 720,
           "h": 1280
         }
+      ],
+      "aliases": [
+        "new-project"
       ]
     },
     "giant-helmets": {
@@ -3366,7 +3369,7 @@
   "reel": [
     "rabbit-pace-chaser",
     "giant-helmets",
-    "new-project",
+    "ford-bronco",
     "rabbit-cadence",
     "hoka-transport",
     "lexus-gx"
