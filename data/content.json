@@ -3614,9 +3614,10 @@
     "rabbit-pace-chaser",
     "giant-helmets",
     "ford-bronco",
+    "citizen-watch",
     "hoka-transport",
-    "rabbit-cadence",
-    "lexus-gx"
+    "lexus-gx",
+    "rabbit-cadence"
   ],
   "clients": [
     {
