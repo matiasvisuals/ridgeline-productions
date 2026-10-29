@@ -730,7 +730,24 @@
           "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7788-S3g20QmyUpVn4d5pRa5vZOODPYjKBT.jpg"
         }
       ],
-      "gallery": [],
+      "gallery": [
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260628_0012-KTkA4JOOdsNPD04ADjoEyGjIOA6CEr.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260628_0199-taPLGY8ONwLpoxtNUaQQdJgGXh4YFn.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260628_0457-sZT1iM0ueyTk9gkdwq930xGWDA7CYR.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260629_0634-edit-FDC7he7LEZzQFRRbBs6oUSn9g8OPdV.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260629_0649-LgzdrK6fcU0NQLGLazT6TkFWbKPrlJ.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260629_0852-Aszuz3GPgygDMw35dEdsoDQvx6rU9A.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260629_1395-GoYFusf03IRMo2tzFwDTIrna9US5Ja.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260629_2034-qmdxRKv6gykO9XJ1vKfGNVbl9YqzbY.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260629_2305-3YNkGcDa6TOZcVFezuPSR7ZLPp6TAj.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260630_2412-QmPFaWBF0hyWSh8m52mPuuqGa3n7n4.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260630_2418-LfiBZ0KYjebPdpTVXKTk7QOt1dRk1v.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260630_2601-KZgpASLEsAd8iJ2N5WFimHkKY8eN6e.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260630_2710-Zv2XuuVYoRXXoAQE0d27w1IszDNz5d.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260630_2847-NoIP4jdKZVS0BTsJcRlDwuslB9WPSe.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260630_2931-FKMbUg6SWVIV8xQ9qOBjsXLh5AxLqx.jpg",
+        "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/maxwell_frank_20260630_3399-M3BSTL2RqH344os5JsG5WpHmmowDzu.jpg"
+      ],
       "heroVideos": [
         {
           "type": "vimeo",
@@ -769,9 +786,25 @@
           "label": ""
         },
         {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_7810-NqIRZUH8Y2AvfTjB28rBLwBHW0yXZM.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-PUF3kM3S4iUZWyUI8PpzW4kouyhBvX.jpg",
+          "label": "",
+          "w": 960,
+          "h": 1280
+        },
+        {
           "kind": "image",
           "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_6239-M3Rgl9LXOwLlcDacAFsYX24qrWQ1RK.jpg",
           "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_7829-e7NJn0OAMtehwmVwaSsa06K1xQKtMA.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-Pkeo5Fr0AEZu24tZGBKDmM49L6xnUd.jpg",
+          "label": "",
+          "w": 960,
+          "h": 1280
         },
         {
           "kind": "image",
@@ -779,9 +812,25 @@
           "label": ""
         },
         {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_8400-arwJju929eYsp8VBPK0TkhIt2vMyFN.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-UlYYhQ3Uya8D9cLgmlAMNuu1fvtSx8.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
           "kind": "image",
           "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7728-0Ph8gBaZaWWzLIXkfY0V0nr7NxrMFC.jpg",
           "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_6241-kBszklTVbFXF8zdpdYxEExc03tZ1xY.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-XdgRYc68wdSGwbsNbcpF3TpF4Tswei.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
         },
         {
           "kind": "image",
@@ -794,6 +843,14 @@
           "label": ""
         },
         {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_8483-LdKXJuKaLe7K8xgd1p6XUNsgDmPDGh.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-knN54vmq4hfuPL4f3lC6nZQtHsVJCk.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
           "kind": "image",
           "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7828-nnV0tuHoFBTWzDQTZKicNFDtZ4XDtc.jpg",
           "label": ""
@@ -802,46 +859,6 @@
           "kind": "image",
           "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7788-S3g20QmyUpVn4d5pRa5vZOODPYjKBT.jpg",
           "label": ""
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_6241-kBszklTVbFXF8zdpdYxEExc03tZ1xY.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-XdgRYc68wdSGwbsNbcpF3TpF4Tswei.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_7810-NqIRZUH8Y2AvfTjB28rBLwBHW0yXZM.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-PUF3kM3S4iUZWyUI8PpzW4kouyhBvX.jpg",
-          "label": "",
-          "w": 960,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_7829-e7NJn0OAMtehwmVwaSsa06K1xQKtMA.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-Pkeo5Fr0AEZu24tZGBKDmM49L6xnUd.jpg",
-          "label": "",
-          "w": 960,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_8400-arwJju929eYsp8VBPK0TkhIt2vMyFN.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-UlYYhQ3Uya8D9cLgmlAMNuu1fvtSx8.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
-          "kind": "video",
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_8483-LdKXJuKaLe7K8xgd1p6XUNsgDmPDGh.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-knN54vmq4hfuPL4f3lC6nZQtHsVJCk.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
         }
       ],
       "aliases": [
@@ -849,13 +866,6 @@
       ],
       "videos": [
         {
-          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_6241-kBszklTVbFXF8zdpdYxEExc03tZ1xY.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-XdgRYc68wdSGwbsNbcpF3TpF4Tswei.jpg",
-          "label": "",
-          "w": 720,
-          "h": 1280
-        },
-        {
           "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_7810-NqIRZUH8Y2AvfTjB28rBLwBHW0yXZM.mp4",
           "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-PUF3kM3S4iUZWyUI8PpzW4kouyhBvX.jpg",
           "label": "",
@@ -877,8 +887,15 @@
           "h": 1280
         },
         {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_6241-kBszklTVbFXF8zdpdYxEExc03tZ1xY.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-XdgRYc68wdSGwbsNbcpF3TpF4Tswei.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
           "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_8483-LdKXJuKaLe7K8xgd1p6XUNsgDmPDGh.mp4",
-          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-ZNu4tDQKkvHvhzLsiQ2T4GppY9YNxH.jpg",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-knN54vmq4hfuPL4f3lC6nZQtHsVJCk.jpg",
           "label": "",
           "w": 720,
           "h": 1280
