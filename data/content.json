@@ -641,6 +641,250 @@
         "new-project"
       ]
     },
+    "citizen-watch": {
+      "client": "Citizen x Outside",
+      "title": "Citizen Promaster Series",
+      "type": "Commercial / Product / Sport / Adventure",
+      "year": "",
+      "vimeo": "1240496716",
+      "vimeoHash": "",
+      "thumb": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/citizen-watch-cover-photo-uDd3UHXoPmOrGWJPeVymsMNVazdK6C.jpg",
+      "description": "Two days to tell four very different stories. Climbing, scuba diving, paragliding, and remote hiking.\n\nLocation, location, location. Few places could accommodate a shoot like this, but Santa Barbara, CA, has it all.\n\nWe teamed up with Outside Magazine and Citizen Watches for a fast-paced production in our own backyard, capturing four incredible athletes in their element with watches built for their respective pursuits.\n\nFrom one location to the next, Ridgeline Productions handled the motion production and product photography for Citizen. A packed schedule, a lot of moving parts, and some incredible stories to tell made for a fun couple of days behind the camera.",
+      "credits": [
+        {
+          "role": "Producer",
+          "name": "Jeff Moore"
+        },
+        {
+          "role": "Producer",
+          "name": "Dallas Barber"
+        },
+        {
+          "role": "Director + DP",
+          "name": "Tye French"
+        },
+        {
+          "role": "Photographer",
+          "name": "Maxwell Frank"
+        },
+        {
+          "role": "1st AC",
+          "name": "Kirk Nakamura"
+        },
+        {
+          "role": "Audio",
+          "name": "Dave Girtsman"
+        },
+        {
+          "role": "PA",
+          "name": "Nate Stephenson"
+        },
+        {
+          "role": "Hiking + Water Talent",
+          "name": "Jody MacDonald"
+        },
+        {
+          "role": "Climbing Talent",
+          "name": "Eddie Taylor"
+        },
+        {
+          "role": "Paragliding Talent",
+          "name": "Marshall Miller"
+        }
+      ],
+      "bts": [
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/1000072508-jlQ4CdMiLgA5U0TwJyxzZ9wBvsktio.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_6225-doulv3Fa0U3aeAcCL25lNdRk5N48TC.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_6239-M3Rgl9LXOwLlcDacAFsYX24qrWQ1RK.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7727-QQMVSfJGmo0bPVtVFIZyhayTHqgCPb.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7728-0Ph8gBaZaWWzLIXkfY0V0nr7NxrMFC.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7756-thDC3a5hz8jYjuahAtNk0xpeUEwB2Q.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7816-IXjBbKItilIUWflvZ7W737zGwCwnCI.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7828-nnV0tuHoFBTWzDQTZKicNFDtZ4XDtc.jpg"
+        },
+        {
+          "label": "",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7788-S3g20QmyUpVn4d5pRa5vZOODPYjKBT.jpg"
+        }
+      ],
+      "gallery": [],
+      "heroVideos": [
+        {
+          "type": "vimeo",
+          "vimeo": "1240496716",
+          "vimeoHash": "",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/eddie-citizen-watch-thumbnail-6AhVhwlB7ia3zeddUxY65Y4p2nz54y.jpg"
+        },
+        {
+          "type": "vimeo",
+          "vimeo": "1240496715",
+          "vimeoHash": "",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/video-thumbnail-16x9-Xhf1FiQxboxNGv3efIEUFVZVlz7izp.jpg"
+        },
+        {
+          "type": "vimeo",
+          "vimeo": "1240496714",
+          "vimeoHash": "",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/marshall-citizen-watch-thumbnail-mqA4qEhAP2jrfIa9EXogiwlnyBciVl.jpg"
+        },
+        {
+          "type": "vimeo",
+          "vimeo": "1240496717",
+          "vimeoHash": "",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/jody-citizen-watch-thumbnail-9SaqXP6iq9hQ9cxZHiFG3INuyVnkxO.jpg"
+        }
+      ],
+      "btsMedia": [
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/1000072508-jlQ4CdMiLgA5U0TwJyxzZ9wBvsktio.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_6225-doulv3Fa0U3aeAcCL25lNdRk5N48TC.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_6239-M3Rgl9LXOwLlcDacAFsYX24qrWQ1RK.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7727-QQMVSfJGmo0bPVtVFIZyhayTHqgCPb.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7728-0Ph8gBaZaWWzLIXkfY0V0nr7NxrMFC.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7756-thDC3a5hz8jYjuahAtNk0xpeUEwB2Q.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7816-IXjBbKItilIUWflvZ7W737zGwCwnCI.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7828-nnV0tuHoFBTWzDQTZKicNFDtZ4XDtc.jpg",
+          "label": ""
+        },
+        {
+          "kind": "image",
+          "img": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/img_7788-S3g20QmyUpVn4d5pRa5vZOODPYjKBT.jpg",
+          "label": ""
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_6241-kBszklTVbFXF8zdpdYxEExc03tZ1xY.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-XdgRYc68wdSGwbsNbcpF3TpF4Tswei.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_7810-NqIRZUH8Y2AvfTjB28rBLwBHW0yXZM.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-PUF3kM3S4iUZWyUI8PpzW4kouyhBvX.jpg",
+          "label": "",
+          "w": 960,
+          "h": 1280
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_7829-e7NJn0OAMtehwmVwaSsa06K1xQKtMA.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-Pkeo5Fr0AEZu24tZGBKDmM49L6xnUd.jpg",
+          "label": "",
+          "w": 960,
+          "h": 1280
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_8400-arwJju929eYsp8VBPK0TkhIt2vMyFN.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-UlYYhQ3Uya8D9cLgmlAMNuu1fvtSx8.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "kind": "video",
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_8483-LdKXJuKaLe7K8xgd1p6XUNsgDmPDGh.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-knN54vmq4hfuPL4f3lC6nZQtHsVJCk.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        }
+      ],
+      "aliases": [
+        "new-project"
+      ],
+      "videos": [
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_6241-kBszklTVbFXF8zdpdYxEExc03tZ1xY.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-XdgRYc68wdSGwbsNbcpF3TpF4Tswei.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_7810-NqIRZUH8Y2AvfTjB28rBLwBHW0yXZM.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-PUF3kM3S4iUZWyUI8PpzW4kouyhBvX.jpg",
+          "label": "",
+          "w": 960,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_7829-e7NJn0OAMtehwmVwaSsa06K1xQKtMA.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-Pkeo5Fr0AEZu24tZGBKDmM49L6xnUd.jpg",
+          "label": "",
+          "w": 960,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_8400-arwJju929eYsp8VBPK0TkhIt2vMyFN.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-UlYYhQ3Uya8D9cLgmlAMNuu1fvtSx8.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        },
+        {
+          "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/bts/img_8483-LdKXJuKaLe7K8xgd1p6XUNsgDmPDGh.mp4",
+          "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/photo-ZNu4tDQKkvHvhzLsiQ2T4GppY9YNxH.jpg",
+          "label": "",
+          "w": 720,
+          "h": 1280
+        }
+      ]
+    },
     "giant-helmets": {
       "client": "Giant Bicycles",
       "title": "Helmet Campaign",
@@ -3370,8 +3614,8 @@
     "rabbit-pace-chaser",
     "giant-helmets",
     "ford-bronco",
-    "rabbit-cadence",
     "hoka-transport",
+    "rabbit-cadence",
     "lexus-gx"
   ],
   "clients": [
@@ -3483,7 +3727,8 @@
     {
       "name": "WTB",
       "src": "brand/clients/wtb.svg",
-      "scale": 0.95
+      "scale": 0.95,
+      "invert": false
     },
     {
       "name": "NVIDIA",
