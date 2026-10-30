@@ -661,27 +661,52 @@ function bindAbout() {
 function renderServices() {
     const root = $('#servicesEditor');
     root.innerHTML = '';
-    (state.content.services || []).forEach((svc, idx) => {
+    if (!Array.isArray(state.content.services)) state.content.services = [];
+    const list = state.content.services;
+    const pad = (n) => String(n + 1).padStart(2, '0');
+
+    // Add, remove or move a service. Numbers that follow the order (01, 02, 03)
+    // are kept in order; a number typed by hand is left alone.
+    const restructure = (change) => {
+        const auto = list.map((svc, i) => !svc.number || svc.number === pad(i));
+        const tagged = list.map((svc, i) => ({ svc, auto: auto[i] }));
+        change(tagged);
+        list.length = 0;
+        tagged.forEach(({ svc, auto }, i) => {
+            if (auto) svc.number = pad(i);
+            list.push(svc);
+        });
+        setDirty(true);
+        updateCounts();
+        renderServices();
+    };
+
+    list.forEach((svc, idx) => {
         const block = document.createElement('div');
         block.className = 'admin-service-block';
         block.innerHTML = `
             <div class="admin-service-block-header">
-                <span class="admin-service-num">${escapeText(svc.number || String(idx + 1).padStart(2, '0'))}</span>
-                <h3>${escapeText(svc.name || '')}</h3>
+                <span class="admin-service-num">${escapeText(svc.number || pad(idx))}</span>
+                <h3>${escapeText(svc.name || 'Untitled service')}</h3>
+                <div class="admin-service-actions">
+                    <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-act="up" title="Move up" aria-label="Move up" ${idx === 0 ? 'disabled' : ''}>↑</button>
+                    <button type="button" class="admin-btn admin-btn--ghost admin-btn--small" data-act="down" title="Move down" aria-label="Move down" ${idx === list.length - 1 ? 'disabled' : ''}>↓</button>
+                    <button type="button" class="admin-btn admin-btn--danger admin-btn--small" data-act="remove" ${list.length <= 1 ? 'disabled title="The site needs at least one service"' : ''}>Remove</button>
+                </div>
             </div>
             <div class="admin-grid-2">
                 <label class="admin-field">
                     <span class="admin-field-label">Display name</span>
-                    <input type="text" data-field="name" value="${escapeAttr(svc.name)}">
+                    <input type="text" data-field="name" value="${escapeAttr(svc.name)}" placeholder="e.g. Photography">
                 </label>
                 <label class="admin-field">
                     <span class="admin-field-label">Number</span>
-                    <input type="text" data-field="number" value="${escapeAttr(svc.number || '')}" placeholder="01">
+                    <input type="text" data-field="number" value="${escapeAttr(svc.number || '')}" placeholder="${pad(idx)}">
                 </label>
             </div>
             <label class="admin-field">
                 <span class="admin-field-label">Description</span>
-                <textarea data-field="description" rows="4">${escapeText(svc.description)}</textarea>
+                <textarea data-field="description" rows="4" placeholder="Shows when a visitor opens this service on the site.">${escapeText(svc.description)}</textarea>
             </label>
             <label class="admin-field">
                 <span class="admin-field-label">Tag chips</span>
@@ -693,20 +718,54 @@ function renderServices() {
             input.addEventListener('input', () => {
                 const field = input.dataset.field;
                 if (field === 'tags') {
-                    state.content.services[idx].tags = input.value.split(',').map(s => s.trim()).filter(Boolean);
+                    list[idx].tags = input.value.split(',').map(s => s.trim()).filter(Boolean);
                 } else {
-                    state.content.services[idx][field] = input.value;
-                    if (field === 'number' || field === 'name') {
-                        const hdr = block.querySelector('.admin-service-block-header');
-                        if (field === 'number') hdr.querySelector('.admin-service-num').textContent = input.value || String(idx + 1).padStart(2, '0');
-                        if (field === 'name') hdr.querySelector('h3').textContent = input.value;
-                    }
+                    list[idx][field] = input.value;
+                    const hdr = block.querySelector('.admin-service-block-header');
+                    if (field === 'number') hdr.querySelector('.admin-service-num').textContent = input.value || pad(idx);
+                    if (field === 'name') hdr.querySelector('h3').textContent = input.value || 'Untitled service';
                 }
                 setDirty(true);
             });
         });
+
+        block.querySelector('[data-act="up"]').addEventListener('click', () =>
+            restructure(t => { [t[idx - 1], t[idx]] = [t[idx], t[idx - 1]]; }));
+        block.querySelector('[data-act="down"]').addEventListener('click', () =>
+            restructure(t => { [t[idx + 1], t[idx]] = [t[idx], t[idx + 1]]; }));
+
+        // Remove asks for a second click instead of a pop-up.
+        const removeBtn = block.querySelector('[data-act="remove"]');
+        let armed = null;
+        removeBtn.addEventListener('click', () => {
+            if (!armed) {
+                removeBtn.textContent = 'Click again to remove';
+                armed = setTimeout(() => { armed = null; removeBtn.textContent = 'Remove'; }, 4000);
+                return;
+            }
+            clearTimeout(armed);
+            const name = svc.name || 'Service';
+            restructure(t => { t.splice(idx, 1); });
+            toast(`Removed "${name}". Save draft, then Publish to update the site.`, 'success');
+        });
+
         root.appendChild(block);
     });
+
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.className = 'admin-btn admin-btn--primary admin-service-add';
+    add.textContent = '+ Add service';
+    add.addEventListener('click', () => {
+        restructure(t => t.push({ auto: true, svc: { id: 'service-' + Date.now().toString(36), number: '', name: '', description: '', tags: [] } }));
+        const blocks = root.querySelectorAll('.admin-service-block');
+        const last = blocks[blocks.length - 1];
+        if (last) {
+            last.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            last.querySelector('[data-field="name"]').focus({ preventScroll: true });
+        }
+    });
+    root.appendChild(add);
 }
 
 /* ────────────── Render: Projects ────────────── */

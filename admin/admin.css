@@ -838,6 +838,9 @@ body.is-grid-dragging { cursor: grabbing; user-select: none; -webkit-user-select
     border-radius: 10px;
 }
 .admin-service-block-header h3 { margin: 0; font-size: 0.98rem; font-weight: 600; }
+.admin-service-actions { margin-left: auto; display: flex; gap: 0.35rem; align-items: center; }
+.admin-service-actions .admin-btn:disabled { opacity: 0.35; cursor: default; pointer-events: none; }
+.admin-service-add { margin-top: 0.2rem; }
 
 /* ════════════ MISC ════════════ */
 .admin-hint { color: var(--fg-3); font-size: 0.82rem; margin: 0 0 1rem; }

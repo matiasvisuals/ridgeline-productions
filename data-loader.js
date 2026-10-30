@@ -67,28 +67,39 @@
         if (phil && about.philosophy) safeText(phil, about.philosophy);
     }
 
+    // "What We Do" — one block per service in the portal, in the portal's order,
+    // so services added or removed there show up here. The first block in the
+    // page markup is the template.
     function hydrateServices(services) {
-        if (!Array.isArray(services)) return;
-        const items = document.querySelectorAll('.services-list .service-item');
-        services.forEach((svc, i) => {
-            const item = items[i];
-            if (!item) return;
+        if (!Array.isArray(services) || !services.length) return;
+        const list = document.querySelector('.services-list');
+        const template = list && list.querySelector('.service-item');
+        if (!template) return;
+        const fresh = services.map((svc, i) => {
+            const item = template.cloneNode(true);
+            item.classList.remove('active', 'svc-visible');
+            const reveal = item.querySelector('.service-reveal');
+            if (reveal) reveal.style.height = '';
             const num = item.querySelector('.service-num');
             const name = item.querySelector('.service-name');
             const desc = item.querySelector('.service-desc');
             const tagsHost = item.querySelector('.service-tags');
-            if (num && svc.number) safeText(num, svc.number);
-            if (name && svc.name) safeText(name, svc.name);
-            if (desc && svc.description) safeText(desc, svc.description);
-            if (tagsHost && Array.isArray(svc.tags)) {
+            if (num) num.textContent = svc.number || String(i + 1).padStart(2, '0');
+            if (name) name.textContent = svc.name || '';
+            if (desc) desc.textContent = svc.description || '';
+            if (tagsHost) {
                 tagsHost.innerHTML = '';
-                svc.tags.forEach(t => {
+                (Array.isArray(svc.tags) ? svc.tags : []).forEach(t => {
                     const span = document.createElement('span');
                     span.textContent = t;
                     tagsHost.appendChild(span);
                 });
+                tagsHost.hidden = !tagsHost.children.length;
             }
+            return item;
         });
+        list.querySelectorAll('.service-item').forEach(el => el.remove());
+        fresh.forEach(el => list.appendChild(el));
     }
 
     // Homepage banner video (set in the portal's Homepage tab).
