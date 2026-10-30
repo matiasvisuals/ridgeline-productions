@@ -19,6 +19,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     // swap the files (data-loader sets the data-src values from the content).
     const heroVideo = document.getElementById('heroVideo');
     if (heroVideo) {
+        // The banner stays dark until the current poster (or the first video
+        // frame) is ready, then fades in. The poster is set here, after the
+        // portal content has loaded, so an old still never flashes first.
+        const showHero = () => heroVideo.classList.add('is-ready');
+        heroVideo.addEventListener('loadeddata', showHero, { once: true });
+        const poster = heroVideo.dataset.poster;
+        if (poster) {
+            const img = new Image();
+            img.onload = () => { heroVideo.setAttribute('poster', poster); showHero(); };
+            img.src = poster;
+        }
+        setTimeout(showHero, 4000); // never leave the banner empty
         const small = window.matchMedia('(max-width: 900px)').matches ||
             (navigator.connection && navigator.connection.saveData);
         const src = (small && heroVideo.dataset.srcMobile) || heroVideo.dataset.src;
@@ -303,9 +315,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         // the gentle re-center smooth as words swap.
         let idx = 0;
         const fitTo = (text) => { wordRotator.style.width = Math.ceil(measure(text + '.') + 2) + 'px'; };
-        const refit = () => fitTo(words[idx]);
+
+        // On phones a long word pushes the headline onto an extra line, so the
+        // page grew and shrank every swap and the scroll jumped near the bottom.
+        // Reserve the height of the tallest version so the page never changes size.
+        const headline = wordRotator.closest('.contact-headline-big');
+        let lockedWidth = 0;
+        const lockHeight = () => {
+            if (!headline || window.innerWidth === lockedWidth) return;
+            lockedWidth = window.innerWidth;
+            const shown = current.textContent;
+            headline.style.minHeight = '';
+            wordRotator.style.transition = 'none';
+            let tallest = 0;
+            words.forEach(w => {
+                current.textContent = w;
+                fitTo(w);
+                tallest = Math.max(tallest, headline.getBoundingClientRect().height);
+            });
+            current.textContent = shown;
+            headline.style.minHeight = Math.ceil(tallest) + 'px';
+        };
+        const refit = () => {
+            lockHeight();
+            fitTo(words[idx]);
+            void wordRotator.offsetWidth;
+            wordRotator.style.transition = '';
+        };
         if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(refit);
+            document.fonts.ready.then(() => { lockedWidth = 0; refit(); });
         }
         refit();
         window.addEventListener('resize', refit);
@@ -417,30 +455,44 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        // Active state — reveal text info
-        ScrollTrigger.create({
-            trigger: card,
-            start: 'top 50%',
-            end: 'bottom 30%',
-            onEnter: () => setActive(i),
-            onEnterBack: () => setActive(i),
-        });
     });
 
+    // Active card (shows its client/title/type): the last card whose top has
+    // reached the middle of the screen. Worked out from where the cards really
+    // are on every scroll frame, so a fast scroll can't skip a card and leave
+    // its text hidden.
+    let activeIdx = -1;
     function setActive(idx) {
-        reelCards.forEach(c => c.classList.remove('is-active'));
-        reelCards[idx].classList.add('is-active');
+        if (idx === activeIdx) return;
+        activeIdx = idx;
+        reelCards.forEach((c, j) => c.classList.toggle('is-active', j === idx));
         if (progressBar) {
             progressBar.style.width = `${((idx + 1) / totalCards) * 100}%`;
         }
     }
-
-    // Activate first card on load
-    setTimeout(() => {
-        if (!document.querySelector('.reel-card.is-active') && reelCards.length) {
-            reelCards[0].classList.add('is-active');
-        }
-    }, 400);
+    let activeTick = false;
+    function updateActive() {
+        activeTick = false;
+        const mid = window.innerHeight * 0.5;
+        let idx = 0;
+        reelCards.forEach((card, j) => {
+            // Leave out the shrink the stacked cards get, which lags the scroll
+            // (the cards scale from their center).
+            const r = card.getBoundingClientRect();
+            const top = r.top - (card.offsetHeight - r.height) / 2;
+            if (top <= mid) idx = j;
+        });
+        setActive(idx);
+    }
+    const queueActive = () => {
+        if (!activeTick) { activeTick = true; requestAnimationFrame(updateActive); }
+    };
+    if (reelCards.length) {
+        window.addEventListener('scroll', queueActive, { passive: true });
+        window.addEventListener('resize', queueActive, { passive: true });
+        window.addEventListener('load', queueActive);
+        updateActive();
+    }
 
 
     // ─── Scroll animations (for non-reel elements) ───
@@ -789,7 +841,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 scrub: true,
             }
         });
-        gsap.to(contactRight, {
+        // Move the form itself, not .contact-right: that box has the fade-up
+        // CSS transition on transform, which made the parallax lag and settle.
+        gsap.to(contactRight.querySelector('.form') || contactRight, {
             y: -50,
             ease: 'none',
             scrollTrigger: {

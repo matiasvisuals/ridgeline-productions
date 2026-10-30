@@ -99,7 +99,7 @@
         // A new banner without its own phone version plays the same file on phones.
         if (hero.mobile) v.dataset.srcMobile = hero.mobile;
         else delete v.dataset.srcMobile;
-        if (hero.poster) v.setAttribute('poster', hero.poster);
+        if (hero.poster) v.dataset.poster = hero.poster;
     }
 
     // Client logo strip — script.js builds the strip from this attribute.
