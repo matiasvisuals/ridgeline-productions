@@ -3624,7 +3624,7 @@
   },
   "hero": {
     "src": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/hero/ridgeline-website-banner_v3-lndjqqinWdgV6d4YQ4EXEDz1KhzY80.mp4",
-    "mobile": "",
+    "mobile": "/media/hero/banner-v3-720.mp4",
     "poster": "https://7omeenoyhhuwtvbp.public.blob.vercel-storage.com/images/ridgeline-productions-banner-image-1-CjoUwNN6YoIDDsF1OlEyVdOkwxv6gT.jpg"
   },
   "reel": [
